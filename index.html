@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029084326";
+  const APP_VERSION = "20261029084607";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -151,7 +151,8 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 .bn small { font-size: .78rem; font-weight: 500; color: var(--muted); }
 .picked { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 14px; background: #fff3e8; border: 2px solid var(--brand); font-weight: 600; margin-top: 4px; }
 .picked svg { width: 20px; height: 20px; color: var(--brand); flex: none; }
-.picked button { margin-left: auto; background: none; border: none; color: var(--brand); font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer; padding: 0; white-space: nowrap; }
+.picked button { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: #fff !important; flex: none;
+  margin-left: auto; background: none; border: none; color: var(--brand); font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer; padding: 0; white-space: nowrap; }
 #fields { animation: rise .35s ease-out; }
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .rate-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; margin-bottom: 8px; background: var(--field); border-radius: 14px; }
@@ -230,6 +231,8 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   .langs .tile { display: flex; padding: 16px; }
   .form-head .ico { width: 44px !important; height: 44px !important; }
   .rate-row { padding: 8px 12px; }
+  .picked { font-size: .9rem; padding: 10px 10px 10px 12px; gap: 8px; }
+  .branches button { font-size: .92rem; }
   .stars button svg { width: 26px; height: 26px; }
   input, textarea { font-size: 16px; }
   .send { position: sticky; bottom: 12px; }
@@ -261,6 +264,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   <symbol id="ic-head" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
   <symbol id="ic-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
   <symbol id="ic-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="ic-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></symbol>
   <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
   <symbol id="ic-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
 </svg>
@@ -312,8 +316,8 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       </div>
       <div class="picked" id="branchPicked" hidden>
         <svg class="i"><use href="#ic-pin"/></svg>
-        <span class="bn" id="branchName"></span>
-        <button type="button" id="branchChange" data-i18n="change"></button>
+        <span id="branchName"></span>
+        <button type="button" id="branchChange" aria-label="Change"><svg class="i"><use href="#ic-edit"/></svg></button>
       </div>
 
       <div id="fields">
@@ -489,7 +493,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   let branch = -1;
   function renderBranches() {
     $("branches").innerHTML = BRANCHES.map((b, i) =>
-      `<button type="button" data-b="${i}" class="${i === branch ? "on" : ""}"><svg class="i"><use href="#ic-pin"/></svg><span class="bn"><small>${T[lang].center}</small>${b[lang]}</span></button>`).join("");
+      `<button type="button" data-b="${i}" class="${i === branch ? "on" : ""}"><svg class="i"><use href="#ic-pin"/></svg><span>${T[lang].center}-${b[lang]}</span></button>`).join("");
     $("branches").querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
       branch = +btn.dataset.b; renderBranches(); $("note").textContent = "";
     }));
@@ -497,7 +501,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     $("branchWrap").hidden = !isReview || branch >= 0;
     $("branchPicked").hidden = !isReview || branch < 0;
     $("fields").hidden = isReview && branch < 0;
-    if (branch >= 0) $("branchName").innerHTML = "<small>" + T[lang].center + "</small>" + BRANCHES[branch][lang];
+    if (branch >= 0) $("branchName").textContent = T[lang].center + "-" + BRANCHES[branch][lang];
   }
   $("branchChange").addEventListener("click", () => { branch = -1; renderBranches(); });
 
@@ -575,7 +579,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
 
     let text = m.head + "\n" + m.cat + ": " + t["c_" + cat + "_t"] + "\n" + m.lang + ": " + t.code + "\n";
     if (cat === "review" && branch < 0) { $("note").textContent = t.needBranch; return; }
-    if (cat === "review") text += m.branch + ": " + t.center + ", " + BRANCHES[branch][lang] + "\n";
+    if (cat === "review") text += m.branch + ": " + t.center + "-" + BRANCHES[branch][lang] + "\n";
     if (cat === "review") {
       const r = [["food", t.r_food], ["service", t.r_service], ["atmos", t.r_atmos]]
         .filter(([k]) => scores[k])
