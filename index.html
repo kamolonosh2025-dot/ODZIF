@@ -130,6 +130,11 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 .branches button:hover { border-color: var(--brand); }
 .branches button.on { border-color: var(--brand); background: #fff3e8; }
 @media (max-width: 560px) { .branches { grid-template-columns: 1fr; } .branches button { padding: 14px 16px; font-size: 1rem; } }
+.picked { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 14px; background: #fff3e8; border: 2px solid var(--brand); font-weight: 600; margin-top: 4px; }
+.picked svg { width: 20px; height: 20px; color: var(--brand); flex: none; }
+.picked button { margin-left: auto; background: none; border: none; color: var(--brand); font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer; padding: 0; white-space: nowrap; }
+#fields { animation: rise .35s ease-out; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .rate-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; margin-bottom: 8px; background: var(--field); border-radius: 14px; }
 .rate-row > span { font-weight: 500; }
 .stars { display: flex; gap: 2px; }
@@ -286,7 +291,13 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
         <span class="label" data-i18n="branchQ"></span>
         <div class="branches" id="branches"></div>
       </div>
+      <div class="picked" id="branchPicked" hidden>
+        <svg class="i"><use href="#ic-pin"/></svg>
+        <span id="branchName"></span>
+        <button type="button" id="branchChange" data-i18n="change"></button>
+      </div>
 
+      <div id="fields">
       <div id="ratings">
         <span class="label" data-i18n="rateQ"></span>
         <div class="rate-row" data-key="food"><span data-i18n="r_food"></span><div class="stars"></div></div>
@@ -315,6 +326,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
         <span data-i18n="send"></span>
       </button>
       <div class="note" id="note"></div>
+      </div>
     </form>
   </section>
 
@@ -380,7 +392,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       send: "Telegram orqali yuborish",
       empty: "Iltimos, xabaringizni yozing.",
       needPhone: "Iltimos, telefon raqamingizni kiriting.",
-      branchQ: "Qaysi filialimizda bo'ldingiz?", needBranch: "Iltimos, filialni tanlang.",
+      branchQ: "Qaysi filialimizda bo'ldingiz?", change: "O'zgartirish", needBranch: "Iltimos, filialni tanlang.",
       thanks: "Rahmat!",
       doneText: "Telegram botimiz ochildi. <b>START</b> tugmasini bosing, so'ng nusxalangan matnni joylab (Paste) yuboring.",
       reopen: "Botni qayta ochish",
@@ -406,7 +418,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       send: "Отправить через Telegram",
       empty: "Пожалуйста, напишите сообщение.",
       needPhone: "Пожалуйста, укажите номер телефона.",
-      branchQ: "В каком филиале вы были?", needBranch: "Пожалуйста, выберите филиал.",
+      branchQ: "В каком филиале вы были?", change: "Изменить", needBranch: "Пожалуйста, выберите филиал.",
       thanks: "Спасибо!",
       doneText: "Наш Telegram-бот открыт. Нажмите <b>START</b>, затем вставьте (Paste) скопированный текст и отправьте.",
       reopen: "Открыть бота снова",
@@ -432,7 +444,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       send: "Send via Telegram",
       empty: "Please write your message.",
       needPhone: "Please enter your phone number.",
-      branchQ: "Which branch did you visit?", needBranch: "Please choose a branch.",
+      branchQ: "Which branch did you visit?", change: "Change", needBranch: "Please choose a branch.",
       thanks: "Thank you!",
       doneText: "Our Telegram bot is open. Tap <b>START</b>, then paste the copied text and send it.",
       reopen: "Open the bot again",
@@ -464,7 +476,13 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     $("branches").querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
       branch = +btn.dataset.b; renderBranches(); $("note").textContent = "";
     }));
+    const isReview = cat === "review";
+    $("branchWrap").hidden = !isReview || branch >= 0;
+    $("branchPicked").hidden = !isReview || branch < 0;
+    $("fields").hidden = isReview && branch < 0;
+    if (branch >= 0) $("branchName").textContent = "Kamolon Osh — " + BRANCHES[branch][lang];
   }
+  $("branchChange").addEventListener("click", () => { branch = -1; renderBranches(); });
 
   function show(name) {
     ["lang", "home", "form", "done", "admin"].forEach(s => $("s-" + s).hidden = s !== name);
@@ -494,7 +512,6 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     $("formIcon").innerHTML = '<use href="#' + ICONS[c] + '"/>';
     $("formHead").dataset.cat = c;
     $("ratings").hidden = c !== "review";
-    $("branchWrap").hidden = c !== "review";
     renderBranches();
     $("companyWrap").hidden = c !== "partner";
     $("phoneOpt").hidden = c === "partner" || c === "problem";
@@ -522,6 +539,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   }));
   $("langBtn").addEventListener("click", () => show("lang"));
   document.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => {
+    branch = -1;
     setCat(b.dataset.cat);
     show("form");
   }));
