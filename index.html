@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029093520";
+  const APP_VERSION = "20261029093633";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -156,7 +156,7 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 .rate-row.err { box-shadow: inset 0 0 0 2px var(--danger); }
 .ferr { color: var(--danger); font-size: .85rem; font-weight: 600; margin: 6px 2px 4px; }
 .shell { position: relative; }
-.admin-dot { position: relative; display: inline-block; vertical-align: middle; width: 9px; height: 9px; margin-left: 8px; padding: 0; border: none; border-radius: 50%; background: #120a05; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.admin-dot { position: relative; display: inline-block; vertical-align: middle; width: 12px; height: 12px; margin-left: 10px; padding: 0; border: none; border-radius: 50%; background: #120a05; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .admin-dot::before { content: ""; position: absolute; inset: -16px; }
 .admin-top { display: flex; align-items: center; }
 #pin { font-size: 1.4rem; letter-spacing: .4em; text-align: center; max-width: 260px; display: block; }
