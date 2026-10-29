@@ -30,24 +30,25 @@ html, body { background: var(--bg); }
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--text);
   display: flex;
   justify-content: center;
-  padding: 24px 16px;
+  padding: 32px 16px;
   background:
     radial-gradient(circle at 0% 0%, #ffd9b3 0, transparent 35%),
-    radial-gradient(circle at 100% 100%, #ffc6d9 0, transparent 40%),
+    radial-gradient(circle at 100% 100%, #ffd2bf 0, transparent 40%),
     var(--bg);
-  background-attachment: fixed;
 }
 .shell {
   width: 100%;
-  max-width: 1100px;
+  display: flex; flex-direction: column;
+  max-width: 760px;
+  margin: auto 0;
   background: var(--panel);
   border-radius: 26px;
   padding: 0 0 28px;
-  align-self: flex-start;
   box-shadow: 0 30px 60px -30px rgba(160, 80, 20, .35);
   overflow: hidden;
 }
@@ -93,7 +94,7 @@ p.lead { color: var(--muted); font-size: 1.02rem; margin: 10px 0 22px; line-heig
 [data-cat="problem"] { --c: var(--c-problem); --cbg: var(--c-problem-bg); }
 
 /* Language screen */
-.langs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.langs { display: grid; grid-template-columns: 1fr; gap: 12px; }
 @media (max-width: 640px) { .langs { grid-template-columns: 1fr; } }
 .langs .tile { display: flex; align-items: center; gap: 14px; }
 .langs .flag { width: 40px; height: 28px; border-radius: 6px; overflow: hidden; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
@@ -106,7 +107,7 @@ p.lead { color: var(--muted); font-size: 1.02rem; margin: 10px 0 22px; line-heig
 .back:hover { color: var(--brand); }
 .form-head { display: flex; align-items: center; gap: 14px; margin-top: 18px; }
 .form-head h1 { margin: 0; }
-form { max-width: 640px; }
+form { max-width: none; }
 label, .label { display: block; font-weight: 600; margin: 20px 0 8px; font-size: .95rem; }
 .opt { color: var(--muted); font-weight: 400; }
 input, textarea {
