@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029085618";
+  const APP_VERSION = "20261029085918";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -152,6 +152,9 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 .bn small { font-size: .78rem; font-weight: 500; color: var(--muted); }
 .cn { font-size: 1.12em; font-weight: 800; white-space: nowrap; }
 .nw { white-space: nowrap; }
+.err { border-color: var(--danger) !important; background: #fff1f1 !important; }
+.rate-row.err { box-shadow: inset 0 0 0 2px var(--danger); }
+.ferr { color: var(--danger); font-size: .85rem; font-weight: 600; margin: 6px 2px 4px; }
 .picked { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 14px; background: #fff3e8; border: 2px solid var(--brand); font-weight: 600; margin-top: 4px; }
 .picked svg { width: 20px; height: 20px; color: var(--brand); flex: none; }
 .picked button { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: #fff !important; flex: none;
@@ -330,16 +333,21 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
         <div class="rate-row" data-key="atmos"><span data-i18n="r_atmos"></span><div class="stars"></div></div>
       </div>
 
-      <label for="name"><span data-i18n="name"></span> <span class="opt" data-i18n="optional"></span></label>
+      <label for="name"><span data-i18n="name"></span></label>
       <input id="name" autocomplete="name">
 
       <div id="phoneWrap">
-        <label for="phone"><span data-i18n="phone"></span> <span class="opt" id="phoneOpt" data-i18n="optional"></span></label>
+        <label for="phone"><span data-i18n="phone"></span></label>
         <input id="phone" type="tel" autocomplete="tel" placeholder="+998 __ ___ __ __">
       </div>
 
+      <div id="tableWrap">
+        <label for="table" data-i18n="table"></label>
+        <input id="table" inputmode="numeric" autocomplete="off">
+      </div>
+
       <div id="companyWrap">
-        <label for="company"><span data-i18n="company"></span> <span class="opt" data-i18n="optional"></span></label>
+        <label for="company"><span data-i18n="company"></span></label>
         <input id="company" autocomplete="organization">
       </div>
 
@@ -415,13 +423,13 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       msg: "Xabaringiz", msgPh: "Shu yerga yozing...",
       send: "Xabarni jo'natish",
       empty: "Iltimos, xabaringizni yozing.",
-      needPhone: "Iltimos, telefon raqamingizni kiriting.",
+      needPhone: "Iltimos, telefon raqamingizni kiriting.", table: "Stol raqami", tablePh: "Masalan: 12", fill: "Bo'sh joyni to'ldiring", fillRate: "Iltimos, baho qo'ying",
       branchQ: "Qaysi filialimizda bo'ldingiz?", change: "O'zgartirish", center: "Kamolon Osh markazi", needBranch: "Iltimos, filialni tanlang.",
       thanks: "Rahmat!",
       doneText: "Telegram botimiz ochildi. <b>START</b> tugmasini bosing, so'ng nusxalangan matnni joylab (Paste) yuboring.",
       reopen: "Botni qayta ochish",
       direct: "Telegram botimiz →",
-      m: { head: "📩 Yangi murojaat", cat: "Mavzu", branch: "Filial", lang: "Til", rate: "Baho", name: "Ism", phone: "Telefon", company: "Kompaniya" }
+      m: { table: "Stol", head: "📩 Yangi murojaat", cat: "Mavzu", branch: "Filial", lang: "Til", rate: "Baho", name: "Ism", phone: "Telefon", company: "Kompaniya" }
     },
     ru: {
       code: "RU", admin: "Обращения (админ)",
@@ -441,13 +449,13 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       msg: "Ваше сообщение", msgPh: "Напишите здесь...",
       send: "Отправить сообщение",
       empty: "Пожалуйста, напишите сообщение.",
-      needPhone: "Пожалуйста, укажите номер телефона.",
+      needPhone: "Пожалуйста, укажите номер телефона.", table: "Номер стола", tablePh: "Например: 12", fill: "Заполните это поле", fillRate: "Пожалуйста, поставьте оценку",
       branchQ: "В каком филиале вы были?", change: "Изменить", center: "Центр Kamolon Osh", needBranch: "Пожалуйста, выберите филиал.",
       thanks: "Спасибо!",
       doneText: "Наш Telegram-бот открыт. Нажмите <b>START</b>, затем вставьте (Paste) скопированный текст и отправьте.",
       reopen: "Открыть бота снова",
       direct: "Наш Telegram-бот →",
-      m: { head: "📩 Новое обращение", cat: "Тема", branch: "Филиал", lang: "Язык", rate: "Оценка", name: "Имя", phone: "Телефон", company: "Компания" }
+      m: { table: "Стол", head: "📩 Новое обращение", cat: "Тема", branch: "Филиал", lang: "Язык", rate: "Оценка", name: "Имя", phone: "Телефон", company: "Компания" }
     },
     en: {
       code: "EN", admin: "Requests (admin)",
@@ -467,13 +475,13 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       msg: "Your message", msgPh: "Write here...",
       send: "Send message",
       empty: "Please write your message.",
-      needPhone: "Please enter your phone number.",
+      needPhone: "Please enter your phone number.", table: "Table number", tablePh: "e.g. 12", fill: "Please fill in this field", fillRate: "Please give a rating",
       branchQ: "Which branch did you visit?", change: "Change", center: "Kamolon Osh center", needBranch: "Please choose a branch.",
       thanks: "Thank you!",
       doneText: "Our Telegram bot is open. Tap <b>START</b>, then paste the copied text and send it.",
       reopen: "Open the bot again",
       direct: "Our Telegram bot →",
-      m: { head: "📩 New request", cat: "Topic", branch: "Branch", lang: "Language", rate: "Rating", name: "Name", phone: "Phone", company: "Company" }
+      m: { table: "Table", head: "📩 New request", cat: "Topic", branch: "Branch", lang: "Language", rate: "Rating", name: "Name", phone: "Phone", company: "Company" }
     }
   };
 
@@ -493,6 +501,22 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     { uz: "Parkent filiali",   ru: "Филиал Паркент",   en: "Parkent branch" }
   ];
   let branch = -1;
+  function markErr(el, txt) {
+    el.classList.add("err");
+    const d = document.createElement("div");
+    d.className = "ferr"; d.textContent = txt;
+    el.insertAdjacentElement("afterend", d);
+  }
+  function clearErrs() {
+    document.querySelectorAll(".ferr").forEach(e => e.remove());
+    document.querySelectorAll(".err").forEach(e => e.classList.remove("err"));
+  }
+  document.addEventListener("input", e => {
+    if (e.target.classList && e.target.classList.contains("err")) {
+      e.target.classList.remove("err");
+      const n = e.target.nextElementSibling; if (n && n.classList.contains("ferr")) n.remove();
+    }
+  });
   function renderBranches() {
     $("branches").innerHTML = BRANCHES.map((b, i) =>
       `<button type="button" data-b="${i}" class="${i === branch ? "on" : ""}"><svg class="i"><use href="#ic-pin"/></svg><span><b class="cn">${T[lang].center}</b><span class="nw">-${b[lang]}</span></span></button>`).join("");
@@ -522,6 +546,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     document.querySelectorAll("[data-i18n-html]").forEach(el => el.innerHTML = t[el.dataset.i18nHtml]);
     $("name").placeholder = t.namePh;
     $("msg").placeholder = t.msgPh;
+    $("table").placeholder = t.tablePh;
     $("langBtn").innerHTML = '<svg class="i" style="width:20px;height:20px"><use href="#ic-globe"/></svg>';
     $("langBtn").setAttribute("aria-label", "Language");
     if (typeof renderAdmin === "function") renderAdmin();
@@ -538,7 +563,8 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     $("ratings").hidden = c !== "review";
     renderBranches();
     $("companyWrap").hidden = c !== "partner";
-    $("phoneOpt").hidden = c === "partner" || c === "problem";
+    $("tableWrap").hidden = c !== "review";
+    clearErrs();
     $("note").textContent = "";
   }
 
@@ -551,6 +577,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       b.innerHTML = '<svg class="i"><use href="#ic-star"/></svg>';
       b.addEventListener("click", () => {
         scores[row.dataset.key] = v;
+        if (row.classList.contains("err")) { row.classList.remove("err"); const n = row.nextElementSibling; if (n && n.classList.contains("ferr")) n.remove(); }
         [...box.children].forEach((s, i) => s.classList.toggle("on", i < v));
       });
       box.appendChild(b);
@@ -576,8 +603,25 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     const phone = $("phone").value.trim();
     const company = $("company").value.trim();
     const msg = $("msg").value.trim();
-    if ((cat === "partner" || cat === "problem") && !phone) { $("note").textContent = t.needPhone; return; }
-    if (!msg) { $("note").textContent = t.empty; return; }
+    const table = $("table").value.trim();
+
+    // Hamma maydonlar majburiy
+    clearErrs();
+    const bad = [];
+    if (cat === "review") {
+      document.querySelectorAll(".rate-row").forEach(row => { if (!scores[row.dataset.key]) bad.push([row, t.fillRate]); });
+    }
+    if (!name) bad.push([$("name"), t.fill]);
+    if (!phone) bad.push([$("phone"), t.fill]);
+    if (cat === "review" && !table) bad.push([$("table"), t.fill]);
+    if (cat === "partner" && !company) bad.push([$("company"), t.fill]);
+    if (!msg) bad.push([$("msg"), t.fill]);
+    if (bad.length) {
+      bad.forEach(([el, txt]) => markErr(el, txt));
+      bad[0][0].scrollIntoView({ behavior: "smooth", block: "center" });
+      if (bad[0][0].focus && bad[0][0].tagName !== "DIV") bad[0][0].focus({ preventScroll: true });
+      return;
+    }
 
     let text = m.head + "\n" + m.cat + ": " + t["c_" + cat + "_t"] + "\n" + m.lang + ": " + t.code + "\n";
     if (cat === "review" && branch < 0) { $("note").textContent = t.needBranch; return; }
@@ -590,6 +634,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     }
     if (name) text += m.name + ": " + name + "\n";
     if (phone) text += m.phone + ": " + phone + "\n";
+    if (cat === "review" && table) text += m.table + ": " + table + "\n";
     if (cat === "partner" && company) text += m.company + ": " + company + "\n";
     text += "\n" + msg;
 
