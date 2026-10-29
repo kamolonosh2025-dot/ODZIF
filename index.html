@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029090553";
+  const APP_VERSION = "20261029090708";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -413,7 +413,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
 
   <!-- 7. Admin: ro'yxat -->
   <section id="s-alist" hidden>
-    <button class="back" data-go="admin"><svg class="i"><use href="#ic-back"/></svg><span>Bo'limlar</span></button>
+    <button class="back" id="alistBack"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
     <div class="form-head" id="alistHead"><div class="ico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="alistIcon"></svg></div><h1 id="alistTitle"></h1></div>
     <div class="items" id="items" style="margin-top:18px"></div>
   </section>
@@ -769,11 +769,34 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     show("admin");
   }
 
-  function openList(c) {
-    const list = adminData[c] || [];
+  let listBack = null;
+  $("alistBack").addEventListener("click", () => listBack ? listBack() : show("admin"));
+  function openList(c, br) {
+    let list = adminData[c] || [];
     $("alistHead").dataset.cat = c;
     $("alistIcon").innerHTML = '<use href="#' + ICONS[c] + '"/>';
     $("alistTitle").textContent = CAT_NAMES[c];
+    listBack = null;
+    // Fikrlar: avval filiallar ro'yxati
+    if (c === "review" && br === undefined) {
+      $("items").innerHTML = BRANCHES.map(b => {
+        const key = b.uz.replace(" filiali", "");
+        const n = list.filter(x => x.branch === key).length;
+        return `<button class="tile" data-br="${esc(key)}" data-cat="review">
+          <div class="ico"><svg class="i"><use href="#ic-pin"/></svg></div>
+          <div class="t">Kamolon Osh markazi-${esc(b.uz)}</div>
+          <div class="d"><span class="count">${n}</span> ta fikr</div>
+        </button>`;
+      }).join("");
+      $("items").querySelectorAll("[data-br]").forEach(btn => btn.addEventListener("click", () => openList("review", btn.dataset.br)));
+      show("alist");
+      return;
+    }
+    if (c === "review") {
+      list = list.filter(x => x.branch === br);
+      $("alistTitle").textContent = br + " filiali";
+      listBack = () => openList("review");
+    }
     $("items").innerHTML = list.length ? list.map(x => `
       <div class="entry">
         <div class="when">🕒 ${fmtTime(x.time)}</div>
