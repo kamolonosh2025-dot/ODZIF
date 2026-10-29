@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029084859";
+  const APP_VERSION = "20261029084912";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -149,7 +149,7 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 @media (max-width: 560px) { .branches { grid-template-columns: 1fr; } .branches button { padding: 14px 16px; font-size: 1rem; } }
 .bn { display: flex; flex-direction: column; line-height: 1.25; }
 .bn small { font-size: .78rem; font-weight: 500; color: var(--muted); }
-.cn { font-size: 1.12em; font-weight: 800; }
+.cn { font-size: 1.12em; font-weight: 800; white-space: nowrap; }
 .nw { white-space: nowrap; }
 .picked { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 14px; background: #fff3e8; border: 2px solid var(--brand); font-weight: 600; margin-top: 4px; }
 .picked svg { width: 20px; height: 20px; color: var(--brand); flex: none; }
