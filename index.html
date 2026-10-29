@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029093633";
+  const APP_VERSION = "20261029093930";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -920,7 +920,8 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       await deleteEntry(adminPin, c, id);
     } catch (err) {
       card.classList.remove("gone");
-      alert(String(err.message) === "pin" ? "PIN noto'g'ri" : "O'chirib bo'lmadi. Internetni tekshiring yoki Apps Script kodini yangilang.");
+      const m = String(err.message);
+      alert(m === "pin" ? "PIN noto'g'ri (Apps Script'dagi PIN bilan bir xil emas)" : m === "cat" ? "Apps Script kodi hali eski. Yangi kodni qo'yib, Новая версия bilan qayta joylang." : "O'chirib bo'lmadi: " + m);
       return;
     }
     adminData[c] = (adminData[c] || []).filter(x => String(x.id) !== String(id));
