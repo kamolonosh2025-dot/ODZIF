@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029085918";
+  const APP_VERSION = "20261029090553";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -155,6 +155,20 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 .err { border-color: var(--danger) !important; background: #fff1f1 !important; }
 .rate-row.err { box-shadow: inset 0 0 0 2px var(--danger); }
 .ferr { color: var(--danger); font-size: .85rem; font-weight: 600; margin: 6px 2px 4px; }
+.shell { position: relative; }
+.admin-dot { position: absolute; right: 14px; bottom: 14px; width: 10px; height: 10px; padding: 0; border: none; border-radius: 50%; background: #e9dccd; cursor: pointer; }
+.admin-dot::before { content: ""; position: absolute; inset: -14px; }
+.admin-top { display: flex; align-items: center; }
+#pin { font-size: 1.4rem; letter-spacing: .4em; text-align: center; max-width: 260px; display: block; }
+#pinForm .send { max-width: 260px; }
+.tile .count { font-weight: 800; color: var(--c); font-size: 1.05rem; }
+.entry { border: 2px solid var(--border); border-radius: 16px; padding: 14px 16px; background: #fff; }
+.entry .when { font-weight: 700; color: var(--brand); font-size: .92rem; margin-bottom: 8px; }
+.entry .row { font-size: .93rem; margin: 4px 0; color: var(--text); }
+.entry .row a { color: var(--brand); text-decoration: none; font-weight: 600; }
+.entry .rates { display: flex; flex-wrap: wrap; gap: 4px 14px; color: var(--muted); }
+.entry .rates i { font-style: normal; color: var(--star); letter-spacing: 1px; }
+.entry .msg { margin-top: 8px; padding: 10px 12px; background: var(--field); border-radius: 12px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
 .picked { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 14px; background: #fff3e8; border: 2px solid var(--brand); font-weight: 600; margin-top: 4px; }
 .picked svg { width: 20px; height: 20px; color: var(--brand); flex: none; }
 .picked button { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: #fff !important; flex: none;
@@ -296,6 +310,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       <button class="tile" data-lang="ru"><span class="flag"><svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#0039a6"/><rect y="13.33" width="30" height="6.67" fill="#d52b1e"/></svg></span><span class="t">Русский</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
       <button class="tile" data-lang="en"><span class="flag"><svg viewBox="0 0 60 30" preserveAspectRatio="none"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#c8102e" stroke-width="2.5"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#c8102e" stroke-width="6"/></svg></span><span class="t">English</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
     </div>
+    <button type="button" class="admin-dot" id="adminDot" aria-label="Admin"></button>
   </section>
 
   <!-- 2. Mavzu tanlash -->
@@ -369,38 +384,48 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       <div class="circle"><svg class="i"><use href="#ic-check"/></svg></div>
       <h1 data-i18n="thanks"></h1>
       <p data-i18n-html="doneText"></p>
-      <a class="send" id="again" href="#" target="_blank" rel="noopener"><span data-i18n="reopen"></span></a>
       <button class="back" data-go="home" style="margin-top:18px"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="toHome"></span></button>
     </div>
   </section>
 
-  <!-- 5. Murojaatlar (admin, namuna) -->
+  <!-- 5. Admin: PIN -->
+  <section id="s-pin" hidden>
+    <button class="back" data-go="lang"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
+    <h1 style="margin-top:14px">Admin panel</h1>
+    <p class="lead">PIN kodni kiriting</p>
+    <form id="pinForm" novalidate>
+      <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="••••">
+      <div class="note" id="pinNote"></div>
+      <button class="send" type="submit"><span>Kirish</span></button>
+    </form>
+  </section>
+
+  <!-- 6. Admin: bo'limlar -->
   <section id="s-admin" hidden>
-    <button class="back" data-go="home"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="toHome"></span></button>
-    <h1 data-i18n="a_title" style="margin-top:14px"></h1>
-    <span class="demo" data-i18n="a_demo"></span>
-    <div class="stats">
-      <div class="stat s1"><b>128</b><span data-i18n="a_total"></span></div>
-      <div class="stat s2"><b>17</b><span data-i18n="a_new"></span></div>
-      <div class="stat s3"><b>8</b><span data-i18n="a_attention"></span></div>
-      <div class="stat s4"><b>103</b><span data-i18n="a_closed"></span></div>
+    <div class="admin-top">
+      <button class="back" id="adminExit"><svg class="i"><use href="#ic-back"/></svg><span>Chiqish</span></button>
+      <button class="back" id="adminRefresh" style="margin-left:auto">↻ <span>Yangilash</span></button>
     </div>
-    <div class="tabs" id="tabs">
-      <button data-f="all" class="on" data-i18n="t_all"></button>
-      <button data-f="review" data-i18n="t_review"></button>
-      <button data-f="partner" data-i18n="t_partner"></button>
-      <button data-f="idea" data-i18n="t_idea"></button>
-      <button data-f="problem" data-i18n="t_problem"></button>
-    </div>
-    <div class="items" id="items"></div>
+    <h1 style="margin-top:14px">Murojaatlar</h1>
+    <span class="demo" id="adminMode" hidden></span>
+    <div class="grid" id="adminTiles" style="margin-top:18px"></div>
+  </section>
+
+  <!-- 7. Admin: ro'yxat -->
+  <section id="s-alist" hidden>
+    <button class="back" data-go="admin"><svg class="i"><use href="#ic-back"/></svg><span>Bo'limlar</span></button>
+    <div class="form-head" id="alistHead"><div class="ico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="alistIcon"></svg></div><h1 id="alistTitle"></h1></div>
+    <div class="items" id="items" style="margin-top:18px"></div>
   </section>
 
   </div>
 </main>
 
 <script>
-  // === SOZLAMA: bot username'ini shu yerga yozing (@ belgisisiz) ===
-  const BOT_USERNAME = "SIZNING_BOTINGIZ_bot";
+  // === SOZLAMA: Google Apps Script havolasi (QOLLANMA.md ga qarang) ===
+  // Bo'sh bo'lsa, sayt "sinov rejimi"da ishlaydi: murojaatlar faqat shu qurilmada saqlanadi.
+  const API_URL = "";
+  const LOCAL_PIN = "1234"; // sinov rejimidagi admin PIN
 
   const ICONS = { review: "ic-star", idea: "ic-bulb", partner: "ic-hand", problem: "ic-brief" };
 
@@ -426,7 +451,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       needPhone: "Iltimos, telefon raqamingizni kiriting.", table: "Stol raqami", tablePh: "Masalan: 12", fill: "Bo'sh joyni to'ldiring", fillRate: "Iltimos, baho qo'ying",
       branchQ: "Qaysi filialimizda bo'ldingiz?", change: "O'zgartirish", center: "Kamolon Osh markazi", needBranch: "Iltimos, filialni tanlang.",
       thanks: "Rahmat!",
-      doneText: "Telegram botimiz ochildi. <b>START</b> tugmasini bosing, so'ng nusxalangan matnni joylab (Paste) yuboring.",
+      doneText: "Xabaringiz qabul qilindi. Fikringiz biz uchun muhim!", sendErr: "Xabar jo'natilmadi. Internetni tekshirib, qayta urinib ko'ring.", sending: "Jo'natilmoqda...",
       reopen: "Botni qayta ochish",
       direct: "Telegram botimiz →",
       m: { table: "Stol", head: "📩 Yangi murojaat", cat: "Mavzu", branch: "Filial", lang: "Til", rate: "Baho", name: "Ism", phone: "Telefon", company: "Kompaniya" }
@@ -452,7 +477,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       needPhone: "Пожалуйста, укажите номер телефона.", table: "Номер стола", tablePh: "Например: 12", fill: "Заполните это поле", fillRate: "Пожалуйста, поставьте оценку",
       branchQ: "В каком филиале вы были?", change: "Изменить", center: "Центр Kamolon Osh", needBranch: "Пожалуйста, выберите филиал.",
       thanks: "Спасибо!",
-      doneText: "Наш Telegram-бот открыт. Нажмите <b>START</b>, затем вставьте (Paste) скопированный текст и отправьте.",
+      doneText: "Ваше сообщение принято. Ваше мнение важно для нас!", sendErr: "Сообщение не отправлено. Проверьте интернет и попробуйте снова.", sending: "Отправляется...",
       reopen: "Открыть бота снова",
       direct: "Наш Telegram-бот →",
       m: { table: "Стол", head: "📩 Новое обращение", cat: "Тема", branch: "Филиал", lang: "Язык", rate: "Оценка", name: "Имя", phone: "Телефон", company: "Компания" }
@@ -478,7 +503,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       needPhone: "Please enter your phone number.", table: "Table number", tablePh: "e.g. 12", fill: "Please fill in this field", fillRate: "Please give a rating",
       branchQ: "Which branch did you visit?", change: "Change", center: "Kamolon Osh center", needBranch: "Please choose a branch.",
       thanks: "Thank you!",
-      doneText: "Our Telegram bot is open. Tap <b>START</b>, then paste the copied text and send it.",
+      doneText: "Your message has been received. Your opinion matters to us!", sendErr: "Message not sent. Check your internet and try again.", sending: "Sending...",
       reopen: "Open the bot again",
       direct: "Our Telegram bot →",
       m: { table: "Table", head: "📩 New request", cat: "Topic", branch: "Branch", lang: "Language", rate: "Rating", name: "Name", phone: "Phone", company: "Company" }
@@ -486,8 +511,6 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   };
 
   const $ = id => document.getElementById(id);
-  const botUrl = "https://t.me/" + BOT_USERNAME;
-  $("again").href = botUrl + "?start=otziv";
 
   let lang = "uz", cat = "review";
   const scores = { food: 0, service: 0, atmos: 0 };
@@ -532,8 +555,8 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   $("branchChange").addEventListener("click", () => { branch = -1; renderBranches(); });
 
   function show(name) {
-    ["lang", "home", "form", "done", "admin"].forEach(s => $("s-" + s).hidden = s !== name);
-    $("langBtn").hidden = name === "lang";
+    ["lang", "home", "form", "done", "pin", "admin", "alist"].forEach(s => $("s-" + s).hidden = s !== name);
+    $("langBtn").hidden = !["home", "form", "done"].includes(name);
     if (name !== "admin" && location.hash === "#admin") history.replaceState(null, "", location.pathname + location.search);
     window.scrollTo(0, 0);
   }
@@ -549,7 +572,6 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     $("table").placeholder = t.tablePh;
     $("langBtn").innerHTML = '<svg class="i" style="width:20px;height:20px"><use href="#ic-globe"/></svg>';
     $("langBtn").setAttribute("aria-label", "Language");
-    if (typeof renderAdmin === "function") renderAdmin();
     setCat(cat);
   }
 
@@ -638,8 +660,26 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     if (cat === "partner" && company) text += m.company + ": " + company + "\n";
     text += "\n" + msg;
 
-    try { await navigator.clipboard.writeText(text); } catch (_) {}
-    window.open(botUrl + "?start=" + cat, "_blank", "noopener");
+    const entry = {
+      cat, lang,
+      branch: cat === "review" ? BRANCHES[branch].uz.replace(' filiali', '') : "",
+      table: cat === "review" ? table : "",
+      food: cat === "review" ? scores.food : "",
+      service: cat === "review" ? scores.service : "",
+      atmos: cat === "review" ? scores.atmos : "",
+      name, phone, company: cat === "partner" ? company : "", msg
+    };
+    const btn = e.submitter || document.querySelector("#form .send");
+    const btnLabel = btn.querySelector("span").textContent;
+    btn.disabled = true; btn.querySelector("span").textContent = t.sending;
+    try {
+      await saveEntry(entry, text);
+    } catch (err) {
+      $("note").textContent = t.sendErr;
+      return;
+    } finally {
+      btn.disabled = false; btn.querySelector("span").textContent = btnLabel;
+    }
 
     $("form").reset();
     branch = -1;
@@ -648,42 +688,104 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     show("done");
   });
 
-  // Murojaatlar — namuna (demo) ma'lumotlar. Haqiqiy murojaatlar Telegram botga keladi.
-  const ITEMS = [
-    { cat: "review", status: "urgent", t: { uz: "Sovuq osh haqida shikoyat", ru: "Жалоба на холодный плов", en: "Complaint about cold plov" },
-      m: { uz: "Filial: Labzak · Baho 2/5", ru: "Филиал: Лабзак · Оценка 2/5", en: "Branch: Labzak · Rating 2/5" } },
-    { cat: "partner", status: "new", t: { uz: "Yetkazib beruvchidan taklif", ru: "Предложение от поставщика", en: "Offer from a supplier" },
-      m: { uz: "Toifa: Qadoqlash · Tijoriy taklif", ru: "Категория: Упаковка · Коммерческое предложение", en: "Category: Packaging · Commercial offer" } },
-    { cat: "idea", status: "review", t: { uz: "Yangi taom qo'shish", ru: "Добавить новое блюдо", en: "Add a new dish" },
-      m: { uz: "Filial: Gulzor · Mehmon taklifi", ru: "Филиал: Гулзор · Предложение гостя", en: "Branch: Gulzor · Guest suggestion" } },
-    { cat: "review", status: "closed", t: { uz: "Ajoyib xizmat, rahmat!", ru: "Отличный сервис, спасибо!", en: "Great service, thank you!" },
-      m: { uz: "Filial: Drujba · Baho 5/5", ru: "Филиал: Дружба · Оценка 5/5", en: "Branch: Drujba · Rating 5/5" } },
-    { cat: "review", status: "new", t: { uz: "Muhit juda yoqdi", ru: "Очень понравилась атмосфера", en: "Loved the atmosphere" },
-      m: { uz: "Filial: Labzak · Baho 4/5", ru: "Филиал: Лабзак · Оценка 4/5", en: "Branch: Labzak · Rating 4/5" } },
-    { cat: "partner", status: "review", t: { uz: "Bino ijarasi bo'yicha", ru: "По аренде помещения", en: "About renting premises" },
-      m: { uz: "Toifa: Ijara · 250 m²", ru: "Категория: Аренда · 250 м²", en: "Category: Rent · 250 m²" } }
-  ];
-  let filter = "all";
-  function renderAdmin() {
-    const t = T[lang];
-    $("items").innerHTML = ITEMS.filter(i => filter === "all" || i.cat === filter).map(i => `
-      <div class="item" data-cat="${i.cat}">
-        <div class="ico"><svg class="i"><use href="#${ICONS[i.cat]}"/></svg></div>
-        <div class="main"><div class="ttl">${i.t[lang]}</div><div class="meta">${i.m[lang]}</div></div>
-        <span class="badge ${i.status}">${t["s_" + i.status]}</span>
-      </div>`).join("");
+  // ===== Saqlash (Google Sheets yoki sinov rejimida shu qurilma) =====
+  const LS_KEY = "kamolon_entries";
+  function localEntries() { try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch (_) { return []; } }
+  async function saveEntry(entry, text) {
+    if (API_URL) {
+      const r = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "add", entry, text }) });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "save");
+      return;
+    }
+    const all = localEntries();
+    all.push({ ...entry, id: Date.now().toString(36), time: new Date().toISOString() });
+    try { localStorage.setItem(LS_KEY, JSON.stringify(all)); } catch (_) {}
   }
-  document.querySelectorAll("#tabs button").forEach(b => b.addEventListener("click", () => {
-    filter = b.dataset.f;
-    document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("on", x === b));
-    renderAdmin();
-  }));
-  // Admin sahifa faqat to'g'ridan-to'g'ri havola orqali: .../ODZIF/#admin
-  function openAdminFromHash() { if (location.hash === "#admin") { renderAdmin(); show("admin"); } }
-  window.addEventListener("hashchange", openAdminFromHash);
+  async function loadEntries(pin) {
+    if (API_URL) {
+      const r = await fetch(API_URL + "?action=list&pin=" + encodeURIComponent(pin));
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "load");
+      return j.entries;
+    }
+    if (pin !== LOCAL_PIN) throw new Error("pin");
+    const res = { review: [], idea: [], partner: [], problem: [] };
+    localEntries().slice().reverse().forEach(x => res[x.cat] && res[x.cat].push(x));
+    return res;
+  }
+
+  // ===== Admin panel =====
+  const CAT_NAMES = { review: "Fikr qoldirish", idea: "G'oya taklif qilish", partner: "Hamkorlik", problem: "Rahbariyatga murojaat" };
+  let adminPin = "", adminData = null;
+  try { adminPin = sessionStorage.getItem("kamolon_pin") || ""; } catch (_) {}
+  const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  function fmtTime(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return esc(iso);
+    return d.toLocaleString("ru-RU", { timeZone: "Asia/Tashkent", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  }
+  const stars = n => n ? "★".repeat(+n) + "☆".repeat(5 - n) : "—";
+
+  $("adminDot").addEventListener("click", () => {
+    if (adminPin) openAdmin(); else { $("pin").value = ""; $("pinNote").textContent = ""; show("pin"); setTimeout(() => $("pin").focus(), 50); }
+  });
+  $("pinForm").addEventListener("submit", e => {
+    e.preventDefault();
+    adminPin = $("pin").value.trim();
+    openAdmin(true);
+  });
+  $("adminExit").addEventListener("click", () => {
+    adminPin = ""; adminData = null;
+    try { sessionStorage.removeItem("kamolon_pin"); } catch (_) {}
+    show("lang");
+  });
+  $("adminRefresh").addEventListener("click", () => openAdmin());
+
+  async function openAdmin(fromPin) {
+    $("pinNote").style.color = "var(--muted)";
+    $("pinNote").textContent = "Yuklanmoqda...";
+    try {
+      adminData = await loadEntries(adminPin);
+    } catch (err) {
+      adminPin = "";
+      try { sessionStorage.removeItem("kamolon_pin"); } catch (_) {}
+      $("pinNote").style.color = "";
+      $("pinNote").textContent = String(err.message) === "pin" ? "PIN noto'g'ri" : "Yuklab bo'lmadi. Internetni tekshiring.";
+      show("pin");
+      return;
+    }
+    $("pinNote").textContent = "";
+    try { sessionStorage.setItem("kamolon_pin", adminPin); } catch (_) {}
+    $("adminMode").hidden = !!API_URL;
+    $("adminMode").textContent = "Sinov rejimi: faqat shu qurilmadagi murojaatlar ko'rinadi";
+    $("adminTiles").innerHTML = Object.keys(CAT_NAMES).map(c => `
+      <button class="tile" data-acat="${c}" data-cat="${c}">
+        <div class="ico"><svg class="i"><use href="#${ICONS[c]}"/></svg></div>
+        <div class="t">${CAT_NAMES[c]}</div>
+        <div class="d"><span class="count">${(adminData[c] || []).length}</span> ta murojaat</div>
+      </button>`).join("");
+    $("adminTiles").querySelectorAll("[data-acat]").forEach(b => b.addEventListener("click", () => openList(b.dataset.acat)));
+    show("admin");
+  }
+
+  function openList(c) {
+    const list = adminData[c] || [];
+    $("alistHead").dataset.cat = c;
+    $("alistIcon").innerHTML = '<use href="#' + ICONS[c] + '"/>';
+    $("alistTitle").textContent = CAT_NAMES[c];
+    $("items").innerHTML = list.length ? list.map(x => `
+      <div class="entry">
+        <div class="when">🕒 ${fmtTime(x.time)}</div>
+        ${x.branch ? `<div class="row"><b>Filial:</b> Kamolon Osh markazi-${esc(x.branch)} filiali${x.table ? ` · <b>Stol:</b> ${esc(x.table)}` : ""}</div>` : ""}
+        ${c === "review" ? `<div class="row rates"><span>Taom <i>${stars(x.food)}</i></span><span>Xizmat <i>${stars(x.service)}</i></span><span>Muhit <i>${stars(x.atmos)}</i></span></div>` : ""}
+        <div class="row"><b>${esc(x.name)}</b> · <a href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">${esc(x.phone)}</a>${x.company ? ` · ${esc(x.company)}` : ""}</div>
+        <div class="msg">${esc(x.msg)}</div>
+      </div>`).join("") : '<p class="lead">Hozircha murojaat yo\'q.</p>';
+    show("alist");
+  }
 
   applyLang("uz");
-  openAdminFromHash();
 </script>
 </body>
 </html>
