@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029090941";
+  const APP_VERSION = "20261029092309";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -424,7 +424,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
 <script>
   // === SOZLAMA: Google Apps Script havolasi (QOLLANMA.md ga qarang) ===
   // Bo'sh bo'lsa, sayt "sinov rejimi"da ishlaydi: murojaatlar faqat shu qurilmada saqlanadi.
-  const API_URL = "";
+  const API_URL = "https://script.google.com/macros/s/AKfycbygt2qgM_B_-wubOyiRs2MbVbEmqiVU5eS1GFgsC1XV0QfaEPAoWqeioE_JGBY_9JgP/exec";
   const LOCAL_PIN = "1234"; // sinov rejimidagi admin PIN
 
   const ICONS = { review: "ic-star", idea: "ic-bulb", partner: "ic-hand", problem: "ic-brief" };
