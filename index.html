@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029084607";
+  const APP_VERSION = "20261029084859";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -149,6 +149,8 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 @media (max-width: 560px) { .branches { grid-template-columns: 1fr; } .branches button { padding: 14px 16px; font-size: 1rem; } }
 .bn { display: flex; flex-direction: column; line-height: 1.25; }
 .bn small { font-size: .78rem; font-weight: 500; color: var(--muted); }
+.cn { font-size: 1.12em; font-weight: 800; }
+.nw { white-space: nowrap; }
 .picked { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 14px; background: #fff3e8; border: 2px solid var(--brand); font-weight: 600; margin-top: 4px; }
 .picked svg { width: 20px; height: 20px; color: var(--brand); flex: none; }
 .picked button { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: #fff !important; flex: none;
@@ -493,7 +495,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   let branch = -1;
   function renderBranches() {
     $("branches").innerHTML = BRANCHES.map((b, i) =>
-      `<button type="button" data-b="${i}" class="${i === branch ? "on" : ""}"><svg class="i"><use href="#ic-pin"/></svg><span>${T[lang].center}-${b[lang]}</span></button>`).join("");
+      `<button type="button" data-b="${i}" class="${i === branch ? "on" : ""}"><svg class="i"><use href="#ic-pin"/></svg><span><b class="cn">${T[lang].center}</b><span class="nw">-${b[lang]}</span></span></button>`).join("");
     $("branches").querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
       branch = +btn.dataset.b; renderBranches(); $("note").textContent = "";
     }));
@@ -501,7 +503,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     $("branchWrap").hidden = !isReview || branch >= 0;
     $("branchPicked").hidden = !isReview || branch < 0;
     $("fields").hidden = isReview && branch < 0;
-    if (branch >= 0) $("branchName").textContent = T[lang].center + "-" + BRANCHES[branch][lang];
+    if (branch >= 0) $("branchName").innerHTML = '<b class="cn">' + T[lang].center + '</b><span class="nw">-' + BRANCHES[branch][lang] + "</span>";
   }
   $("branchChange").addEventListener("click", () => { branch = -1; renderBranches(); });
 
