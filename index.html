@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029084912";
+  const APP_VERSION = "20261029084952";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -108,6 +108,7 @@ p.lead { color: var(--muted); font-size: 1.02rem; margin: 10px 0 22px; line-heig
 [data-cat="review"]  { --c: var(--c-review);  --cbg: var(--c-review-bg); }
 [data-cat="idea"]    { --c: var(--c-idea);    --cbg: var(--c-idea-bg); }
 [data-cat="partner"] { --c: var(--c-partner); --cbg: var(--c-partner-bg); }
+.grid > .tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
 [data-cat="problem"] { --c: var(--c-problem); --cbg: var(--c-problem-bg); }
 
 /* Language screen */
@@ -267,6 +268,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   <symbol id="ic-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
   <symbol id="ic-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
   <symbol id="ic-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></symbol>
+  <symbol id="ic-brief" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></symbol>
   <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
   <symbol id="ic-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
 </svg>
@@ -301,7 +303,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       <button class="tile" data-cat="review"><div class="ico"><svg class="i"><use href="#ic-star"/></svg></div><div class="t" data-i18n="c_review_t"></div><div class="d" data-i18n="c_review_d"></div></button>
       <button class="tile" data-cat="idea"><div class="ico"><svg class="i"><use href="#ic-bulb"/></svg></div><div class="t" data-i18n="c_idea_t"></div><div class="d" data-i18n="c_idea_d"></div></button>
       <button class="tile" data-cat="partner"><div class="ico"><svg class="i"><use href="#ic-hand"/></svg></div><div class="t" data-i18n="c_partner_t"></div><div class="d" data-i18n="c_partner_d"></div></button>
-      <button class="tile" data-cat="problem"><div class="ico"><svg class="i"><use href="#ic-head"/></svg></div><div class="t" data-i18n="c_problem_t"></div><div class="d" data-i18n="c_problem_d"></div></button>
+      <button class="tile" data-cat="problem"><div class="ico"><svg class="i"><use href="#ic-brief"/></svg></div><div class="t" data-i18n="c_problem_t"></div><div class="d" data-i18n="c_problem_d"></div></button>
     </div>
   </section>
 
@@ -394,19 +396,19 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   // === SOZLAMA: bot username'ini shu yerga yozing (@ belgisisiz) ===
   const BOT_USERNAME = "SIZNING_BOTINGIZ_bot";
 
-  const ICONS = { review: "ic-star", idea: "ic-bulb", partner: "ic-hand", problem: "ic-head" };
+  const ICONS = { review: "ic-star", idea: "ic-bulb", partner: "ic-hand", problem: "ic-brief" };
 
   const T = {
     uz: {
       code: "UZ", admin: "Murojaatlar (admin)",
-      a_title: "Murojaatlar", a_demo: "Namuna ma'lumotlar", a_total: "Jami murojaatlar", a_new: "Yangi", a_attention: "E'tibor talab qiladi", a_closed: "Yopilgan", t_all: "Hammasi", t_review: "Fikrlar", t_partner: "Hamkorlar", t_idea: "G'oyalar", t_problem: "Muammolar", s_urgent: "Shoshilinch", s_new: "Yangi", s_review: "Ko'rib chiqilmoqda", s_closed: "Yopilgan",
+      a_title: "Murojaatlar", a_demo: "Namuna ma'lumotlar", a_total: "Jami murojaatlar", a_new: "Yangi", a_attention: "E'tibor talab qiladi", a_closed: "Yopilgan", t_all: "Hammasi", t_review: "Fikrlar", t_partner: "Hamkorlar", t_idea: "G'oyalar", t_problem: "Rahbariyat", s_urgent: "Shoshilinch", s_new: "Yangi", s_review: "Ko'rib chiqilmoqda", s_closed: "Yopilgan",
       tag: "Fikr-mulohaza markazi",
       title: "Biz sizning fikringizni qadrlaymiz",
       lead: "Murojaat mavzusini tanlang. Xabaringiz mas'ul mutaxassisga yetkaziladi.",
       c_review_t: "Fikr qoldirish", c_review_d: "Taom, xizmat va muhitga baho",
       c_idea_t: "G'oya taklif qilish", c_idea_d: "Rahbariyat uchun g'oya va istaklar",
       c_partner_t: "Hamkorlik", c_partner_d: "Yetkazib beruvchilar, ijara, hamkorlik",
-      c_problem_t: "Muammoni hal qilish", c_problem_d: "Shikoyatlar va shoshilinch murojaatlar",
+      c_problem_t: "Rahbariyatga murojaat", c_problem_d: "Rahbariyatga to'g'ridan-to'g'ri yozish",
       back: "Orqaga", toHome: "Bosh sahifaga",
       rateQ: "Bahoyingiz",
       r_food: "Taom", r_service: "Xizmat", r_atmos: "Muhit",
@@ -425,14 +427,14 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     },
     ru: {
       code: "RU", admin: "Обращения (админ)",
-      a_title: "Обращения", a_demo: "Демонстрационные данные", a_total: "Всего обращений", a_new: "Новые", a_attention: "Требуют внимания", a_closed: "Закрытые", t_all: "Все", t_review: "Отзывы", t_partner: "Партнёры", t_idea: "Идеи", t_problem: "Проблемы", s_urgent: "Срочно", s_new: "Новое", s_review: "На рассмотрении", s_closed: "Закрыто",
+      a_title: "Обращения", a_demo: "Демонстрационные данные", a_total: "Всего обращений", a_new: "Новые", a_attention: "Требуют внимания", a_closed: "Закрытые", t_all: "Все", t_review: "Отзывы", t_partner: "Партнёры", t_idea: "Идеи", t_problem: "Руководство", s_urgent: "Срочно", s_new: "Новое", s_review: "На рассмотрении", s_closed: "Закрыто",
       tag: "Центр обратной связи",
       title: "Мы ценим ваше мнение",
       lead: "Выберите тему обращения. Ваше сообщение будет передано ответственному специалисту.",
       c_review_t: "Оставить отзыв", c_review_d: "Оценка еды, сервиса и атмосферы",
       c_idea_t: "Предложить идею", c_idea_d: "Идеи и пожелания для руководства",
       c_partner_t: "Сотрудничество", c_partner_d: "Поставщики, аренда, партнёрства",
-      c_problem_t: "Решить проблему", c_problem_d: "Жалобы и срочные обращения",
+      c_problem_t: "Обращение к руководству", c_problem_d: "Написать напрямую руководству",
       back: "Назад", toHome: "На главную",
       rateQ: "Ваша оценка",
       r_food: "Еда", r_service: "Сервис", r_atmos: "Атмосфера",
@@ -451,14 +453,14 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     },
     en: {
       code: "EN", admin: "Requests (admin)",
-      a_title: "Requests", a_demo: "Demo data", a_total: "Total requests", a_new: "New", a_attention: "Need attention", a_closed: "Closed", t_all: "All", t_review: "Reviews", t_partner: "Partners", t_idea: "Ideas", t_problem: "Problems", s_urgent: "Urgent", s_new: "New", s_review: "Under review", s_closed: "Closed",
+      a_title: "Requests", a_demo: "Demo data", a_total: "Total requests", a_new: "New", a_attention: "Need attention", a_closed: "Closed", t_all: "All", t_review: "Reviews", t_partner: "Partners", t_idea: "Ideas", t_problem: "Management", s_urgent: "Urgent", s_new: "New", s_review: "Under review", s_closed: "Closed",
       tag: "Feedback center",
       title: "We value your opinion",
       lead: "Choose a topic. Your message will be passed to the responsible specialist.",
       c_review_t: "Leave a review", c_review_d: "Rate the food, service and atmosphere",
       c_idea_t: "Suggest an idea", c_idea_d: "Ideas and wishes for management",
       c_partner_t: "Partnership", c_partner_d: "Suppliers, rent, partnerships",
-      c_problem_t: "Solve a problem", c_problem_d: "Complaints and urgent requests",
+      c_problem_t: "Contact management", c_problem_d: "Write directly to management",
       back: "Back", toHome: "Back to home",
       rateQ: "Your rating",
       r_food: "Food", r_service: "Service", r_atmos: "Atmosphere",
@@ -605,7 +607,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
 
   // Murojaatlar — namuna (demo) ma'lumotlar. Haqiqiy murojaatlar Telegram botga keladi.
   const ITEMS = [
-    { cat: "problem", status: "urgent", t: { uz: "Sovuq osh haqida shikoyat", ru: "Жалоба на холодный плов", en: "Complaint about cold plov" },
+    { cat: "review", status: "urgent", t: { uz: "Sovuq osh haqida shikoyat", ru: "Жалоба на холодный плов", en: "Complaint about cold plov" },
       m: { uz: "Filial: Labzak · Baho 2/5", ru: "Филиал: Лабзак · Оценка 2/5", en: "Branch: Labzak · Rating 2/5" } },
     { cat: "partner", status: "new", t: { uz: "Yetkazib beruvchidan taklif", ru: "Предложение от поставщика", en: "Offer from a supplier" },
       m: { uz: "Toifa: Qadoqlash · Tijoriy taklif", ru: "Категория: Упаковка · Коммерческое предложение", en: "Category: Packaging · Commercial offer" } },
