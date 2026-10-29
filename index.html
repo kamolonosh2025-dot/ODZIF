@@ -119,6 +119,17 @@ input, textarea {
 input::placeholder, textarea::placeholder { color: #b9a596; }
 textarea { min-height: 130px; resize: vertical; }
 input:focus, textarea:focus { outline: none; border-color: var(--brand); background: #fff; }
+.branches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.branches button {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 14px; border-radius: 14px; border: 2px solid var(--border);
+  background: #fff; color: var(--text); font: inherit; font-weight: 600; font-size: .95rem; cursor: pointer; text-align: left;
+  transition: border-color .15s, background .15s;
+}
+.branches button svg { width: 18px; height: 18px; color: var(--brand); }
+.branches button:hover { border-color: var(--brand); }
+.branches button.on { border-color: var(--brand); background: #fff3e8; }
+@media (max-width: 560px) { .branches { grid-template-columns: 1fr 1fr; } }
 .rate-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; margin-bottom: 8px; background: var(--field); border-radius: 14px; }
 .rate-row > span { font-weight: 500; }
 .stars { display: flex; gap: 2px; }
@@ -224,6 +235,7 @@ footer a:hover { color: var(--brand); }
   <symbol id="ic-hand" viewBox="0 0 24 24"><path d="M11 17l2 2a1.4 1.4 0 0 0 2-2"/><path d="M14 14l2.5 2.5a1.4 1.4 0 0 0 2-2l-3.9-3.9a3 3 0 0 0-4.2 0l-.9.9a1.4 1.4 0 0 1-2-2l2.8-2.8a5.3 5.3 0 0 1 6.4-.8l.5.3a3 3 0 0 0 2.1.4L21 6"/><path d="M21 5l1 9-2 2"/><path d="M3 5l-1 9 6.5 6.5a1.4 1.4 0 0 0 2-2"/><path d="M3 6h8"/></symbol>
   <symbol id="ic-head" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
   <symbol id="ic-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="ic-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
   <symbol id="ic-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
   <symbol id="ic-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
 </svg>
@@ -269,6 +281,11 @@ footer a:hover { color: var(--brand); }
     <p class="lead" id="formDesc" style="color:var(--muted)"></p>
 
     <form id="form" novalidate>
+      <div id="branchWrap">
+        <span class="label" data-i18n="branchQ"></span>
+        <div class="branches" id="branches"></div>
+      </div>
+
       <div id="ratings">
         <span class="label" data-i18n="rateQ"></span>
         <div class="rate-row" data-key="food"><span data-i18n="r_food"></span><div class="stars"></div></div>
@@ -362,11 +379,12 @@ footer a:hover { color: var(--brand); }
       send: "Telegram orqali yuborish",
       empty: "Iltimos, xabaringizni yozing.",
       needPhone: "Iltimos, telefon raqamingizni kiriting.",
+      branchQ: "Qaysi filialimizda bo'ldingiz?", needBranch: "Iltimos, filialni tanlang.",
       thanks: "Rahmat!",
       doneText: "Telegram botimiz ochildi. <b>START</b> tugmasini bosing, so'ng nusxalangan matnni joylab (Paste) yuboring.",
       reopen: "Botni qayta ochish",
       direct: "Telegram botimiz →",
-      m: { head: "📩 Yangi murojaat", cat: "Mavzu", lang: "Til", rate: "Baho", name: "Ism", phone: "Telefon", company: "Kompaniya" }
+      m: { head: "📩 Yangi murojaat", cat: "Mavzu", branch: "Filial", lang: "Til", rate: "Baho", name: "Ism", phone: "Telefon", company: "Kompaniya" }
     },
     ru: {
       code: "RU", admin: "Обращения (админ)",
@@ -387,11 +405,12 @@ footer a:hover { color: var(--brand); }
       send: "Отправить через Telegram",
       empty: "Пожалуйста, напишите сообщение.",
       needPhone: "Пожалуйста, укажите номер телефона.",
+      branchQ: "В каком филиале вы были?", needBranch: "Пожалуйста, выберите филиал.",
       thanks: "Спасибо!",
       doneText: "Наш Telegram-бот открыт. Нажмите <b>START</b>, затем вставьте (Paste) скопированный текст и отправьте.",
       reopen: "Открыть бота снова",
       direct: "Наш Telegram-бот →",
-      m: { head: "📩 Новое обращение", cat: "Тема", lang: "Язык", rate: "Оценка", name: "Имя", phone: "Телефон", company: "Компания" }
+      m: { head: "📩 Новое обращение", cat: "Тема", branch: "Филиал", lang: "Язык", rate: "Оценка", name: "Имя", phone: "Телефон", company: "Компания" }
     },
     en: {
       code: "EN", admin: "Requests (admin)",
@@ -412,11 +431,12 @@ footer a:hover { color: var(--brand); }
       send: "Send via Telegram",
       empty: "Please write your message.",
       needPhone: "Please enter your phone number.",
+      branchQ: "Which branch did you visit?", needBranch: "Please choose a branch.",
       thanks: "Thank you!",
       doneText: "Our Telegram bot is open. Tap <b>START</b>, then paste the copied text and send it.",
       reopen: "Open the bot again",
       direct: "Our Telegram bot →",
-      m: { head: "📩 New request", cat: "Topic", lang: "Language", rate: "Rating", name: "Name", phone: "Phone", company: "Company" }
+      m: { head: "📩 New request", cat: "Topic", branch: "Branch", lang: "Language", rate: "Rating", name: "Name", phone: "Phone", company: "Company" }
     }
   };
 
@@ -427,6 +447,23 @@ footer a:hover { color: var(--brand); }
 
   let lang = "uz", cat = "review";
   const scores = { food: 0, service: 0, atmos: 0 };
+
+  // === SOZLAMA: filiallar ro'yxati (nomlarini shu yerda o'zgartiring) ===
+  const BRANCHES = [
+    { uz: "Labzak",    ru: "Лабзак",    en: "Labzak" },
+    { uz: "Gulzor",    ru: "Гулзор",    en: "Gulzor" },
+    { uz: "Chilonzor", ru: "Чиланзар",  en: "Chilanzar" },
+    { uz: "Filial 4",  ru: "Филиал 4",  en: "Branch 4" },
+    { uz: "Filial 5",  ru: "Филиал 5",  en: "Branch 5" }
+  ];
+  let branch = -1;
+  function renderBranches() {
+    $("branches").innerHTML = BRANCHES.map((b, i) =>
+      `<button type="button" data-b="${i}" class="${i === branch ? "on" : ""}"><svg class="i"><use href="#ic-pin"/></svg>${b[lang]}</button>`).join("");
+    $("branches").querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+      branch = +btn.dataset.b; renderBranches(); $("note").textContent = "";
+    }));
+  }
 
   function show(name) {
     ["lang", "home", "form", "done", "admin"].forEach(s => $("s-" + s).hidden = s !== name);
@@ -456,6 +493,8 @@ footer a:hover { color: var(--brand); }
     $("formIcon").innerHTML = '<use href="#' + ICONS[c] + '"/>';
     $("formHead").dataset.cat = c;
     $("ratings").hidden = c !== "review";
+    $("branchWrap").hidden = c !== "review";
+    renderBranches();
     $("companyWrap").hidden = c !== "partner";
     $("phoneOpt").hidden = c === "partner" || c === "problem";
     $("note").textContent = "";
@@ -498,6 +537,8 @@ footer a:hover { color: var(--brand); }
     if (!msg) { $("note").textContent = t.empty; return; }
 
     let text = m.head + "\n" + m.cat + ": " + t["c_" + cat + "_t"] + "\n" + m.lang + ": " + t.code + "\n";
+    if (cat === "review" && branch < 0) { $("note").textContent = t.needBranch; return; }
+    if (cat === "review") text += m.branch + ": " + BRANCHES[branch][lang] + "\n";
     if (cat === "review") {
       const r = [["food", t.r_food], ["service", t.r_service], ["atmos", t.r_atmos]]
         .filter(([k]) => scores[k])
@@ -513,6 +554,7 @@ footer a:hover { color: var(--brand); }
     window.open(botUrl + "?start=" + cat, "_blank", "noopener");
 
     $("form").reset();
+    branch = -1;
     Object.keys(scores).forEach(k => scores[k] = 0);
     document.querySelectorAll(".stars button").forEach(s => s.classList.remove("on"));
     show("done");
