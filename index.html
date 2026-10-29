@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029084215";
+  const APP_VERSION = "20261029084326";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -381,7 +381,6 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     <div class="items" id="items"></div>
   </section>
 
-  <footer><a href="#" id="adminLink" data-i18n="admin"></a> · <a id="direct" href="#" target="_blank" rel="noopener" data-i18n="direct">Telegram bot →</a></footer>
   </div>
 </main>
 
@@ -474,7 +473,6 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
 
   const $ = id => document.getElementById(id);
   const botUrl = "https://t.me/" + BOT_USERNAME;
-  $("direct").href = botUrl;
   $("again").href = botUrl + "?start=otziv";
 
   let lang = "uz", cat = "review";
@@ -506,6 +504,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   function show(name) {
     ["lang", "home", "form", "done", "admin"].forEach(s => $("s-" + s).hidden = s !== name);
     $("langBtn").hidden = name === "lang";
+    if (name !== "admin" && location.hash === "#admin") history.replaceState(null, "", location.pathname + location.search);
     window.scrollTo(0, 0);
   }
 
@@ -628,9 +627,12 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("on", x === b));
     renderAdmin();
   }));
-  $("adminLink").addEventListener("click", e => { e.preventDefault(); renderAdmin(); show("admin"); });
+  // Admin sahifa faqat to'g'ridan-to'g'ri havola orqali: .../ODZIF/#admin
+  function openAdminFromHash() { if (location.hash === "#admin") { renderAdmin(); show("admin"); } }
+  window.addEventListener("hashchange", openAdminFromHash);
 
   applyLang("uz");
+  openAdminFromHash();
 </script>
 </body>
 </html>
