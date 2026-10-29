@@ -15,15 +15,15 @@
   --muted: #8a7566;
   --border: #f1e3d3;
   --field: #fff6ec;
-  --brand: #ff7a1a;
-  --brand-2: #ff3d6e;
+  --brand: #f97316;
+  --brand-2: #e8503a;
   --star: #ffb800;
   --danger: #e5383b;
 
-  --c-review: #ff9f1c;   --c-review-bg: #fff3df;
-  --c-idea: #22c55e;     --c-idea-bg: #e6f9ee;
-  --c-partner: #3b82f6;  --c-partner-bg: #e7f0ff;
-  --c-problem: #ec4899;  --c-problem-bg: #fde8f3;
+  --c-review: #e9a100;   --c-review-bg: #fef3c7;
+  --c-idea: #f97316;     --c-idea-bg: #ffedd5;
+  --c-partner: #e8503a;  --c-partner-bg: #ffe4dc;
+  --c-problem: #d9304f;  --c-problem-bg: #ffe1e6;
 }
 * { box-sizing: border-box; }
 html, body { background: var(--bg); }
@@ -95,7 +95,8 @@ p.lead { color: var(--muted); font-size: 1.02rem; margin: 10px 0 22px; line-heig
 .langs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 @media (max-width: 640px) { .langs { grid-template-columns: 1fr; } }
 .langs .tile { display: flex; align-items: center; gap: 14px; }
-.langs .flag { font-size: 2rem; }
+.langs .flag { width: 40px; height: 28px; border-radius: 6px; overflow: hidden; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
+.langs .flag svg { width: 100%; height: 100%; display: block; }
 .langs .t { margin: 0; font-size: 1.15rem; }
 .langs .arrow { margin-left: auto; color: var(--brand); transform: rotate(180deg); }
 
@@ -152,10 +153,10 @@ footer a:hover { color: var(--brand); }
 .stat { border-radius: 20px; padding: 18px 20px; color: #fff; }
 .stat b { display: block; font-size: 2rem; font-weight: 800; }
 .stat span { opacity: .95; font-size: .92rem; }
-.stat.s1 { background: linear-gradient(135deg, #ff9f1c, #ff6b1a); }
-.stat.s2 { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
-.stat.s3 { background: linear-gradient(135deg, #f472b6, #e11d48); }
-.stat.s4 { background: linear-gradient(135deg, #4ade80, #16a34a); }
+.stat.s1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+.stat.s2 { background: linear-gradient(135deg, #fb923c, #f97316); }
+.stat.s3 { background: linear-gradient(135deg, #f87171, #d9304f); }
+.stat.s4 { background: linear-gradient(135deg, #f0815f, #e8503a); }
 .tabs { display: flex; gap: 8px; margin: 24px 0 16px; padding: 6px; background: var(--field); border-radius: 999px; overflow-x: auto; }
 .tabs button { flex: 1; border: none; background: none; font: inherit; font-weight: 600; color: var(--muted); padding: 10px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
 .tabs button.on { background: #fff; color: var(--text); box-shadow: 0 4px 12px -6px rgba(120,60,20,.4); }
@@ -167,10 +168,46 @@ footer a:hover { color: var(--brand); }
 .item .meta { color: var(--muted); font-size: .9rem; margin-top: 6px; }
 .badge { font-size: .8rem; font-weight: 700; padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
 .badge.urgent { background: #ffe1e3; color: #d62839; }
-.badge.new { background: #e0edff; color: #2563eb; }
+.badge.new { background: #ffedd5; color: #c2410c; }
 .badge.review { background: #fff1d6; color: #b45309; }
 .badge.closed { background: #dcfce7; color: #15803d; }
 .demo { display: inline-block; margin-top: 12px; font-size: .85rem; color: #b45309; background: #fff1d6; padding: 6px 12px; border-radius: 999px; }
+
+/* Telefon uchun */
+@media (max-width: 560px) {
+  body { padding: 0; background: var(--panel); }
+  .shell { border-radius: 0; box-shadow: none; min-height: 100vh; padding-bottom: 24px; }
+  header { padding: 16px; gap: 12px; position: sticky; top: 0; z-index: 5; }
+  header .logo { width: 40px; height: 40px; border-radius: 12px; }
+  header .brand { font-size: 1.1rem; }
+  header .tag { font-size: .82rem; }
+  .body { padding: 0 16px; }
+  h1 { font-size: 1.35rem; margin-top: 20px; }
+  p.lead { font-size: .95rem; margin-bottom: 16px; }
+  .grid, .langs { gap: 10px; }
+  .tile { padding: 14px 16px; border-radius: 16px; display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: center; }
+  .tile .ico { width: 46px; height: 46px; border-radius: 14px; grid-row: span 2; }
+  .tile .t { font-size: 1.05rem; margin: 0 0 3px; }
+  .tile .d { font-size: .86rem; }
+  .langs .tile { display: flex; padding: 16px; }
+  .form-head .ico { width: 44px !important; height: 44px !important; }
+  .rate-row { padding: 8px 12px; }
+  .stars button svg { width: 26px; height: 26px; }
+  input, textarea { font-size: 16px; }
+  .send { position: sticky; bottom: 12px; }
+  .stats { gap: 10px; }
+  .stat { padding: 14px 16px; border-radius: 16px; }
+  .stat b { font-size: 1.6rem; }
+  .stat span { font-size: .82rem; }
+  .tabs { margin: 18px 0 12px; }
+  .tabs button { flex: none; padding: 9px 14px; font-size: .9rem; }
+  .item { padding: 12px 14px; gap: 12px; flex-wrap: wrap; }
+  .item .ico { width: 40px; height: 40px; }
+  .item .ttl { font-size: 1rem; }
+  .item .main { flex-basis: calc(100% - 60px); }
+  .item .badge { margin-left: 52px; }
+  footer { margin-top: 22px; }
+}
 
 [hidden] { display: none !important; }
 </style>
@@ -201,12 +238,12 @@ footer a:hover { color: var(--brand); }
 
   <!-- 1. Til tanlash -->
   <section id="s-lang">
-    <h1>Tilni tanlang · Выберите язык · Choose language</h1>
-    <p class="lead">&nbsp;</p>
+    <h1 class="lang-title">Tilni tanlang</h1>
+    <p class="lead">Выберите язык · Choose language</p>
     <div class="langs">
-      <button class="tile" data-lang="uz"><span class="flag">🇺🇿</span><span class="t">O'zbekcha</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
-      <button class="tile" data-lang="ru"><span class="flag">🇷🇺</span><span class="t">Русский</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
-      <button class="tile" data-lang="en"><span class="flag">🇬🇧</span><span class="t">English</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
+      <button class="tile" data-lang="uz"><span class="flag"><svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.4" fill="#1eb5e0"/><rect y="13.6" width="30" height="6.4" fill="#1eb53a"/><rect y="6.4" width="30" height=".6" fill="#ce1126"/><rect y="13" width="30" height=".6" fill="#ce1126"/></svg></span><span class="t">O'zbekcha</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
+      <button class="tile" data-lang="ru"><span class="flag"><svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#0039a6"/><rect y="13.33" width="30" height="6.67" fill="#d52b1e"/></svg></span><span class="t">Русский</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
+      <button class="tile" data-lang="en"><span class="flag"><svg viewBox="0 0 60 30" preserveAspectRatio="none"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#c8102e" stroke-width="2.5"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#c8102e" stroke-width="6"/></svg></span><span class="t">English</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
     </div>
   </section>
 
@@ -402,7 +439,7 @@ footer a:hover { color: var(--brand); }
     document.querySelectorAll("[data-i18n-html]").forEach(el => el.innerHTML = t[el.dataset.i18nHtml]);
     $("name").placeholder = t.namePh;
     $("msg").placeholder = t.msgPh;
-    $("langBtn").textContent = "🌐 " + t.code;
+    $("langBtn").textContent = t.code + " ▾";
     if (typeof renderAdmin === "function") renderAdmin();
     setCat(cat);
   }
