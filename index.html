@@ -119,7 +119,7 @@ input, textarea {
 input::placeholder, textarea::placeholder { color: #b9a596; }
 textarea { min-height: 130px; resize: vertical; }
 input:focus, textarea:focus { outline: none; border-color: var(--brand); background: #fff; }
-.branches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.branches { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .branches button {
   display: flex; align-items: center; gap: 8px;
   padding: 12px 14px; border-radius: 14px; border: 2px solid var(--border);
@@ -129,7 +129,7 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 .branches button svg { width: 18px; height: 18px; color: var(--brand); }
 .branches button:hover { border-color: var(--brand); }
 .branches button.on { border-color: var(--brand); background: #fff3e8; }
-@media (max-width: 560px) { .branches { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .branches { grid-template-columns: 1fr; } .branches button { padding: 14px 16px; font-size: 1rem; } }
 .rate-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; margin-bottom: 8px; background: var(--field); border-radius: 14px; }
 .rate-row > span { font-weight: 500; }
 .stars { display: flex; gap: 2px; }
@@ -159,6 +159,7 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 footer { text-align: center; margin-top: 28px; }
 footer a { color: var(--muted); font-size: .88rem; font-weight: 500; text-decoration: none; margin: 0 8px; }
 footer a:hover { color: var(--brand); }
+footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
 
 /* Admin */
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
@@ -450,11 +451,11 @@ footer a:hover { color: var(--brand); }
 
   // === SOZLAMA: filiallar ro'yxati (nomlarini shu yerda o'zgartiring) ===
   const BRANCHES = [
-    { uz: "Labzak",    ru: "Лабзак",    en: "Labzak" },
-    { uz: "Gulzor",    ru: "Гулзор",    en: "Gulzor" },
-    { uz: "Chilonzor", ru: "Чиланзар",  en: "Chilanzar" },
-    { uz: "Filial 4",  ru: "Филиал 4",  en: "Branch 4" },
-    { uz: "Filial 5",  ru: "Филиал 5",  en: "Branch 5" }
+    { uz: "Labzak filiali",    ru: "Филиал Лабзак",    en: "Labzak branch" },
+    { uz: "Drujba filiali",    ru: "Филиал Дружба",    en: "Drujba branch" },
+    { uz: "Gulzor filiali",    ru: "Филиал Гулзор",    en: "Gulzor branch" },
+    { uz: "Ziyolilar filiali", ru: "Филиал Зиёлилар",  en: "Ziyolilar branch" },
+    { uz: "Parkent filiali",   ru: "Филиал Паркент",   en: "Parkent branch" }
   ];
   let branch = -1;
   function renderBranches() {
@@ -538,7 +539,7 @@ footer a:hover { color: var(--brand); }
 
     let text = m.head + "\n" + m.cat + ": " + t["c_" + cat + "_t"] + "\n" + m.lang + ": " + t.code + "\n";
     if (cat === "review" && branch < 0) { $("note").textContent = t.needBranch; return; }
-    if (cat === "review") text += m.branch + ": " + BRANCHES[branch][lang] + "\n";
+    if (cat === "review") text += m.branch + ": Kamolon Osh — " + BRANCHES[branch][lang] + "\n";
     if (cat === "review") {
       const r = [["food", t.r_food], ["service", t.r_service], ["atmos", t.r_atmos]]
         .filter(([k]) => scores[k])
@@ -569,7 +570,7 @@ footer a:hover { color: var(--brand); }
     { cat: "idea", status: "review", t: { uz: "Yangi taom qo'shish", ru: "Добавить новое блюдо", en: "Add a new dish" },
       m: { uz: "Filial: Gulzor · Mehmon taklifi", ru: "Филиал: Гулзор · Предложение гостя", en: "Branch: Gulzor · Guest suggestion" } },
     { cat: "review", status: "closed", t: { uz: "Ajoyib xizmat, rahmat!", ru: "Отличный сервис, спасибо!", en: "Great service, thank you!" },
-      m: { uz: "Filial: Chilonzor · Baho 5/5", ru: "Филиал: Чиланзар · Оценка 5/5", en: "Branch: Chilanzar · Rating 5/5" } },
+      m: { uz: "Filial: Drujba · Baho 5/5", ru: "Филиал: Дружба · Оценка 5/5", en: "Branch: Drujba · Rating 5/5" } },
     { cat: "review", status: "new", t: { uz: "Muhit juda yoqdi", ru: "Очень понравилась атмосфера", en: "Loved the atmosphere" },
       m: { uz: "Filial: Labzak · Baho 4/5", ru: "Филиал: Лабзак · Оценка 4/5", en: "Branch: Labzak · Rating 4/5" } },
     { cat: "partner", status: "review", t: { uz: "Bino ijarasi bo'yicha", ru: "По аренде помещения", en: "About renting premises" },
