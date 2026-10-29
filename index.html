@@ -3,6 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script>
+  // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
+  const APP_VERSION = "20261029082601";
+  fetch("version.json?t=" + Date.now(), { cache: "no-store" })
+    .then(r => r.json())
+    .then(j => {
+      if (j.v === APP_VERSION) return;
+      const u = new URL(location.href);
+      if (u.searchParams.get("v") === j.v) return;
+      u.searchParams.set("v", j.v);
+      location.replace(u.toString());
+    })
+    .catch(() => {});
+</script>
 <title>Kamolon Osh — Fikr-mulohaza</title>
 <meta name="description" content="Kamolon Osh fikr-mulohaza markazi. Murojaatingiz to'g'ridan-to'g'ri Telegram botimizga yetib boradi.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
