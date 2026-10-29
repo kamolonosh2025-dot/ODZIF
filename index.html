@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029093930";
+  const APP_VERSION = "20261029115512";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -20,7 +20,7 @@
     })
     .catch(() => {});
 </script>
-<title>Kamolon Osh markazi — Fikr-mulohaza</title>
+<title>Kamolon Osh markazi — Feedback</title>
 <meta name="description" content="Kamolon Osh fikr-mulohaza markazi. Fikr va takliflaringizni qoldiring.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -182,6 +182,12 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 .dbtn:disabled { opacity: .35; cursor: default; }
 .dpick { position: relative; display: flex; align-items: center; height: 42px; padding: 0 14px; border-radius: 12px; border: 2px solid var(--brand); background: #fff3e8; font-weight: 700; cursor: pointer; margin: 0; font-size: .98rem; }
 .dpick input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; padding: 0; border: none; }
+.drange { height: 42px; padding: 0 14px; border-radius: 12px; border: 2px solid var(--border); background: #fff; color: var(--text); font: inherit; font-weight: 700; cursor: pointer; }
+.datebar .rsep, .datebar .ato { display: none; }
+.datebar.range .rsep { display: inline; color: var(--muted); font-weight: 700; }
+.datebar.range .ato { display: flex; }
+.datebar.range .aprev, .datebar.range .anext { display: none; }
+.datebar.range .drange { border-color: var(--brand); color: var(--brand); }
 .dtoday { height: 42px; padding: 0 14px; border-radius: 12px; border: none; background: var(--brand); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
 .arefresh.spin .rico { display: inline-block; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -422,13 +428,16 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       <button class="back" id="adminExit"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
       <button class="back arefresh" id="adminRefresh" style="margin-left:auto"><b class="rico">↻</b> <span>Yangilash</span></button>
     </div>
-    <h1 style="margin-top:14px">Murojaatlar</h1>
+    <h1 style="margin-top:14px">Feedbacklar</h1>
     <span class="demo" id="adminMode" hidden></span>
     <div class="datebar">
       <button type="button" class="dbtn aprev" aria-label="Oldingi kun">‹</button>
       <label class="dpick"><span class="adaylabel"></span><input type="date" class="adate"></label>
+      <span class="rsep">—</span>
+      <label class="dpick ato"><span class="atolabel"></span><input type="date" class="adateto"></label>
       <button type="button" class="dbtn anext" aria-label="Keyingi kun">›</button>
       <button type="button" class="dtoday atoday" hidden>Bugun</button>
+      <button type="button" class="drange arange">Oraliq</button>
     </div>
     <div class="grid" id="adminTiles" style="margin-top:18px"></div>
   </section>
@@ -443,8 +452,11 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     <div class="datebar" style="margin-top:16px">
       <button type="button" class="dbtn aprev" aria-label="Oldingi kun">‹</button>
       <label class="dpick"><span class="adaylabel"></span><input type="date" class="adate"></label>
+      <span class="rsep">—</span>
+      <label class="dpick ato"><span class="atolabel"></span><input type="date" class="adateto"></label>
       <button type="button" class="dbtn anext" aria-label="Keyingi kun">›</button>
       <button type="button" class="dtoday atoday" hidden>Bugun</button>
+      <button type="button" class="drange arange">Oraliq</button>
     </div>
     <div class="items" id="items" style="margin-top:18px"></div>
   </section>
@@ -758,7 +770,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   const TZ = "Asia/Tashkent";
   let adminPin = "", adminData = null;
   // Joriy ko'rinish: qaysi sana, bo'lim va filial (yangilaganda shu joyda qoladi)
-  let view = { screen: "admin", cat: null, br: null, date: null };
+  let view = { screen: "admin", cat: null, br: null, date: null, to: null };
   try {
     adminPin = sessionStorage.getItem("kamolon_pin") || "";
     view = Object.assign(view, JSON.parse(sessionStorage.getItem("kamolon_view") || "{}"));
@@ -778,7 +790,12 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     return d + "." + m + "." + y + (k === today() ? " (bugun)" : "");
   }
   const stars = n => n ? "★".repeat(+n) + "☆".repeat(5 - n) : "—";
-  const ofDay = list => (list || []).filter(x => dayKey(x.time) === curDate());
+  // Bitta kun yoki oraliq (dan — gacha)
+  const isRange = () => !!view.to;
+  const ofDay = list => (list || []).filter(x => {
+    const k = dayKey(x.time);
+    return isRange() ? (k >= curDate() && k <= view.to) : k === curDate();
+  });
 
   $("adminDot").addEventListener("click", () => {
     if (adminPin) loadAdmin(); else { $("pin").value = ""; $("pinNote").textContent = ""; show("pin"); setTimeout(() => $("pin").focus(), 50); }
@@ -786,7 +803,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   $("pinForm").addEventListener("submit", e => {
     e.preventDefault();
     adminPin = $("pin").value.trim();
-    view = { screen: "admin", cat: null, br: null, date: null };
+    view = { screen: "admin", cat: null, br: null, date: null, to: null };
     loadAdmin();
   });
   $("adminExit").addEventListener("click", () => {
@@ -800,10 +817,27 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   // Sana tanlash
   function setDate(k) {
     view.date = (!k || k === today()) ? null : k;
+    if (view.to && curDate() > view.to) view.to = curDate();
     saveView(); render();
   }
+  function setTo(k) {
+    if (!k) return;
+    if (k < curDate()) { view.to = curDate(); view.date = k === today() ? null : k; } else view.to = k;
+    saveView(); render();
+  }
+  document.querySelectorAll(".adateto").forEach(inp => inp.addEventListener("change", () => setTo(inp.value)));
+  document.querySelectorAll(".arange").forEach(btn => btn.addEventListener("click", () => {
+    if (isRange()) view.to = null;
+    else {
+      // standart: oxirgi 10 kun
+      view.to = curDate();
+      const d = new Date(curDate() + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() - 9);
+      view.date = d.toISOString().slice(0, 10);
+    }
+    saveView(); render();
+  }));
   document.querySelectorAll(".adate").forEach(inp => inp.addEventListener("change", () => setDate(inp.value)));
-  document.querySelectorAll(".atoday").forEach(btn => btn.addEventListener("click", () => setDate(null)));
+  document.querySelectorAll(".atoday").forEach(btn => btn.addEventListener("click", () => { view.to = null; setDate(null); }));
   document.querySelectorAll(".aprev").forEach(btn => btn.addEventListener("click", () => shiftDay(-1)));
   document.querySelectorAll(".anext").forEach(btn => btn.addEventListener("click", () => shiftDay(1)));
   function shiftDay(n) {
@@ -839,8 +873,12 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     if (!adminData) return;
     const k = curDate();
     document.querySelectorAll(".adate").forEach(inp => { inp.value = k; inp.max = today(); });
-    document.querySelectorAll(".adaylabel").forEach(el => el.textContent = fmtDay(k));
-    document.querySelectorAll(".atoday").forEach(el => el.hidden = !view.date);
+    document.querySelectorAll(".adaylabel").forEach(el => el.textContent = isRange() ? fmtDay(k).replace(" (bugun)", "") : fmtDay(k));
+    document.querySelectorAll(".atoday").forEach(el => el.hidden = !view.date && !view.to);
+    document.querySelectorAll(".datebar").forEach(el => el.classList.toggle("range", isRange()));
+    document.querySelectorAll(".adateto").forEach(inp => { inp.value = view.to || ""; inp.max = today(); });
+    document.querySelectorAll(".atolabel").forEach(el => el.textContent = view.to ? fmtDay(view.to).replace(" (bugun)", "") : "");
+    document.querySelectorAll(".arange").forEach(el => el.textContent = isRange() ? "✕ Oraliq" : "Oraliq");
     document.querySelectorAll(".anext").forEach(el => el.disabled = k >= today());
     if (view.screen === "alist" && view.cat) renderList(); else renderAdmin();
   }
@@ -853,7 +891,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       <button class="tile" data-acat="${c}" data-cat="${c}">
         <div class="ico"><svg class="i"><use href="#${ICONS[c]}"/></svg></div>
         <div class="t">${CAT_NAMES[c]}</div>
-        <div class="d"><span class="count">${ofDay(adminData[c]).length}</span> ta murojaat</div>
+        <div class="d"><span class="count">${ofDay(adminData[c]).length}</span> ta feedback</div>
       </button>`).join("");
     $("adminTiles").querySelectorAll("[data-acat]").forEach(b => b.addEventListener("click", () => {
       view.screen = "alist"; view.cat = b.dataset.acat; view.br = null; saveView(); renderList(); window.scrollTo(0, 0);
@@ -880,7 +918,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
         return `<button class="tile" data-br="${esc(key)}" data-cat="review">
           <div class="ico"><svg class="i"><use href="#ic-pin"/></svg></div>
           <div class="t">Kamolon Osh markazi-${esc(b.uz)}</div>
-          <div class="d"><span class="count">${n}</span> ta fikr</div>
+          <div class="d"><span class="count">${n}</span> ta feedback</div>
         </button>`;
       }).join("");
       $("items").querySelectorAll("[data-br]").forEach(btn => btn.addEventListener("click", () => {
@@ -892,12 +930,12 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
         <div class="entry" data-id="${esc(x.id)}">
           <div class="emenu"><button class="edots" type="button" aria-label="Menyu">⋮</button>
             <div class="epop"><button class="edel" type="button">🗑 O'chirish</button></div></div>
-          <div class="when">🕒 ${fmtTime(x.time)}</div>
+          <div class="when">🕒 ${isRange() ? fmtDay(dayKey(x.time)).replace(" (bugun)", "") + " · " : ""}${fmtTime(x.time)}</div>
           ${x.branch ? `<div class="row"><b>Filial:</b> Kamolon Osh markazi-${esc(x.branch)} filiali${x.table ? ` · <b>Stol:</b> ${esc(x.table)}` : ""}</div>` : ""}
           ${c === "review" ? `<div class="row rates"><span>Taom <i>${stars(x.food)}</i></span><span>Xizmat <i>${stars(x.service)}</i></span><span>Muhit <i>${stars(x.atmos)}</i></span></div>` : ""}
           <div class="row"><b>${esc(x.name)}</b> · <a href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">${esc(x.phone)}</a>${x.company ? ` · ${esc(x.company)}` : ""}</div>
           <div class="msg">${esc(x.msg)}</div>
-        </div>`).join("") : '<p class="lead">Bu kunda murojaat yo\'q.</p>';
+        </div>`).join("") : '<p class="lead">${isRange() ? "Bu kunlarda" : "Bu kunda"} feedback yo\'q.</p>';
     }
     if ($("s-alist").hidden) show("alist");
   }
