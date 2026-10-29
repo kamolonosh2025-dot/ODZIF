@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029085239";
+  const APP_VERSION = "20261029085351";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -79,8 +79,8 @@ header {
   color: #fff;
 }
 header .logo { width: 46px; height: 46px; border-radius: 14px; background: rgba(255,255,255,.22); display: grid; place-items: center; }
-header .brand { font-weight: 700; font-size: 1.25rem; }
-header .tag { opacity: .9; font-size: .92rem; margin-top: 3px; }
+header .brand { font-weight: 900; font-size: 1.5rem; text-transform: uppercase; color: #120a05; letter-spacing: .01em; line-height: 1.1; }
+header .tag { color: #2b1408; opacity: .85; font-weight: 600; font-size: .92rem; margin-top: 3px; }
 header .lang-btn {
   display: grid; place-items: center;
   margin-left: auto; background: rgba(255,255,255,.22); color: #fff; border: none;
@@ -221,7 +221,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   .shell { border-radius: 0; box-shadow: none; min-height: 100vh; padding-bottom: 24px; }
   header { padding: 16px; gap: 12px; position: sticky; top: 0; z-index: 5; }
   header .logo { width: 40px; height: 40px; border-radius: 12px; }
-  header .brand { font-size: 1.1rem; }
+  header .brand { font-size: 1.2rem; }
   header .tag { font-size: .82rem; }
   .body { padding: 0 16px; }
   h1 { font-size: 1.35rem; margin-top: 20px; }
