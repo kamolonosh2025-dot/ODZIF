@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029090708";
+  const APP_VERSION = "20261029090941";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -21,7 +21,7 @@
     .catch(() => {});
 </script>
 <title>Kamolon Osh markazi — Fikr-mulohaza</title>
-<meta name="description" content="Kamolon Osh fikr-mulohaza markazi. Murojaatingiz to'g'ridan-to'g'ri Telegram botimizga yetib boradi.">
+<meta name="description" content="Kamolon Osh fikr-mulohaza markazi. Fikr va takliflaringizni qoldiring.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -453,7 +453,6 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       thanks: "Rahmat!",
       doneText: "Xabaringiz qabul qilindi. Fikringiz biz uchun muhim!", sendErr: "Xabar jo'natilmadi. Internetni tekshirib, qayta urinib ko'ring.", sending: "Jo'natilmoqda...",
       reopen: "Botni qayta ochish",
-      direct: "Telegram botimiz →",
       m: { table: "Stol", head: "📩 Yangi murojaat", cat: "Mavzu", branch: "Filial", lang: "Til", rate: "Baho", name: "Ism", phone: "Telefon", company: "Kompaniya" }
     },
     ru: {
@@ -479,7 +478,6 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       thanks: "Спасибо!",
       doneText: "Ваше сообщение принято. Ваше мнение важно для нас!", sendErr: "Сообщение не отправлено. Проверьте интернет и попробуйте снова.", sending: "Отправляется...",
       reopen: "Открыть бота снова",
-      direct: "Наш Telegram-бот →",
       m: { table: "Стол", head: "📩 Новое обращение", cat: "Тема", branch: "Филиал", lang: "Язык", rate: "Оценка", name: "Имя", phone: "Телефон", company: "Компания" }
     },
     en: {
@@ -505,7 +503,6 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       thanks: "Thank you!",
       doneText: "Your message has been received. Your opinion matters to us!", sendErr: "Message not sent. Check your internet and try again.", sending: "Sending...",
       reopen: "Open the bot again",
-      direct: "Our Telegram bot →",
       m: { table: "Table", head: "📩 New request", cat: "Topic", branch: "Branch", lang: "Language", rate: "Rating", name: "Name", phone: "Phone", company: "Company" }
     }
   };
