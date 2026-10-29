@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029092309";
+  const APP_VERSION = "20261029093230";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -162,13 +162,29 @@ input:focus, textarea:focus { outline: none; border-color: var(--brand); backgro
 #pin { font-size: 1.4rem; letter-spacing: .4em; text-align: center; max-width: 260px; display: block; }
 #pinForm .send { max-width: 260px; }
 .tile .count { font-weight: 800; color: var(--c); font-size: 1.05rem; }
-.entry { border: 2px solid var(--border); border-radius: 16px; padding: 14px 16px; background: #fff; }
+.entry { position: relative; border: 2px solid var(--border); border-radius: 16px; padding: 14px 16px; background: #fff; }
+.entry.gone { opacity: .45; pointer-events: none; }
+.emenu { position: absolute; top: 8px; right: 8px; }
+.edots { width: 36px; height: 36px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+.edots:hover, .emenu.open .edots { background: var(--field); color: var(--text); }
+.epop { display: none; position: absolute; right: 0; top: 40px; z-index: 5; background: #fff; border: 2px solid var(--border); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.12); padding: 4px; }
+.emenu.open .epop { display: block; }
+.edel { display: flex; align-items: center; gap: 8px; border: 0; background: transparent; color: #d93636; font: inherit; font-weight: 700; padding: 10px 14px; border-radius: 9px; cursor: pointer; white-space: nowrap; }
+.edel:hover { background: #fdecec; }
 .entry .when { font-weight: 700; color: var(--brand); font-size: .92rem; margin-bottom: 8px; }
 .entry .row { font-size: .93rem; margin: 4px 0; color: var(--text); }
 .entry .row a { color: var(--brand); text-decoration: none; font-weight: 600; }
 .entry .rates { display: flex; flex-wrap: wrap; gap: 4px 14px; color: var(--muted); }
 .entry .rates i { font-style: normal; color: var(--star); letter-spacing: 1px; }
 .entry .msg { margin-top: 8px; padding: 10px 12px; background: var(--field); border-radius: 12px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+.datebar { display: flex; align-items: center; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.dbtn { width: 42px; height: 42px; border-radius: 12px; border: 2px solid var(--border); background: #fff; color: var(--text); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+.dbtn:disabled { opacity: .35; cursor: default; }
+.dpick { position: relative; display: flex; align-items: center; height: 42px; padding: 0 14px; border-radius: 12px; border: 2px solid var(--brand); background: #fff3e8; font-weight: 700; cursor: pointer; margin: 0; font-size: .98rem; }
+.dpick input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; padding: 0; border: none; }
+.dtoday { height: 42px; padding: 0 14px; border-radius: 12px; border: none; background: var(--brand); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.arefresh.spin .rico { display: inline-block; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 .picked { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 14px; background: #fff3e8; border: 2px solid var(--brand); font-weight: 600; margin-top: 4px; }
 .picked svg { width: 20px; height: 20px; color: var(--brand); flex: none; }
 .picked button { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: #fff !important; flex: none;
@@ -404,17 +420,32 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
   <section id="s-admin" hidden>
     <div class="admin-top">
       <button class="back" id="adminExit"><svg class="i"><use href="#ic-back"/></svg><span>Chiqish</span></button>
-      <button class="back" id="adminRefresh" style="margin-left:auto">↻ <span>Yangilash</span></button>
+      <button class="back arefresh" id="adminRefresh" style="margin-left:auto"><b class="rico">↻</b> <span>Yangilash</span></button>
     </div>
     <h1 style="margin-top:14px">Murojaatlar</h1>
     <span class="demo" id="adminMode" hidden></span>
+    <div class="datebar">
+      <button type="button" class="dbtn aprev" aria-label="Oldingi kun">‹</button>
+      <label class="dpick"><span class="adaylabel"></span><input type="date" class="adate"></label>
+      <button type="button" class="dbtn anext" aria-label="Keyingi kun">›</button>
+      <button type="button" class="dtoday atoday" hidden>Bugun</button>
+    </div>
     <div class="grid" id="adminTiles" style="margin-top:18px"></div>
   </section>
 
   <!-- 7. Admin: ro'yxat -->
   <section id="s-alist" hidden>
-    <button class="back" id="alistBack"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
+    <div class="admin-top">
+      <button class="back" id="alistBack"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
+      <button class="back arefresh" id="alistRefresh" style="margin-left:auto"><b class="rico">↻</b> <span>Yangilash</span></button>
+    </div>
     <div class="form-head" id="alistHead"><div class="ico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="alistIcon"></svg></div><h1 id="alistTitle"></h1></div>
+    <div class="datebar" style="margin-top:16px">
+      <button type="button" class="dbtn aprev" aria-label="Oldingi kun">‹</button>
+      <label class="dpick"><span class="adaylabel"></span><input type="date" class="adate"></label>
+      <button type="button" class="dbtn anext" aria-label="Keyingi kun">›</button>
+      <button type="button" class="dtoday atoday" hidden>Bugun</button>
+    </div>
     <div class="items" id="items" style="margin-top:18px"></div>
   </section>
 
@@ -699,6 +730,16 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     all.push({ ...entry, id: Date.now().toString(36), time: new Date().toISOString() });
     try { localStorage.setItem(LS_KEY, JSON.stringify(all)); } catch (_) {}
   }
+  async function deleteEntry(pin, cat, id) {
+    if (API_URL) {
+      const r = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete", pin, cat, id }) });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "delete");
+      return;
+    }
+    if (pin !== LOCAL_PIN) throw new Error("pin");
+    try { localStorage.setItem(LS_KEY, JSON.stringify(localEntries().filter(x => String(x.id) !== String(id)))); } catch (_) {}
+  }
   async function loadEntries(pin) {
     if (API_URL) {
       const r = await fetch(API_URL + "?action=list&pin=" + encodeURIComponent(pin));
@@ -714,37 +755,73 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
 
   // ===== Admin panel =====
   const CAT_NAMES = { review: "Fikr qoldirish", idea: "G'oya taklif qilish", partner: "Hamkorlik", problem: "Rahbariyatga murojaat" };
+  const TZ = "Asia/Tashkent";
   let adminPin = "", adminData = null;
-  try { adminPin = sessionStorage.getItem("kamolon_pin") || ""; } catch (_) {}
+  // Joriy ko'rinish: qaysi sana, bo'lim va filial (yangilaganda shu joyda qoladi)
+  let view = { screen: "admin", cat: null, br: null, date: null };
+  try {
+    adminPin = sessionStorage.getItem("kamolon_pin") || "";
+    view = Object.assign(view, JSON.parse(sessionStorage.getItem("kamolon_view") || "{}"));
+  } catch (_) {}
+  const saveView = () => { try { sessionStorage.setItem("kamolon_view", JSON.stringify(view)); } catch (_) {} };
   const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const dayKey = d => new Date(d).toLocaleDateString("en-CA", { timeZone: TZ });
+  const today = () => dayKey(Date.now());
+  const curDate = () => view.date || today();
   function fmtTime(iso) {
     const d = new Date(iso);
     if (isNaN(d)) return esc(iso);
-    return d.toLocaleString("ru-RU", { timeZone: "Asia/Tashkent", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+    return d.toLocaleTimeString("ru-RU", { timeZone: TZ, hour: "2-digit", minute: "2-digit" });
+  }
+  function fmtDay(k) {
+    const [y, m, d] = k.split("-");
+    return d + "." + m + "." + y + (k === today() ? " (bugun)" : "");
   }
   const stars = n => n ? "★".repeat(+n) + "☆".repeat(5 - n) : "—";
+  const ofDay = list => (list || []).filter(x => dayKey(x.time) === curDate());
 
   $("adminDot").addEventListener("click", () => {
-    if (adminPin) openAdmin(); else { $("pin").value = ""; $("pinNote").textContent = ""; show("pin"); setTimeout(() => $("pin").focus(), 50); }
+    if (adminPin) loadAdmin(); else { $("pin").value = ""; $("pinNote").textContent = ""; show("pin"); setTimeout(() => $("pin").focus(), 50); }
   });
   $("pinForm").addEventListener("submit", e => {
     e.preventDefault();
     adminPin = $("pin").value.trim();
-    openAdmin(true);
+    view = { screen: "admin", cat: null, br: null, date: null };
+    loadAdmin();
   });
   $("adminExit").addEventListener("click", () => {
     adminPin = ""; adminData = null;
-    try { sessionStorage.removeItem("kamolon_pin"); } catch (_) {}
+    try { sessionStorage.removeItem("kamolon_pin"); sessionStorage.removeItem("kamolon_view"); } catch (_) {}
     show("lang");
   });
-  $("adminRefresh").addEventListener("click", () => openAdmin());
+  $("adminRefresh").addEventListener("click", () => loadAdmin());
+  $("alistRefresh").addEventListener("click", () => loadAdmin());
 
-  async function openAdmin(fromPin) {
+  // Sana tanlash
+  function setDate(k) {
+    view.date = (!k || k === today()) ? null : k;
+    saveView(); render();
+  }
+  document.querySelectorAll(".adate").forEach(inp => inp.addEventListener("change", () => setDate(inp.value)));
+  document.querySelectorAll(".atoday").forEach(btn => btn.addEventListener("click", () => setDate(null)));
+  document.querySelectorAll(".aprev").forEach(btn => btn.addEventListener("click", () => shiftDay(-1)));
+  document.querySelectorAll(".anext").forEach(btn => btn.addEventListener("click", () => shiftDay(1)));
+  function shiftDay(n) {
+    const d = new Date(curDate() + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + n);
+    const k = d.toISOString().slice(0, 10);
+    if (k > today()) return;
+    setDate(k);
+  }
+
+  async function loadAdmin() {
     $("pinNote").style.color = "var(--muted)";
     $("pinNote").textContent = "Yuklanmoqda...";
+    document.querySelectorAll(".arefresh").forEach(b => b.classList.add("spin"));
     try {
       adminData = await loadEntries(adminPin);
     } catch (err) {
+      document.querySelectorAll(".arefresh").forEach(b => b.classList.remove("spin"));
+      if (String(err.message) !== "pin" && adminData) return; // internet uzilsa, eski ko'rinish qoladi
       adminPin = "";
       try { sessionStorage.removeItem("kamolon_pin"); } catch (_) {}
       $("pinNote").style.color = "";
@@ -752,30 +829,51 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       show("pin");
       return;
     }
+    document.querySelectorAll(".arefresh").forEach(b => b.classList.remove("spin"));
     $("pinNote").textContent = "";
     try { sessionStorage.setItem("kamolon_pin", adminPin); } catch (_) {}
+    render();
+  }
+
+  function render() {
+    if (!adminData) return;
+    const k = curDate();
+    document.querySelectorAll(".adate").forEach(inp => { inp.value = k; inp.max = today(); });
+    document.querySelectorAll(".adaylabel").forEach(el => el.textContent = fmtDay(k));
+    document.querySelectorAll(".atoday").forEach(el => el.hidden = !view.date);
+    document.querySelectorAll(".anext").forEach(el => el.disabled = k >= today());
+    if (view.screen === "alist" && view.cat) renderList(); else renderAdmin();
+  }
+
+  function renderAdmin() {
+    view.screen = "admin"; view.cat = null; view.br = null; saveView();
     $("adminMode").hidden = !!API_URL;
     $("adminMode").textContent = "Sinov rejimi: faqat shu qurilmadagi murojaatlar ko'rinadi";
     $("adminTiles").innerHTML = Object.keys(CAT_NAMES).map(c => `
       <button class="tile" data-acat="${c}" data-cat="${c}">
         <div class="ico"><svg class="i"><use href="#${ICONS[c]}"/></svg></div>
         <div class="t">${CAT_NAMES[c]}</div>
-        <div class="d"><span class="count">${(adminData[c] || []).length}</span> ta murojaat</div>
+        <div class="d"><span class="count">${ofDay(adminData[c]).length}</span> ta murojaat</div>
       </button>`).join("");
-    $("adminTiles").querySelectorAll("[data-acat]").forEach(b => b.addEventListener("click", () => openList(b.dataset.acat)));
-    show("admin");
+    $("adminTiles").querySelectorAll("[data-acat]").forEach(b => b.addEventListener("click", () => {
+      view.screen = "alist"; view.cat = b.dataset.acat; view.br = null; saveView(); renderList(); window.scrollTo(0, 0);
+    }));
+    if ($("s-admin").hidden) show("admin");
   }
 
-  let listBack = null;
-  $("alistBack").addEventListener("click", () => listBack ? listBack() : show("admin"));
-  function openList(c, br) {
-    let list = adminData[c] || [];
+  $("alistBack").addEventListener("click", () => {
+    if (view.cat === "review" && view.br) view.br = null; else { view.screen = "admin"; view.cat = null; }
+    saveView(); render(); window.scrollTo(0, 0);
+  });
+
+  function renderList() {
+    const c = view.cat, br = view.br;
+    let list = ofDay(adminData[c]);
     $("alistHead").dataset.cat = c;
     $("alistIcon").innerHTML = '<use href="#' + ICONS[c] + '"/>';
     $("alistTitle").textContent = CAT_NAMES[c];
-    listBack = null;
     // Fikrlar: avval filiallar ro'yxati
-    if (c === "review" && br === undefined) {
+    if (c === "review" && !br) {
       $("items").innerHTML = BRANCHES.map(b => {
         const key = b.uz.replace(" filiali", "");
         const n = list.filter(x => x.branch === key).length;
@@ -785,27 +883,65 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
           <div class="d"><span class="count">${n}</span> ta fikr</div>
         </button>`;
       }).join("");
-      $("items").querySelectorAll("[data-br]").forEach(btn => btn.addEventListener("click", () => openList("review", btn.dataset.br)));
-      show("alist");
-      return;
+      $("items").querySelectorAll("[data-br]").forEach(btn => btn.addEventListener("click", () => {
+        view.br = btn.dataset.br; saveView(); renderList(); window.scrollTo(0, 0);
+      }));
+    } else {
+      if (c === "review") { list = list.filter(x => x.branch === br); $("alistTitle").textContent = br + " filiali"; }
+      $("items").innerHTML = list.length ? list.map(x => `
+        <div class="entry" data-id="${esc(x.id)}">
+          <div class="emenu"><button class="edots" type="button" aria-label="Menyu">⋮</button>
+            <div class="epop"><button class="edel" type="button">🗑 O'chirish</button></div></div>
+          <div class="when">🕒 ${fmtTime(x.time)}</div>
+          ${x.branch ? `<div class="row"><b>Filial:</b> Kamolon Osh markazi-${esc(x.branch)} filiali${x.table ? ` · <b>Stol:</b> ${esc(x.table)}` : ""}</div>` : ""}
+          ${c === "review" ? `<div class="row rates"><span>Taom <i>${stars(x.food)}</i></span><span>Xizmat <i>${stars(x.service)}</i></span><span>Muhit <i>${stars(x.atmos)}</i></span></div>` : ""}
+          <div class="row"><b>${esc(x.name)}</b> · <a href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">${esc(x.phone)}</a>${x.company ? ` · ${esc(x.company)}` : ""}</div>
+          <div class="msg">${esc(x.msg)}</div>
+        </div>`).join("") : '<p class="lead">Bu kunda murojaat yo\'q.</p>';
     }
-    if (c === "review") {
-      list = list.filter(x => x.branch === br);
-      $("alistTitle").textContent = br + " filiali";
-      listBack = () => openList("review");
-    }
-    $("items").innerHTML = list.length ? list.map(x => `
-      <div class="entry">
-        <div class="when">🕒 ${fmtTime(x.time)}</div>
-        ${x.branch ? `<div class="row"><b>Filial:</b> Kamolon Osh markazi-${esc(x.branch)} filiali${x.table ? ` · <b>Stol:</b> ${esc(x.table)}` : ""}</div>` : ""}
-        ${c === "review" ? `<div class="row rates"><span>Taom <i>${stars(x.food)}</i></span><span>Xizmat <i>${stars(x.service)}</i></span><span>Muhit <i>${stars(x.atmos)}</i></span></div>` : ""}
-        <div class="row"><b>${esc(x.name)}</b> · <a href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">${esc(x.phone)}</a>${x.company ? ` · ${esc(x.company)}` : ""}</div>
-        <div class="msg">${esc(x.msg)}</div>
-      </div>`).join("") : '<p class="lead">Hozircha murojaat yo\'q.</p>';
-    show("alist");
+    if ($("s-alist").hidden) show("alist");
   }
 
+  // ⋮ menyu: o'chirish
+  $("items").addEventListener("click", async e => {
+    const dots = e.target.closest(".edots"), del = e.target.closest(".edel");
+    if (dots) {
+      const m = dots.parentElement, was = m.classList.contains("open");
+      document.querySelectorAll(".emenu.open").forEach(x => x.classList.remove("open"));
+      if (!was) m.classList.add("open");
+      return;
+    }
+    if (!del) return;
+    const card = del.closest(".entry"), id = card.dataset.id, c = view.cat;
+    card.querySelector(".emenu").classList.remove("open");
+    if (!confirm("Bu murojaatni o'chirasizmi? Uni qaytarib bo'lmaydi.")) return;
+    card.classList.add("gone");
+    try {
+      await deleteEntry(adminPin, c, id);
+    } catch (err) {
+      card.classList.remove("gone");
+      alert(String(err.message) === "pin" ? "PIN noto'g'ri" : "O'chirib bo'lmadi. Internetni tekshiring yoki Apps Script kodini yangilang.");
+      return;
+    }
+    adminData[c] = (adminData[c] || []).filter(x => String(x.id) !== String(id));
+    render();
+  });
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".emenu")) document.querySelectorAll(".emenu.open").forEach(x => x.classList.remove("open"));
+  });
+
+  // Har daqiqada jimgina yangilanadi; 00:00 da "bugun" o'z-o'zidan yangi kunga o'tadi
+  let lastDay = today();
+  setInterval(() => {
+    const adminOpen = !$("s-admin").hidden || !$("s-alist").hidden;
+    if (!adminOpen || !adminPin) return;
+    if (today() !== lastDay) { lastDay = today(); render(); }
+    loadAdmin();
+  }, 60000);
+
   applyLang("uz");
+  // Sahifa yangilansa, admin o'sha joyida ochiladi
+  if (adminPin) loadAdmin();
 </script>
 </body>
 </html>

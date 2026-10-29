@@ -30,6 +30,7 @@ function clean(v) {
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
+    if (data.action === "delete") return deleteRow(data);
     const x = data.entry || {};
     const sh = sheetFor(x.cat);
     const id = Utilities.getUuid();
@@ -46,6 +47,17 @@ function doPost(e) {
   } catch (err) {
     return out({ ok: false, error: String(err.message || err) });
   }
+}
+
+// Admin paneldan murojaatni o'chirish (id bo'yicha)
+function deleteRow(data) {
+  if (data.pin !== PIN) return out({ ok: false, error: "pin" });
+  const sh = sheetFor(data.cat);
+  const ids = sh.getRange(1, 1, sh.getLastRow(), 1).getValues();
+  for (let i = ids.length - 1; i >= 1; i--) {
+    if (String(ids[i][0]) === String(data.id)) { sh.deleteRow(i + 1); return out({ ok: true }); }
+  }
+  return out({ ok: true, missing: true });
 }
 
 function doGet(e) {

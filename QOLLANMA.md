@@ -18,3 +18,10 @@ Shundan keyin har bir murojaat jadvalga o'z bo'limiga (Fikrlar, G'oyalar, Hamkor
 
 ## Ixtiyoriy: murojaatlar Telegram'ga ham kelsin
 `TG_TOKEN` ga botingiz tokenini (@BotFather), `TG_CHAT_ID` ga xabar keladigan chat ID sini yozing va qaytadan **Joylashtirish → Joylashtirishlarni boshqarish → Tahrirlash → Yangi versiya** qiling. Token saytga emas, faqat Google'ga yoziladi, shuning uchun xavfsiz.
+
+## Kodni yangilash (URL o'zgarmaydi)
+
+1. Google Sheets → **Расширения → Apps Script**.
+2. Eski kodni hammasini o'chirib, `apps-script/Code.gs` dagi yangi kodni qo'ying.
+3. `const PIN = "...";` qatoriga o'zingizning PIN kodingizni qayta yozing. Saqlang (💾).
+4. **Начать развертывание → Управление развертываниями** → ✏️ (qalam) → Версия: **Новая версия** → **Развернуть**.
