@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029085509";
+  const APP_VERSION = "20261029085618";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -413,7 +413,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       name: "Ismingiz", optional: "(ixtiyoriy)", namePh: "Masalan: Aziz",
       phone: "Telefon raqamingiz", company: "Kompaniya nomi",
       msg: "Xabaringiz", msgPh: "Shu yerga yozing...",
-      send: "Telegram orqali yuborish",
+      send: "Xabarni jo'natish",
       empty: "Iltimos, xabaringizni yozing.",
       needPhone: "Iltimos, telefon raqamingizni kiriting.",
       branchQ: "Qaysi filialimizda bo'ldingiz?", change: "O'zgartirish", center: "Kamolon Osh markazi", needBranch: "Iltimos, filialni tanlang.",
@@ -439,7 +439,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       name: "Ваше имя", optional: "(необязательно)", namePh: "Например: Азиз",
       phone: "Номер телефона", company: "Название компании",
       msg: "Ваше сообщение", msgPh: "Напишите здесь...",
-      send: "Отправить через Telegram",
+      send: "Отправить сообщение",
       empty: "Пожалуйста, напишите сообщение.",
       needPhone: "Пожалуйста, укажите номер телефона.",
       branchQ: "В каком филиале вы были?", change: "Изменить", center: "Центр Kamolon Osh", needBranch: "Пожалуйста, выберите филиал.",
@@ -465,7 +465,7 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       name: "Your name", optional: "(optional)", namePh: "e.g. Aziz",
       phone: "Phone number", company: "Company name",
       msg: "Your message", msgPh: "Write here...",
-      send: "Send via Telegram",
+      send: "Send message",
       empty: "Please write your message.",
       needPhone: "Please enter your phone number.",
       branchQ: "Which branch did you visit?", change: "Change", center: "Kamolon Osh center", needBranch: "Please choose a branch.",
