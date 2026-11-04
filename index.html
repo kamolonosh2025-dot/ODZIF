@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261104082802";
+  const APP_VERSION = "20261104083228";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -406,10 +406,15 @@ body.lm .admin-dot svg { width: 100%; height: 100%; }
 .lrow.sel .arrow { display: none; }
 .lrow.sel .lok { display: block; }
 @media (max-width: 560px) {
-  body.lm::before, body.lm::after { display: none; }
-  body.lm .shell { border: 0; }
+  /* telefonda: yashil fon + naqshlar, karta o'rtada suzib turadi */
+  body.lm { padding: 20px 14px; align-items: center; min-height: 100dvh; }
+  body.lm::before, body.lm::after { width: 230px; height: 230px; opacity: .35; }
+  body.lm::before { left: -90px; bottom: -80px; }
+  body.lm::after { right: -90px; top: -80px; }
+  body.lm .shell { min-height: 0; margin: auto 0; border-radius: 24px; border: 1px solid rgba(201,161,74,.45); padding-bottom: 20px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7); }
+  body.lm header { position: relative; }
   body.lm header { padding: 16px 16px 40px; box-shadow: none; gap: 10px; }
-  body.lm header .brand { font-size: 1.02rem; white-space: nowrap; }
+  body.lm header .brand { font-size: clamp(.84rem, 4.3vw, 1.02rem); white-space: nowrap; }
   body.lm header .tag { font-size: .78rem; }
   body.lm header .logo { width: 34px; height: 34px; }
   body.lm header .logo svg { width: 30px; height: 30px; }
