@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261029115512";
+  const APP_VERSION = "20261104080850";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -709,17 +709,8 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
       atmos: cat === "review" ? scores.atmos : "",
       name, phone, company: cat === "partner" ? company : "", msg
     };
-    const btn = e.submitter || document.querySelector("#form .send");
-    const btnLabel = btn.querySelector("span").textContent;
-    btn.disabled = true; btn.querySelector("span").textContent = t.sending;
-    try {
-      await saveEntry(entry, text);
-    } catch (err) {
-      $("note").textContent = t.sendErr;
-      return;
-    } finally {
-      btn.disabled = false; btn.querySelector("span").textContent = btnLabel;
-    }
+    // Darhol "rahmat" ekrani; yuborish orqa fonda (xato bo'lsa keyin qayta yuboriladi)
+    queueSend(entry, text);
 
     $("form").reset();
     branch = -1;
@@ -742,6 +733,37 @@ footer a { display: inline-block; white-space: nowrap; margin-top: 6px; }
     all.push({ ...entry, id: Date.now().toString(36), time: new Date().toISOString() });
     try { localStorage.setItem(LS_KEY, JSON.stringify(all)); } catch (_) {}
   }
+  // Yuborilmagan xabarlar navbati: internet uzilsa ham yo'qolmaydi
+  const OUT_KEY = "kamolon_outbox";
+  const inFlight = new Set();
+  let retryTimer = null;
+  const outbox = () => { try { return JSON.parse(localStorage.getItem(OUT_KEY)) || []; } catch (_) { return []; } };
+  const setOutbox = list => { try { localStorage.setItem(OUT_KEY, JSON.stringify(list)); } catch (_) {} };
+  function queueSend(entry, text) {
+    if (!API_URL) { saveEntry(entry, text); return; }
+    const item = { qid: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), entry, text };
+    setOutbox(outbox().concat(item));
+    sendItem(item);
+  }
+  async function sendItem(item) {
+    if (inFlight.has(item.qid)) return;
+    inFlight.add(item.qid);
+    try {
+      const r = await fetch(API_URL, { method: "POST", keepalive: true, body: JSON.stringify({ action: "add", entry: item.entry, text: item.text }) });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || "save");
+      setOutbox(outbox().filter(x => x.qid !== item.qid));
+    } catch (_) {
+      clearTimeout(retryTimer);
+      retryTimer = setTimeout(flushOutbox, 15000);
+    } finally {
+      inFlight.delete(item.qid);
+    }
+  }
+  function flushOutbox() { if (API_URL) outbox().forEach(sendItem); }
+  window.addEventListener("online", flushOutbox);
+  setTimeout(flushOutbox, 1500);
+
   async function deleteEntry(pin, cat, id) {
     if (API_URL) {
       const r = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete", pin, cat, id }) });
