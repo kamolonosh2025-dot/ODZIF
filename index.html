@@ -2,13 +2,13 @@
 <html lang="uz">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261104083228";
+  const APP_VERSION = "20261104083404";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -23,7 +23,7 @@
 <title>Kamolon Osh markazi — Feedback</title>
 <meta name="description" content="Kamolon Osh fikr-mulohaza markazi. Fikr va takliflaringizni qoldiring.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #fff8ef;
@@ -361,6 +361,27 @@ input:focus, textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 4px 
 }
 
 /* ===== Til tanlash: yashil-oltin dizayn (faqat body.lm) ===== */
+.lbottom { display: none; }
+body.lm .lbottom { display: block; margin-top: auto; }
+body.lm .shell { padding-bottom: 0; display: flex; flex-direction: column; }
+body.lm .body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.madrasa { display: block; width: 100%; max-width: 560px; height: auto; margin: 10px auto -2px; opacity: .85; }
+.lband { position: relative; background: linear-gradient(135deg, #0f5a3d, #0b3d2a); padding: 30px 0 18px; }
+.lwave { position: absolute; left: 0; top: -1px; width: 100%; height: 30px; }
+.lfl { display: flex; align-items: center; justify-content: center; gap: 12px; position: relative; }
+.lfl span { width: 64px; height: 1.5px; background: linear-gradient(90deg, transparent, #c9a14a); }
+.lfl span:last-child { transform: scaleX(-1); }
+.lflower { width: 30px; height: 30px; }
+.lcloche { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 4px 0 6px; }
+.lcloche svg { width: 54px; height: 38px; }
+.lcloche span { width: 56px; height: 1.5px; background: linear-gradient(90deg, transparent, #c9a14a); }
+.lcloche span:last-child { transform: scaleX(-1); }
+body.lm #s-lang { text-align: center; width: 100%; }
+@media (max-height: 720px) { .madrasa { max-width: 320px; } .lcloche { margin-top: 0; } body.lm #s-lang .lang-title { font-size: 2rem; } }
+body.lm #s-lang .lang-title { font-family: "Fraunces", Georgia, "Times New Roman", serif; font-weight: 800; letter-spacing: -.01em; }
+body.lm .lline { margin-left: auto; margin-right: auto; }
+body.lm .lrow { text-align: left; }
+
 :root { --gold: #c9a14a; --gold-2: #e2c27a; --deep: #0b3d2a; --deep-2: #06261a; }
 .hsep, .horn, .hwave, .lo-b, .admin-dot svg { display: none; }
 body.lm .lo-a { display: none; }
@@ -407,11 +428,11 @@ body.lm .admin-dot svg { width: 100%; height: 100%; }
 .lrow.sel .lok { display: block; }
 @media (max-width: 560px) {
   /* telefonda: yashil fon + naqshlar, karta o'rtada suzib turadi */
-  body.lm { padding: 20px 14px; align-items: center; min-height: 100dvh; }
-  body.lm::before, body.lm::after { width: 230px; height: 230px; opacity: .35; }
-  body.lm::before { left: -90px; bottom: -80px; }
-  body.lm::after { right: -90px; top: -80px; }
-  body.lm .shell { min-height: 0; margin: auto 0; border-radius: 24px; border: 1px solid rgba(201,161,74,.45); padding-bottom: 20px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7); }
+  body.lm { padding: 0; }
+  body.lm::before, body.lm::after { display: none; }
+  body.lm .shell { min-height: 100vh; min-height: 100dvh; margin: 0; border-radius: 0; border: 0; box-shadow: none; }
+  body.lm header { padding-top: calc(18px + env(safe-area-inset-top)); }
+  body.lm .lband { padding-bottom: calc(18px + env(safe-area-inset-bottom)); }
   body.lm header { position: relative; }
   body.lm header { padding: 16px 16px 40px; box-shadow: none; gap: 10px; }
   body.lm header .brand { font-size: clamp(.84rem, 4.3vw, 1.02rem); white-space: nowrap; }
@@ -422,7 +443,8 @@ body.lm .admin-dot svg { width: 100%; height: 100%; }
   body.lm .horn { width: 150px; height: 150px; right: -60px; top: -46px; }
   body.lm .hwave { height: 28px; }
   body.lm .admin-dot { width: 20px; height: 20px; margin-left: 5px; }
-  #s-lang .lang-title { font-size: 1.65rem; }
+  #s-lang .lang-title { font-size: 2.3rem; margin-top: 2px; }
+  body.lm .lsub { font-size: .98rem; }
   .lrow.tile { min-height: 66px; padding: 0 16px; }
   .lsep { margin: 0 14px; }
 }
@@ -470,6 +492,7 @@ body.lm .admin-dot svg { width: 100%; height: 100%; }
 
   <!-- 1. Til tanlash -->
   <section id="s-lang">
+    <div class="lcloche"><span></span><svg viewBox="0 0 64 44" aria-hidden="true"><defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9cd88"/><stop offset="1" stop-color="#b98d34"/></linearGradient></defs><g fill="none" stroke="#c9a14a" stroke-width="1.6" stroke-linecap="round"><path d="M25 9c-2-2 2-4 0-6"/><path d="M32 8c-2-2 2-4 0-6"/><path d="M39 9c-2-2 2-4 0-6"/></g><circle cx="32" cy="14" r="2.6" fill="url(#gg)"/><path d="M11 36Q11 16 32 15Q53 16 53 36Z" fill="url(#gg)"/><path d="M17 33Q18 22 28 19" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/><rect x="6" y="36" width="52" height="4" rx="2" fill="url(#gg)"/></svg><span></span></div>
     <h1 class="lang-title">Tilni tanlang</h1>
     <p class="lsub">Выберите язык <i>•</i> Choose language</p>
     <span class="lline"></span>
@@ -607,6 +630,23 @@ body.lm .admin-dot svg { width: 100%; height: 100%; }
     <div class="items" id="items" style="margin-top:18px"></div>
   </section>
 
+  </div>
+  <div class="lbottom">
+    <svg class="madrasa" viewBox="0 0 400 132" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><g fill="#f1e5c8" stroke="#d6bd86" stroke-width="1.1" stroke-linejoin="round">
+  <g fill="#ecdcb6" stroke="#dcc694"><circle cx="16" cy="104" r="12"/><circle cx="28" cy="96" r="13"/><circle cx="40" cy="106" r="11"/><path d="M28 118V131" fill="none"/>
+  <circle cx="384" cy="104" r="12"/><circle cx="372" cy="96" r="13"/><circle cx="360" cy="106" r="11"/><path d="M372 118V131" fill="none"/></g>
+  <rect x="44" y="98" width="40" height="32"/><rect x="316" y="98" width="40" height="32"/>
+  <path d="M52 130V117.9Q52 108 58.0 105.36Q64 108 64 117.9V130" fill="#fbf6ea"/><path d="M68 130V117.9Q68 108 74.0 105.36Q80 108 80 117.9V130" fill="#fbf6ea"/><path d="M320 130V117.9Q320 108 326.0 105.36Q332 108 332 117.9V130" fill="#fbf6ea"/><path d="M336 130V117.9Q336 108 342.0 105.36Q348 108 348 117.9V130" fill="#fbf6ea"/>
+  <rect x="70" y="72" width="90" height="58"/><rect x="88" y="63" width="54" height="9"/><path d="M88 63Q87 30 115 26Q143 30 142 63Z"/><path d="M115 26V17" fill="none"/><circle cx="115" cy="16" r="1.6"/><path d="M101 60Q102 40 115 34" fill="none" stroke-opacity=".6"/><path d="M77 130V109.1Q77 92 87.0 87.44Q97 92 97 109.1V130" fill="#fbf6ea"/><path d="M103 130V109.1Q103 92 113.0 87.44Q123 92 123 109.1V130" fill="#fbf6ea"/><path d="M129 130V109.1Q129 92 139.0 87.44Q149 92 149 109.1V130" fill="#fbf6ea"/><rect x="240" y="72" width="90" height="58"/><rect x="258" y="63" width="54" height="9"/><path d="M258 63Q257 30 285 26Q313 30 312 63Z"/><path d="M285 26V17" fill="none"/><circle cx="285" cy="16" r="1.6"/><path d="M271 60Q272 40 285 34" fill="none" stroke-opacity=".6"/><path d="M247 130V109.1Q247 92 257.0 87.44Q267 92 267 109.1V130" fill="#fbf6ea"/><path d="M273 130V109.1Q273 92 283.0 87.44Q293 92 293 109.1V130" fill="#fbf6ea"/><path d="M299 130V109.1Q299 92 309.0 87.44Q319 92 319 109.1V130" fill="#fbf6ea"/>
+  <rect x="148" y="16" width="104" height="114"/>
+  <rect x="148" y="10" width="9" height="120"/><rect x="243" y="10" width="9" height="120"/>
+  <rect x="160" y="22" width="80" height="108" fill="#ead9b0"/>
+  <path d="M170 130V90.4Q170 58 200.0 49.36Q230 58 230 90.4V130" fill="#fbf6ea"/>
+  <path d="M182 130V102.5Q182 80 200.0 74.0Q218 80 218 102.5V130" fill="#ead9b0"/>
+  <path d="M164 30H236M164 36H236" fill="none" stroke-opacity=".7"/>
+  <path d="M160 130H240" fill="none"/>
+  <path d="M0 131H400" fill="none" stroke-width="1.4"/></g></svg>
+    <div class="lband"><svg class="lwave" viewBox="0 0 400 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V14C90 32 170 4 250 14S360 26 400 10V0Z" fill="#fbf8f2"/><path d="M0 14C90 32 170 4 250 14S360 26 400 10" fill="none" stroke="#c9a14a" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="lfl"><span></span><svg class="lflower" viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="#d9b66a" stroke-width="1.6"><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(0 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(45 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(90 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(135 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(225 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(270 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(315 20 20)"/><circle cx="20" cy="20" r="4" fill="#d9b66a"/></g></svg><span></span></div></div>
   </div>
 </main>
 
