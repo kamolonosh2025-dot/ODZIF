@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261104081544";
+  const APP_VERSION = "20261104081837";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -360,6 +360,29 @@ input:focus, textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 4px 
   .send { bottom: 10px; }
 }
 
+/* Til tanlash ekrani */
+#s-lang { max-width: 460px; margin: 0 auto; padding-bottom: 8px; }
+.lhero { text-align: center; padding: 30px 0 6px; }
+.lemb { width: 78px; height: 78px; margin: 0 auto; border-radius: 24px; display: grid; place-items: center; color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: 0 16px 30px -14px var(--brand-2), inset 0 1px 0 rgba(255,255,255,.35); animation: pop .5s cubic-bezier(.2,1.4,.4,1); }
+.lemb svg { width: 40px; height: 40px; stroke-width: 1.7; }
+.lhi { display: inline-block; margin-top: 18px; padding: 6px 12px; border-radius: 999px; background: #fff1e4; color: #c2410c; font-weight: 700; font-size: .85rem; }
+.lhero h1 { margin: 10px 0 0; font-size: 1.9rem; font-weight: 800; }
+.lhero .lead { margin: 6px 0 22px; }
+.langs .tile { padding: 14px 16px; border-radius: 18px; min-height: 72px; gap: 14px; }
+.langs .flag { width: 46px; height: 46px; border-radius: 50%; box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line); }
+.langs .flag svg { width: 100%; height: 100%; }
+.langs .t { display: flex; flex-direction: column; font-size: 1.12rem; font-weight: 700; line-height: 1.2; }
+.langs .t small { font-size: .8rem; font-weight: 500; color: var(--muted); margin-top: 2px; }
+.langs .arrow { width: 36px; height: 36px; padding: 8px; border-radius: 50%; background: #fff3e8; transition: background .15s, color .15s; }
+.langs .tile:hover .arrow, .langs .tile:active .arrow { background: var(--brand); color: #fff; }
+.lfoot { text-align: center; color: var(--muted); font-size: .8rem; margin: 22px 0 0; line-height: 1.5; }
+@media (max-width: 560px) {
+  .lhero { padding-top: 34px; }
+  .langs { gap: 12px; }
+  .langs .tile { padding: 16px; }
+}
+
 [hidden] { display: none !important; }
 </style>
 </head>
@@ -393,13 +416,18 @@ input:focus, textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 4px 
 
   <!-- 1. Til tanlash -->
   <section id="s-lang">
-    <h1 class="lang-title">Tilni tanlang</h1>
-    <p class="lead">Выберите язык · Choose language</p>
-    <div class="langs">
-      <button class="tile" data-lang="uz"><span class="flag"><svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.4" fill="#1eb5e0"/><rect y="13.6" width="30" height="6.4" fill="#1eb53a"/><rect y="6.4" width="30" height=".6" fill="#ce1126"/><rect y="13" width="30" height=".6" fill="#ce1126"/></svg></span><span class="t">O'zbekcha</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
-      <button class="tile" data-lang="ru"><span class="flag"><svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#0039a6"/><rect y="13.33" width="30" height="6.67" fill="#d52b1e"/></svg></span><span class="t">Русский</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
-      <button class="tile" data-lang="en"><span class="flag"><svg viewBox="0 0 60 30" preserveAspectRatio="none"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#c8102e" stroke-width="2.5"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#c8102e" stroke-width="6"/></svg></span><span class="t">English</span><svg class="i arrow"><use href="#ic-back"/></svg></button>
+    <div class="lhero">
+      <div class="lemb"><svg class="i"><use href="#ic-chat"/></svg></div>
+      <div class="lhi">Assalomu alaykum! 👋</div>
+      <h1 class="lang-title">Tilni tanlang</h1>
+      <p class="lead">Выберите язык · Choose language</p>
     </div>
+    <div class="langs">
+      <button class="tile" data-lang="uz"><span class="flag"><svg viewBox="0 0 30 20" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.4" fill="#1eb5e0"/><rect y="13.6" width="30" height="6.4" fill="#1eb53a"/><rect y="6.4" width="30" height=".6" fill="#ce1126"/><rect y="13" width="30" height=".6" fill="#ce1126"/></svg></span><span class="t">O'zbekcha<small>Davom etish</small></span><svg class="i arrow"><use href="#ic-back"/></svg></button>
+      <button class="tile" data-lang="ru"><span class="flag"><svg viewBox="0 0 30 20" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#0039a6"/><rect y="13.33" width="30" height="6.67" fill="#d52b1e"/></svg></span><span class="t">Русский<small>Продолжить</small></span><svg class="i arrow"><use href="#ic-back"/></svg></button>
+      <button class="tile" data-lang="en"><span class="flag"><svg viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#c8102e" stroke-width="2.5"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#c8102e" stroke-width="6"/></svg></span><span class="t">English<small>Continue</small></span><svg class="i arrow"><use href="#ic-back"/></svg></button>
+    </div>
+    <p class="lfoot">Fikringiz biz uchun muhim · Ваше мнение важно · Your opinion matters</p>
   </section>
 
   <!-- 2. Mavzu tanlash -->
