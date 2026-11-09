@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261109121330";
+  const APP_VERSION = "20261109121801";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1085,24 +1085,8 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     const msg = $("msg").value.trim();
     const table = $("table").value.trim();
 
-    // Hamma maydonlar majburiy
+    // Hech qaysi maydon majburiy emas: xohlasa yozadi, xohlamasa yo'q
     clearErrs();
-    const bad = [];
-    if (cat === "review") {
-      const miss = [...document.querySelectorAll(".rate-row")].filter(row => !scores[row.dataset.key]);
-      miss.forEach((row, i) => bad.push([row, i === miss.length - 1 ? t.fillRate : ""]));
-    }
-    if (!name) bad.push([$("name"), t.fill]);
-    if (!phone) bad.push([$("phone"), t.fill]);
-    if (cat === "review" && !table) bad.push([$("table"), t.fill]);
-    if (cat === "partner" && !company) bad.push([$("company"), t.fill]);
-    if (!msg) bad.push([$("msg"), t.fill]);
-    if (bad.length) {
-      bad.forEach(([el, txt]) => markErr(el, txt));
-      bad[0][0].scrollIntoView({ behavior: "smooth", block: "center" });
-      if (bad[0][0].focus && bad[0][0].tagName !== "DIV") bad[0][0].focus({ preventScroll: true });
-      return;
-    }
 
     let text = m.head + "\n" + m.cat + ": " + t["c_" + cat + "_t"] + "\n" + m.lang + ": " + t.code + "\n";
     if (cat === "review" && branch < 0) { $("note").textContent = t.needBranch; return; }
@@ -1117,7 +1101,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     if (phone) text += m.phone + ": " + phone + "\n";
     if (cat === "review" && table) text += m.table + ": " + table + "\n";
     if (cat === "partner" && company) text += m.company + ": " + company + "\n";
-    text += "\n" + msg;
+    if (msg) text += "\n" + msg;
 
     const entry = {
       cat, lang,
