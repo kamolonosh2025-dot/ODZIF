@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261109114603";
+  const APP_VERSION = "20261109114913";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -462,7 +462,8 @@ body.hm .body { padding: 0; }
 .hback { position: absolute; left: 12px; top: 12px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(241,181,72,.5); background: rgba(40,12,8,.45); color: #f6d9a0; display: grid; place-items: center; cursor: pointer; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 .hback svg { width: 20px; height: 20px; }
 .hintro { position: relative; padding: 14px 24px 4px; }
-.hintro h1 { margin: 0; font-size: 1.75rem; line-height: 1.2; font-weight: 800; color: #2b120d; max-width: 74%; position: relative; z-index: 1; }
+.hintro h1 { margin: 0; font-size: 1.75rem; line-height: 1.2; font-weight: 800; color: #2b120d; max-width: 68%; position: relative; z-index: 1; }
+.hlogo { position: absolute; right: 18px; top: 16px; width: 24%; max-width: 130px; height: auto; }
 .hline { display: block; width: 52px; height: 3px; border-radius: 3px; background: #f1b548; margin: 14px 0 12px; }
 .hintro p { margin: 0 0 18px; color: #5e4d47; font-size: 1rem; line-height: 1.5; max-width: 72%; position: relative; z-index: 1; }
 .hmosque { position: absolute; right: 6px; top: 8px; width: 30%; max-width: 170px; height: auto; opacity: .55; }
@@ -633,7 +634,7 @@ body.lm .lpast { display: block; width: 100%; height: auto; margin-top: -6px; }
   <!-- 2. Mavzu tanlash -->
   <section id="s-home" hidden>
     <div class="hhero"><img src="img/hero-uy-v2.jpg" alt="Kamolon Osh markazi" width="1280" height="814"><button class="hback" data-go="lang" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button></div>
-    <div class="hintro"><svg class="hmosque" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg><h1 data-i18n="homeT"></h1><span class="hline"></span><p data-i18n="homeD"></p></div>
+    <div class="hintro"><img class="hlogo" src="img/logo-jigar.png" alt="Kamolon Osh" width="360" height="343"><h1 data-i18n="homeT"></h1><span class="hline"></span><p data-i18n="homeD"></p></div>
     <div class="grid hcards">
       <button class="tile" data-cat="review"><div class="ico"><svg class="i"><use href="#ic-star"/></svg></div><div class="t" data-i18n="c_review_t"></div><div class="d" data-i18n="c_review_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
       <button class="tile" data-cat="idea"><div class="ico"><svg class="i"><use href="#ic-bulb"/></svg></div><div class="t" data-i18n="c_idea_t"></div><div class="d" data-i18n="c_idea_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
