@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261109112856";
+  const APP_VERSION = "20261109114247";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -538,6 +538,44 @@ body.fm .fvals { display: block; margin: 40px -24px 0; }
   body.fm .branches .nw { font-size: .9rem; }
 }
 
+/* ===== Til tanlash: jigarrang-oltin (osh rasmi bilan) ===== */
+.lhero, .lpast, .lsky { display: none; }
+body.lm header { display: none; }
+body.lm { background: radial-gradient(ellipse at 50% 0%, #5a1d14, #1f0705 70%) fixed; }
+body.lm::before, body.lm::after { filter: sepia(1) saturate(2) hue-rotate(-15deg); }
+body.lm .shell { background: #fdf5ee; border-color: rgba(241,181,72,.45); }
+body.lm .lhero { display: block; margin: 0 -24px; }
+body.lm #s-lang { max-width: none; padding-top: 0; }
+body.lm .lname { color: #3a0f0b; font-size: 2.6rem; margin: 6px 0 10px; display: inline-flex; align-items: center; gap: 0; }
+.adot2 { width: 8px; height: 8px; margin-left: 10px; border: 0; padding: 0; border-radius: 50%; background: #3a0f0b; cursor: pointer; position: relative; }
+.adot2::before { content: ""; position: absolute; inset: -16px; }
+body.lm #s-lang .lang-title.lone { color: #3a1d16; }
+body.lm .lone span { color: #3a1d16; }
+body.lm .lone i { color: #d9962a; }
+body.lm .lline { background: #c98a24; width: 64px; margin-bottom: 26px; }
+body.lm .langs { max-width: 560px; margin: 0 auto; }
+body.lm .lrow.tile { background: #fff; border: 1.5px solid #f0e2d6; min-height: 72px; }
+body.lm .lrow.tile:hover { border-color: #e7b45a; box-shadow: 0 10px 22px -14px rgba(120,60,10,.45); }
+body.lm .lrow .t { color: #3a0f0b; }
+body.lm .lrow .arrow { color: #3a0f0b; }
+body.lm .lrow.sel { border: 2px solid #d9a441; background: linear-gradient(90deg, #fbeccc, #fdf3e2 60%, #fff8ee); box-shadow: 0 10px 24px -14px rgba(180,120,30,.6); }
+body.lm .lrow.sel .lok circle { fill: #d79a1e; }
+body.lm .lok { filter: drop-shadow(0 3px 5px rgba(180,120,30,.45)); }
+body.lm .lsep { background: #e6d6c6; }
+body.lm .lbase { display: flex; align-items: flex-end; justify-content: center; position: relative; margin: 26px 0 0; }
+body.lm .lsky { display: block; position: absolute; bottom: 0; width: 34%; max-width: 200px; opacity: .55; }
+body.lm .lsky g { stroke: #f0cfa8; }
+body.lm .lsky-l { left: 0; transform: scaleX(-1); }
+body.lm .lsky-r { right: 0; }
+body.lm .lbig { position: relative; z-index: 1; width: 150px; margin: 0 auto 6px; }
+body.lm .lband { display: none; }
+body.lm .lpast { display: block; width: 100%; height: auto; margin-top: -6px; }
+@media (max-width: 560px) {
+  body.lm .lhero { margin: 0 -16px; }
+  body.lm .lname { font-size: min(2.4rem, 9vw); white-space: nowrap; }
+  body.lm .lpast { padding-bottom: env(safe-area-inset-bottom); background: #2a0c08; }
+}
+
 [hidden] { display: none !important; }
 </style>
 </head>
@@ -581,7 +619,8 @@ body.fm .fvals { display: block; margin: 40px -24px 0; }
 
   <!-- 1. Til tanlash -->
   <section id="s-lang">
-    <div class="lname">Kamolon Osh</div>
+    <div class="hhero lhero"><img src="img/hero-til.jpg" alt="Kamolon Osh markazi" width="1280" height="844"></div>
+    <div class="lname">Kamolon Osh<button type="button" class="adot2" id="adminDot2" aria-label="Admin"></button></div>
     <h1 class="lang-title lone">Tilni tanlang <i>•</i> <span>Выберите язык</span> <i>•</i> <span>Choose language</span></h1>
     <span class="lline"></span>
     <div class="langs">
@@ -723,7 +762,8 @@ body.fm .fvals { display: block; margin: 40px -24px 0; }
 
   </div>
   <div class="lbottom">
-    <img class="lbig" src="img/logo-asl.png" alt="Kamolon Osh" width="360" height="343">
+    <div class="lbase"><svg class="lsky lsky-l" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg><img class="lbig" src="img/logo-jigar.png" alt="Kamolon Osh" width="360" height="343"><svg class="lsky lsky-r" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
+    <img class="lpast" src="img/til-past.jpg" alt="" width="851" height="257">
     <div class="lband"><svg class="lwave" viewBox="0 0 400 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V14C90 32 170 4 250 14S360 26 400 10V0Z" fill="#fbf8f2"/><path d="M0 14C90 32 170 4 250 14S360 26 400 10" fill="none" stroke="#c9a14a" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="lfl"><span></span><svg class="lflower" viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="#d9b66a" stroke-width="1.6"><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(0 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(45 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(90 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(135 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(225 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(270 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(315 20 20)"/><circle cx="20" cy="20" r="4" fill="#d9b66a"/></g></svg><span></span></div></div>
   </div>
 </main>
@@ -1092,6 +1132,7 @@ body.fm .fvals { display: block; margin: 40px -24px 0; }
     return isRange() ? (k >= curDate() && k <= view.to) : k === curDate();
   });
 
+  $("adminDot2").addEventListener("click", () => $("adminDot").click());
   $("adminDot").addEventListener("click", () => {
     if (adminPin) loadAdmin(); else { $("pin").value = ""; $("pinNote").textContent = ""; show("pin"); setTimeout(() => $("pin").focus(), 50); }
   });
