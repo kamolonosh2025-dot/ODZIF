@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261109123255";
+  const APP_VERSION = "20261109123630";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -22,13 +22,13 @@
 </script>
 <title>Kamolon Osh markazi — Feedback</title>
 <meta name="description" content="Kamolon Osh fikr-mulohaza markazi. Fikr va takliflaringizni qoldiring.">
-<link rel="preload" as="image" href="img/hero-til-v3.webp" fetchpriority="high">
+<link rel="preload" as="image" href="img/hero-til-v4.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #fff8ef;
+  --bg: #ffffff;
   --panel: #ffffff;
   --text: #2b1d14;
   --muted: #8a7566;
@@ -419,7 +419,7 @@ body.lm::before, body.lm::after { content: ""; position: fixed; width: 340px; he
   background: no-repeat center/contain url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g fill='none' stroke='%23c9a14a' stroke-width='2.2' stroke-linecap='round'><g id='q'><path d='M100 100C100 70 120 52 146 56C170 60 176 86 160 98C148 107 132 98 138 86'/><path d='M146 56C150 36 170 26 188 34'/><path d='M160 98C176 104 186 122 180 140'/><path d='M120 70C112 58 114 44 124 36C130 48 128 60 120 70Z' fill='%23c9a14a' fill-opacity='.35'/><path d='M170 74C182 70 194 74 198 84C186 88 176 84 170 74Z' fill='%23c9a14a' fill-opacity='.35'/></g><use href='%23q' transform='rotate(90 100 100)'/><use href='%23q' transform='rotate(180 100 100)'/><use href='%23q' transform='rotate(270 100 100)'/><circle cx='100' cy='100' r='7' fill='%23c9a14a'/></g></svg>"); }
 body.lm::before { left: -120px; bottom: -120px; }
 body.lm::after { right: -120px; top: -120px; }
-body.lm .shell { background: #fbf8f2; border: 1px solid rgba(201,161,74,.35); box-shadow: 0 40px 80px -30px rgba(0,0,0,.6); z-index: 1; }
+body.lm .shell { background: #fff; border: 1px solid rgba(201,161,74,.35); box-shadow: 0 40px 80px -30px rgba(0,0,0,.6); z-index: 1; }
 body.lm header { position: relative; overflow: hidden; background: linear-gradient(135deg, #0f5a3d, var(--deep)); padding-bottom: 46px; }
 body.lm header .logo { background: transparent; color: var(--gold-2); width: 50px; height: 50px; }
 body.lm header .logo svg { width: 40px; height: 40px; stroke-width: 1.6; }
@@ -471,7 +471,7 @@ body.lm .admin-dot svg { width: 100%; height: 100%; }
 
 /* ===== Mavzular ekrani (body.hm) ===== */
 body.hm header { display: none; }
-body.hm .shell { padding-bottom: 0; background: #fcf8f5; }
+body.hm .shell { padding-bottom: 0; background: #fff; }
 body.hm .body { padding: 0; }
 .hhero { position: relative; line-height: 0; background: #2a0f0b; }
 .hhero img { width: 100%; height: auto; display: block; }
@@ -512,7 +512,7 @@ body.hm .body { padding: 0; }
 /* ===== Forma ekrani (body.fm) ===== */
 .fhero, .fvals, .fmosque { display: none; }
 body.fm header { display: none; }
-body.fm .shell { padding-bottom: 0; background: #fcf8f5; }
+body.fm .shell { padding-bottom: 0; background: #fff; }
 body.fm .fhero { display: block; margin: 0 -24px; }
 body.fm #s-form > .back { display: none; }
 .hglobe { left: auto; right: 12px; }
@@ -560,7 +560,7 @@ body.fm .fvals { display: block; margin: 40px -24px 0; }
 body.lm header { display: none; }
 body.lm { background: radial-gradient(ellipse at 50% 0%, #5a1d14, #1f0705 70%) fixed; }
 body.lm::before, body.lm::after { filter: sepia(1) saturate(2) hue-rotate(-15deg); }
-body.lm .shell { background: #fdf5ee; border-color: rgba(241,181,72,.45); }
+body.lm .shell { background: #fff; border-color: rgba(241,181,72,.45); }
 body.lm .lhero { display: block; margin: 0 -24px; }
 body.lm #s-lang { max-width: none; padding-top: 0; }
 body.lm .lname { color: #3a0f0b; font-size: 2.6rem; margin: 6px 0 10px; display: inline-flex; align-items: center; gap: 0; }
@@ -608,7 +608,7 @@ body.fm #branchName { font-weight: 800; color: #2b120d; }
 body.fm #branchName .cn { font-size: 1em; }
 body.fm #branchName .dsh { display: inline; margin: 0 4px; }
 body.fm #branchChange { background: #fae1b4 !important; border-radius: 50%; color: #3a1a0e; }
-body.fm #ratings { background: #fdfaf6; border: 1px solid #f1e6da; border-radius: 22px; padding: 10px 16px 6px; box-shadow: 0 12px 26px -18px rgba(90,40,10,.5); }
+body.fm #ratings { background: #fff; border: 1px solid #f1e6da; border-radius: 22px; padding: 10px 16px 6px; box-shadow: 0 12px 26px -18px rgba(90,40,10,.5); }
 body.fm .rqh { display: flex; align-items: center; gap: 12px; margin: 4px 0 6px; }
 body.fm .rq-ico { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: #3b0f0a; }
 body.fm .rq-ico svg { width: 22px; height: 22px; }
@@ -687,13 +687,13 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     </div>
     <button class="lang-btn" id="langBtn" hidden></button>
     <svg class="horn" viewBox="0 0 200 200" aria-hidden="true"><use href="#orn"/></svg>
-    <svg class="hwave" viewBox="0 0 400 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0 34V24C70 12 150 30 230 20S350 2 400 6V34Z" fill="#fbf8f2"/><path d="M0 24C70 12 150 30 230 20S350 2 400 6" fill="none" stroke="var(--gold)" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg>
+    <svg class="hwave" viewBox="0 0 400 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0 34V24C70 12 150 30 230 20S350 2 400 6V34Z" fill="#fff"/><path d="M0 24C70 12 150 30 230 20S350 2 400 6" fill="none" stroke="var(--gold)" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg>
   </header>
   <div class="body">
 
   <!-- 1. Til tanlash -->
   <section id="s-lang">
-    <div class="hhero lhero"><img src="img/hero-til-v3.webp" alt="Kamolon Osh markazi" width="900" height="593" fetchpriority="high"></div>
+    <div class="hhero lhero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712" fetchpriority="high"></div>
     <div class="lname">Kamolon Osh<button type="button" class="adot2" id="adminDot2" aria-label="Admin"></button></div>
     <h1 class="lang-title lone">Tilni tanlang <i>•</i> <span>Выберите язык</span> <i>•</i> <span>Choose language</span></h1>
     <span class="lline"></span>
@@ -706,8 +706,8 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 
   <!-- 2. Mavzu tanlash -->
   <section id="s-home" hidden>
-    <div class="hhero"><img src="img/hero-uy-v3.webp" alt="Kamolon Osh markazi" width="900" height="572"><button class="hback" data-go="lang" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button></div>
-    <div class="hintro"><img class="hlogo" src="img/logo-jigar-v2.webp" alt="Kamolon Osh" width="300" height="286"><h1 data-i18n="homeT"></h1><span class="hline"></span><p data-i18n="homeD"></p></div>
+    <div class="hhero"><img src="img/hero-uy-v4.webp" alt="Kamolon Osh markazi" width="1080" height="687"><button class="hback" data-go="lang" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button></div>
+    <div class="hintro"><img class="hlogo" src="img/logo-jigar-v3.webp" alt="Kamolon Osh" width="300" height="286"><h1 data-i18n="homeT"></h1><span class="hline"></span><p data-i18n="homeD"></p></div>
     <div class="grid hcards">
       <button class="tile" data-cat="review"><div class="ico"><svg class="i"><use href="#ic-star"/></svg></div><div class="t" data-i18n="c_review_t"></div><div class="d" data-i18n="c_review_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
       <button class="tile" data-cat="idea"><div class="ico"><svg class="i"><use href="#ic-bulb"/></svg></div><div class="t" data-i18n="c_idea_t"></div><div class="d" data-i18n="c_idea_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
@@ -720,8 +720,8 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   <!-- 3. Forma -->
   <section id="s-form" hidden>
     <button class="back" data-go="home"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="back"></span></button>
-    <div class="hhero fhero"><img src="img/hero-forma-v3.webp" alt="Kamolon Osh markazi" width="900" height="591"><button class="hback" data-go="home" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
-    <div class="fctop"><img src="img/forma-tepa-v2.webp" alt="Kamolon Osh markazi" width="851" height="166"><button class="hback" data-go="home" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button></div>
+    <div class="hhero fhero"><img src="img/hero-forma-v4.webp" alt="Kamolon Osh markazi" width="1080" height="710"><button class="hback" data-go="home" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
+    <div class="fctop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166"><button class="hback" data-go="home" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button></div>
     <div class="form-head" id="formHead" data-cat="review"><div class="tile-ico ico fico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="formIcon"><use href="#ic-star"/></svg></div><div class="fht"><h1 id="formTitle"></h1><p class="lead" id="formDesc" style="color:var(--muted)"></p></div><svg class="hmosque fmosque" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
 
     <form id="form" novalidate>
@@ -772,7 +772,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       </div>
     </form>
     <div class="hvals fvals"><svg class="hvwave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C80 2 160 30 240 18S360 0 400 14V40Z" fill="#531a16"/><path d="M0 22C80 2 160 30 240 18S360 0 400 14" fill="none" stroke="#f1b548" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="hvrow"><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 1-3 4-3 7h3v11"/></svg><span data-i18n="v5"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 8.5V7M10.5 7h3"/></svg><span data-i18n="v6"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="7" r="2.6"/><circle cx="5.5" cy="9" r="2.1"/><circle cx="18.5" cy="9" r="2.1"/><path d="M7 19c0-3 2.2-5.5 5-5.5s5 2.5 5 5.5M1.5 18c0-2.4 1.7-4.4 4-4.4M22.5 18c0-2.4-1.7-4.4-4-4.4"/></svg><span data-i18n="v7"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l8-8"/></svg><span data-i18n="v8"></span></div></div></div>
-    <img class="fcpast" src="img/forma-past-v2.webp" alt="" width="851" height="167">
+    <img class="fcpast" src="img/forma-past-v3.webp" alt="" width="851" height="167">
   </section>
 
   <!-- 4. Rahmat -->
@@ -868,9 +868,9 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 
   </div>
   <div class="lbottom">
-    <div class="lbase"><svg class="lsky lsky-l" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg><img class="lbig" src="img/logo-jigar-v2.webp" alt="Kamolon Osh" width="300" height="286"><svg class="lsky lsky-r" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
-    <img class="lpast" src="img/til-past-v2.webp" alt="" width="851" height="257">
-    <div class="lband"><svg class="lwave" viewBox="0 0 400 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V14C90 32 170 4 250 14S360 26 400 10V0Z" fill="#fbf8f2"/><path d="M0 14C90 32 170 4 250 14S360 26 400 10" fill="none" stroke="#c9a14a" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="lfl"><span></span><svg class="lflower" viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="#d9b66a" stroke-width="1.6"><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(0 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(45 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(90 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(135 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(225 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(270 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(315 20 20)"/><circle cx="20" cy="20" r="4" fill="#d9b66a"/></g></svg><span></span></div></div>
+    <div class="lbase"><svg class="lsky lsky-l" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg><img class="lbig" src="img/logo-jigar-v3.webp" alt="Kamolon Osh" width="300" height="286"><svg class="lsky lsky-r" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
+    <img class="lpast" src="img/til-past-v3.webp" alt="" width="851" height="257">
+    <div class="lband"><svg class="lwave" viewBox="0 0 400 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V14C90 32 170 4 250 14S360 26 400 10V0Z" fill="#fff"/><path d="M0 14C90 32 170 4 250 14S360 26 400 10" fill="none" stroke="#c9a14a" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="lfl"><span></span><svg class="lflower" viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="#d9b66a" stroke-width="1.6"><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(0 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(45 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(90 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(135 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(225 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(270 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(315 20 20)"/><circle cx="20" cy="20" r="4" fill="#d9b66a"/></g></svg><span></span></div></div>
   </div>
 </main>
 
@@ -1461,7 +1461,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   window.addEventListener("hashchange", goAdminLink);
   // Keyingi ekranlar rasmlarini oldindan yuklab qo'yish (tez ochilishi uchun)
   window.addEventListener("load", () => setTimeout(() => {
-    ["hero-uy-v3.webp", "hero-forma-v3.webp", "forma-tepa-v2.webp", "forma-past-v2.webp",
+    ["hero-uy-v4.webp", "hero-forma-v4.webp", "forma-tepa-v3.webp", "forma-past-v3.webp",
      "filial-labzak-3.webp", "filial-drujba-3.webp", "filial-gulzor-3.webp", "filial-ziyolilar-3.webp", "filial-parkent-3.webp"]
       .forEach(f => { const i = new Image(); i.decoding = "async"; i.src = "img/" + f; });
   }, 300));
