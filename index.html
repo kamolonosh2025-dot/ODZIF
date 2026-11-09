@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261109114913";
+  const APP_VERSION = "20261109115923";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -577,6 +577,63 @@ body.lm .lpast { display: block; width: 100%; height: auto; margin-top: -6px; }
   body.lm .lpast { padding-bottom: env(safe-area-inset-bottom); background: #2a0c08; }
 }
 
+/* ===== Forma (to'ldirish) — ixcham dizayn ===== */
+.fctop, .fcpast, .lico, .ricon, .rq-ico { display: none; }
+body.fm.fc .fhero { display: none; }
+body.fm.fc .fctop { display: block; position: relative; margin: 0 -24px; line-height: 0; }
+.fctop img { width: 100%; height: auto; display: block; }
+.fctop .hback { top: 50%; margin-top: -24px; width: 40px; height: 40px; }
+body.fm.fc.frv .form-head { display: none; }
+body.fm.fc .fvals { display: none; }
+body.fm.fc .fcpast { display: block; width: calc(100% + 48px); margin: 30px -24px 0; height: auto; }
+body.fm .picked { border: 2px solid #eec06a; background: linear-gradient(90deg, #fdf0d8, #fdf5ea); border-radius: 18px; padding: 10px 12px; margin-top: 14px; box-shadow: 0 8px 20px -14px rgba(160,100,20,.6); }
+body.fm .picked > svg { width: 38px; height: 38px; padding: 8px; border-radius: 50%; background: #fae1b4; color: #c66a10; }
+body.fm #branchName { font-weight: 800; color: #2b120d; }
+body.fm #branchName .cn { font-size: 1em; }
+body.fm #branchName .dsh { display: inline; margin: 0 4px; }
+body.fm #branchChange { background: #fae1b4 !important; border-radius: 50%; color: #3a1a0e; }
+body.fm #ratings { background: #fdfaf6; border: 1px solid #f1e6da; border-radius: 22px; padding: 10px 16px 6px; box-shadow: 0 12px 26px -18px rgba(90,40,10,.5); }
+body.fm .rqh { display: flex; align-items: center; gap: 12px; margin: 4px 0 6px; }
+body.fm .rq-ico { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: #3b0f0a; }
+body.fm .rq-ico svg { width: 22px; height: 22px; }
+body.fm .rqh .label { margin: 0; font-size: 1.15rem; font-weight: 800; color: #2b120d; }
+body.fm .rate-row { justify-content: flex-start; gap: 12px; padding: 8px 0; }
+body.fm .rate-row > span { font-weight: 800; color: #2b120d; font-size: 1.05rem; }
+body.fm .ricon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: #fbe6c8; color: #a5480f; flex: none; font-style: normal; }
+body.fm .ricon svg { width: 24px; height: 24px; }
+body.fm .rate-row .stars { margin-left: auto; }
+body.fm .stars button { color: #e7a530; }
+body.fm .stars button svg { width: 30px; height: 30px; stroke-width: 1.6; }
+body.fm .stars button.on { color: #e7a530; }
+body.fm .stars button.on svg { fill: #f2b33d; }
+body.fm label { display: flex; align-items: center; gap: 10px; font-size: 1.02rem; font-weight: 800; color: #2b120d; margin: 20px 0 8px; }
+body.fm .lico { display: inline-grid; font-style: normal; color: #2b120d; }
+body.fm .lico svg { width: 24px; height: 24px; stroke-width: 1.7; }
+body.fm input, body.fm textarea { background: #fff; border: 1.5px solid #e8dacb; border-radius: 16px; padding: 15px 18px; }
+body.fm input::placeholder, body.fm textarea::placeholder { color: #a8968c; }
+body.fm input:focus, body.fm textarea:focus { border-color: #d8952b; box-shadow: 0 0 0 4px rgba(216,149,43,.15); }
+body.fm .send { background: linear-gradient(180deg, #6e2113, #3c0d07); border: 2px solid #e6a83c; border-radius: 999px; padding: 17px; font-size: 1.15rem; box-shadow: 0 14px 26px -12px rgba(60,13,7,.7); }
+@media (max-width: 560px) {
+  body.fm.fc .fctop { margin: 0 -16px; }
+  body.fm.fc .fcpast { width: calc(100% + 32px); margin: 26px -16px 0; padding-bottom: env(safe-area-inset-bottom); background: #2a0c08; }
+  body.fm .stars button svg { width: 27px; height: 27px; }
+  body.fm .ricon { width: 38px; height: 38px; }
+  body.fm .rate-row > span { font-size: .98rem; }
+  body.fm .picked { font-size: .92rem; }
+}
+
+body.fm #branchName .nw { white-space: normal; }
+body.fm #branchName { min-width: 0; line-height: 1.3; }
+@media (max-width: 360px) {
+  body.fm .stars { gap: 0; }
+  body.fm .stars button svg { width: 23px; height: 23px; }
+  body.fm .ricon { width: 32px; height: 32px; border-radius: 10px; }
+  body.fm .ricon svg { width: 19px; height: 19px; }
+  body.fm #ratings { padding: 8px 10px 4px; }
+  body.fm .rate-row { gap: 8px; }
+  body.fm .rate-row > span { font-size: .9rem; }
+}
+
 [hidden] { display: none !important; }
 </style>
 </head>
@@ -648,6 +705,7 @@ body.lm .lpast { display: block; width: 100%; height: auto; margin-top: -6px; }
   <section id="s-form" hidden>
     <button class="back" data-go="home"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="back"></span></button>
     <div class="hhero fhero"><img src="img/hero-forma2-v2.jpg" alt="Kamolon Osh markazi" width="1280" height="841"><button class="hback" data-go="home" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
+    <div class="fctop"><img src="img/forma-tepa.jpg" alt="Kamolon Osh markazi" width="851" height="166"><button class="hback" data-go="home" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button></div>
     <div class="form-head" id="formHead" data-cat="review"><div class="tile-ico ico fico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="formIcon"><use href="#ic-star"/></svg></div><div class="fht"><h1 id="formTitle"></h1><p class="lead" id="formDesc" style="color:var(--muted)"></p></div><svg class="hmosque fmosque" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
 
     <form id="form" novalidate>
@@ -658,36 +716,36 @@ body.lm .lpast { display: block; width: 100%; height: auto; margin-top: -6px; }
       <div class="picked" id="branchPicked" hidden>
         <svg class="i"><use href="#ic-pin"/></svg>
         <span id="branchName"></span>
-        <button type="button" id="branchChange" aria-label="Change"><svg class="i"><use href="#ic-edit"/></svg></button>
+        <button type="button" id="branchChange" aria-label="Change"><svg class="i" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
       </div>
 
       <div id="fields">
       <div id="ratings">
-        <span class="label" data-i18n="rateQ"></span>
-        <div class="rate-row" data-key="food"><span data-i18n="r_food"></span><div class="stars"></div></div>
-        <div class="rate-row" data-key="service"><span data-i18n="r_service"></span><div class="stars"></div></div>
-        <div class="rate-row" data-key="atmos"><span data-i18n="r_atmos"></span><div class="stars"></div></div>
+        <div class="rqh"><span class="rq-ico"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z" fill="#f2b33d"/></svg></span><span class="label" data-i18n="rateQ"></span></div>
+        <div class="rate-row" data-key="food"><i class="ricon"><svg class="i" viewBox="0 0 24 24"><path d="M4 4l9 9M7 3l-3 3 5 5 3-3M14 14l6 6M20 4l-8 8M17 3c2 0 4 2 4 4l-3 3-4-4z"/></svg></i><span data-i18n="r_food"></span><div class="stars"></div></div>
+        <div class="rate-row" data-key="service"><i class="ricon"><svg class="i" viewBox="0 0 24 24"><path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 8.5V7M10.5 7h3"/></svg></i><span data-i18n="r_service"></span><div class="stars"></div></div>
+        <div class="rate-row" data-key="atmos"><i class="ricon"><svg class="i" viewBox="0 0 24 24"><path d="M3 21v-9M3 15h6v6M21 21v-9M21 15h-6v6M7 12h10M12 12v9M12 4v3M10.5 7h3a1.5 1.5 0 0 1 1.5 1.5V12H9V8.5A1.5 1.5 0 0 1 10.5 7z"/></svg></i><span data-i18n="r_atmos"></span><div class="stars"></div></div>
       </div>
 
-      <label for="name"><span data-i18n="name"></span></label>
+      <label for="name"><i class="lico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></i><span data-i18n="name"></span></label>
       <input id="name" autocomplete="name">
 
       <div id="phoneWrap">
-        <label for="phone"><span data-i18n="phone"></span></label>
+        <label for="phone"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M5 3h3l2 5-2.5 1.5a11 11 0 0 0 7 7L16 14l5 2v3a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg></i><span data-i18n="phone"></span></label>
         <input id="phone" type="tel" autocomplete="tel" placeholder="+998 __ ___ __ __">
       </div>
 
       <div id="tableWrap">
-        <label for="table" data-i18n="table"></label>
+        <label for="table"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M2 21V10M2 15h5v6M22 21V10M22 15h-5v6M6 11h12M12 11v10"/></svg></i><span data-i18n="table"></span></label>
         <input id="table" inputmode="numeric" autocomplete="off">
       </div>
 
       <div id="companyWrap">
-        <label for="company"><span data-i18n="company"></span></label>
+        <label for="company"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M3 21h18M5 21V5h9v16M14 9h5v12M8 9h3M8 13h3M8 17h3"/></svg></i><span data-i18n="company"></span></label>
         <input id="company" autocomplete="organization">
       </div>
 
-      <label for="msg" data-i18n="msg"></label>
+      <label for="msg"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z"/><path d="M8 10h8M8 13h5"/></svg></i><span data-i18n="msg"></span></label>
       <textarea id="msg"></textarea>
 
       <button class="send" type="submit">
@@ -698,6 +756,7 @@ body.lm .lpast { display: block; width: 100%; height: auto; margin-top: -6px; }
       </div>
     </form>
     <div class="hvals fvals"><svg class="hvwave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C80 2 160 30 240 18S360 0 400 14V40Z" fill="#531a16"/><path d="M0 22C80 2 160 30 240 18S360 0 400 14" fill="none" stroke="#f1b548" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="hvrow"><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 1-3 4-3 7h3v11"/></svg><span data-i18n="v5"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 8.5V7M10.5 7h3"/></svg><span data-i18n="v6"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="7" r="2.6"/><circle cx="5.5" cy="9" r="2.1"/><circle cx="18.5" cy="9" r="2.1"/><path d="M7 19c0-3 2.2-5.5 5-5.5s5 2.5 5 5.5M1.5 18c0-2.4 1.7-4.4 4-4.4M22.5 18c0-2.4-1.7-4.4-4-4.4"/></svg><span data-i18n="v7"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l8-8"/></svg><span data-i18n="v8"></span></div></div></div>
+    <img class="fcpast" src="img/forma-past.jpg" alt="" width="851" height="167">
   </section>
 
   <!-- 4. Rahmat -->
@@ -899,7 +958,9 @@ body.lm .lpast { display: block; width: 100%; height: auto; margin-top: -6px; }
     $("branchWrap").hidden = !isReview || branch >= 0;
     $("branchPicked").hidden = !isReview || branch < 0;
     $("fields").hidden = isReview && branch < 0;
-    if (branch >= 0) $("branchName").innerHTML = '<b class="cn">' + T[lang].center + '</b><span class="nw">-' + BRANCHES[branch][lang] + "</span>";
+    document.body.classList.toggle("fc", !$("fields").hidden); // forma ochiq: ixcham tepa qism
+    document.body.classList.toggle("frv", isReview);
+    if (branch >= 0) $("branchName").innerHTML = '<b class="cn">' + T[lang].center + '</b><span class="nw"> – ' + BRANCHES[branch][lang] + "</span>";
   }
   $("branchChange").addEventListener("click", () => { branch = -1; renderBranches(); });
 
