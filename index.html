@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261109110433";
+  const APP_VERSION = "20261109111828";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -492,6 +492,47 @@ body.hm .body { padding: 0; }
   .hv { font-size: min(.76rem, 3.1vw); }
 }
 
+/* ===== Forma ekrani (body.fm) ===== */
+.fhero, .fvals, .fmosque { display: none; }
+body.fm header { display: none; }
+body.fm .shell { padding-bottom: 0; background: #fcf8f5; }
+body.fm .fhero { display: block; margin: 0 -24px; }
+body.fm #s-form > .back { display: none; }
+.hglobe { left: auto; right: 12px; }
+.fsub { position: absolute; left: 0; right: 0; top: 47%; text-align: center; color: #fbeedd; font-size: clamp(.8rem, 3.6vw, 1.05rem); font-weight: 500; line-height: 1.2; text-shadow: 0 1px 6px rgba(0,0,0,.6); pointer-events: none; }
+body.fm .form-head { position: relative; margin-top: 8px; align-items: center; }
+body.fm .fico { width: 64px !important; height: 64px !important; border-radius: 18px !important; background: linear-gradient(140deg, #fbb03b, #f07a12) !important; color: #fff !important; box-shadow: 0 10px 20px -10px #f07a12; flex: none; }
+body.fm .fico svg { width: 32px; height: 32px; }
+body.fm .fht { position: relative; z-index: 1; min-width: 0; }
+body.fm .fht h1 { font-size: 1.55rem; font-weight: 800; color: #2b120d; margin: 0; }
+body.fm .fht .lead { margin: 4px 0 0; color: #4a3a34 !important; font-size: .95rem; }
+body.fm .fmosque { display: block; top: -6px; right: -6px; width: 27%; opacity: .32; z-index: 0; }
+body.fm .bq { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; font-weight: 800; color: #2b120d; margin: 22px 0 14px; padding-bottom: 12px; position: relative; }
+body.fm .bq svg { width: 26px; height: 26px; color: #f08a12; stroke-width: 2; }
+body.fm .bq::after { content: ""; position: absolute; left: 0; bottom: 0; width: 22px; height: 3px; border-radius: 3px; background: #f08a12; box-shadow: 40px 0 0 0 #a3401f, 50px 0 0 0 #a3401f; }
+body.fm .branches { grid-template-columns: 1fr; gap: 12px; }
+body.fm .branches button { position: relative; padding: 6px 48px 6px 6px; gap: 12px; border-radius: 18px; border: 1px solid #f0e6df; background: #fff; min-height: 96px; box-shadow: 0 2px 4px rgba(60,20,10,.04), 0 12px 24px -18px rgba(60,20,10,.35); }
+body.fm .branches button::after { content: "›"; position: absolute; right: 12px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #f8ece4; color: #2b120d; display: grid; place-items: center; font-size: 1.4rem; line-height: 1; padding-bottom: 3px; box-sizing: border-box; }
+body.fm .branches button.on { border-color: #f08a12; background: #fff7ef; }
+.bph { display: none; }
+body.fm .bph { display: block; width: 38%; max-width: 170px; aspect-ratio: 2.2; object-fit: cover; border-radius: 14px; flex: none; align-self: stretch; height: auto; }
+body.fm .branches button > svg { width: 22px; height: 22px; padding: 0; background: none; color: #f08a12; align-self: flex-start; margin-top: 18px; }
+body.fm .branches button > span { display: flex; flex-direction: column; line-height: 1.3; }
+body.fm .branches .cn { font-size: 1.02rem; font-weight: 800; color: #2b120d; white-space: normal; }
+body.fm .branches .nw { white-space: normal; font-weight: 500; color: #3d2d27; }
+.dsh { font-style: normal; }
+body.fm .dsh { display: none; }
+body.fm .fvals { display: block; margin: 40px -24px 0; }
+@media (max-width: 560px) {
+  body.fm .fhero, body.fm .fvals { margin-left: -16px; margin-right: -16px; }
+  body.fm .fvals { padding-bottom: calc(22px + env(safe-area-inset-bottom)); }
+  body.fm .fht h1 { font-size: 1.4rem; }
+  body.fm .fico { width: 56px !important; height: 56px !important; }
+  body.fm .bq { font-size: 1.1rem; }
+  body.fm .branches .cn { font-size: .95rem; }
+  body.fm .branches .nw { font-size: .9rem; }
+}
+
 [hidden] { display: none !important; }
 </style>
 </head>
@@ -561,12 +602,12 @@ body.hm .body { padding: 0; }
   <!-- 3. Forma -->
   <section id="s-form" hidden>
     <button class="back" data-go="home"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="back"></span></button>
-    <div class="form-head" id="formHead" data-cat="review"><div class="tile-ico ico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="formIcon"><use href="#ic-star"/></svg></div><h1 id="formTitle"></h1></div>
-    <p class="lead" id="formDesc" style="color:var(--muted)"></p>
+    <div class="hhero fhero"><img src="img/hero.jpg" alt="Kamolon Osh markazi" width="852" height="390"><button class="hback" data-go="home" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
+    <div class="form-head" id="formHead" data-cat="review"><div class="tile-ico ico fico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="formIcon"><use href="#ic-star"/></svg></div><div class="fht"><h1 id="formTitle"></h1><p class="lead" id="formDesc" style="color:var(--muted)"></p></div><svg class="hmosque fmosque" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
 
     <form id="form" novalidate>
       <div id="branchWrap">
-        <span class="label" data-i18n="branchQ"></span>
+        <span class="label bq"><svg class="i"><use href="#ic-pin"/></svg><span data-i18n="branchQ"></span></span>
         <div class="branches" id="branches"></div>
       </div>
       <div class="picked" id="branchPicked" hidden>
@@ -611,6 +652,7 @@ body.hm .body { padding: 0; }
       <div class="note" id="note"></div>
       </div>
     </form>
+    <div class="hvals fvals"><svg class="hvwave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C80 2 160 30 240 18S360 0 400 14V40Z" fill="#531a16"/><path d="M0 22C80 2 160 30 240 18S360 0 400 14" fill="none" stroke="#f1b548" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="hvrow"><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 1-3 4-3 7h3v11"/></svg><span data-i18n="v5"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 8.5V7M10.5 7h3"/></svg><span data-i18n="v6"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="7" r="2.6"/><circle cx="5.5" cy="9" r="2.1"/><circle cx="18.5" cy="9" r="2.1"/><path d="M7 19c0-3 2.2-5.5 5-5.5s5 2.5 5 5.5M1.5 18c0-2.4 1.7-4.4 4-4.4M22.5 18c0-2.4-1.7-4.4-4-4.4"/></svg><span data-i18n="v7"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l8-8"/></svg><span data-i18n="v8"></span></div></div></div>
   </section>
 
   <!-- 4. Rahmat -->
@@ -700,7 +742,7 @@ body.hm .body { padding: 0; }
       c_idea_t: "G'oya taklif qilish", c_idea_d: "Yangi taklif va g'oyalaringizni yuboring",
       c_partner_t: "Hamkorlik", c_partner_d: "Yetkazib beruvchilar, ijara, hamkorlik",
       c_problem_t: "Rahbariyatga murojaat", c_problem_d: "Rahbariyatga to'g'ridan-to'g'ri yozing",
-      homeT: "Fikr va takliflaringiz biz uchun muhim!", homeD: "Xizmat, taomlar va umumiy taassurot bo'yicha fikringizni qoldiring.", v1: "Sifatli taomlar", v2: "E'tiborli xizmat", v3: "Ishonchli hamkorlik", v4: "Doimiy takomillashuv",
+      homeT: "Fikr va takliflaringiz biz uchun muhim!", homeD: "Xizmat, taomlar va umumiy taassurot bo'yicha fikringizni qoldiring.", v1: "Sifatli taomlar", v2: "E'tiborli xizmat", v3: "Ishonchli hamkorlik", v4: "Doimiy takomillashuv", v5: "Taomlar sifati", v6: "Xizmat sifati", v7: "Muhit va qulaylik", v8: "Taklif va yangiliklar",
       back: "Orqaga", toHome: "Bosh sahifaga",
       rateQ: "Bahoyingiz",
       r_food: "Taom", r_service: "Xizmat", r_atmos: "Muhit",
@@ -726,7 +768,7 @@ body.hm .body { padding: 0; }
       c_idea_t: "Предложить идею", c_idea_d: "Идеи и пожелания для руководства",
       c_partner_t: "Сотрудничество", c_partner_d: "Поставщики, аренда, партнёрства",
       c_problem_t: "Обращение к руководству", c_problem_d: "Написать напрямую руководству",
-      homeT: "Ваши отзывы и предложения важны для нас!", homeD: "Поделитесь мнением о сервисе, блюдах и общем впечатлении.", v1: "Качественные блюда", v2: "Внимательный сервис", v3: "Надёжное партнёрство", v4: "Постоянное развитие",
+      homeT: "Ваши отзывы и предложения важны для нас!", homeD: "Поделитесь мнением о сервисе, блюдах и общем впечатлении.", v1: "Качественные блюда", v2: "Внимательный сервис", v3: "Надёжное партнёрство", v4: "Постоянное развитие", v5: "Качество блюд", v6: "Качество сервиса", v7: "Атмосфера и уют", v8: "Предложения и новости",
       back: "Назад", toHome: "На главную",
       rateQ: "Ваша оценка",
       r_food: "Еда", r_service: "Сервис", r_atmos: "Атмосфера",
@@ -752,7 +794,7 @@ body.hm .body { padding: 0; }
       c_idea_t: "Suggest an idea", c_idea_d: "Ideas and wishes for management",
       c_partner_t: "Partnership", c_partner_d: "Suppliers, rent, partnerships",
       c_problem_t: "Contact management", c_problem_d: "Write directly to management",
-      homeT: "Your feedback and ideas matter to us!", homeD: "Share your thoughts on our service, food and overall experience.", v1: "Quality food", v2: "Attentive service", v3: "Reliable partnership", v4: "Constant improvement",
+      homeT: "Your feedback and ideas matter to us!", homeD: "Share your thoughts on our service, food and overall experience.", v1: "Quality food", v2: "Attentive service", v3: "Reliable partnership", v4: "Constant improvement", v5: "Food quality", v6: "Service quality", v7: "Atmosphere & comfort", v8: "Ideas & news",
       back: "Back", toHome: "Back to home",
       rateQ: "Your rating",
       r_food: "Food", r_service: "Service", r_atmos: "Atmosphere",
@@ -803,7 +845,7 @@ body.hm .body { padding: 0; }
   });
   function renderBranches() {
     $("branches").innerHTML = BRANCHES.map((b, i) =>
-      `<button type="button" data-b="${i}" class="${i === branch ? "on" : ""}"><svg class="i"><use href="#ic-pin"/></svg><span><b class="cn">${T[lang].center}</b><span class="nw">-${b[lang]}</span></span></button>`).join("");
+      `<button type="button" data-b="${i}" class="${i === branch ? "on" : ""}"><img class="bph" src="img/filial-${b.uz.split(" ")[0].toLowerCase()}.jpg" alt="" loading="lazy"><svg class="i"><use href="#ic-pin"/></svg><span><b class="cn">${T[lang].center}</b><span class="nw"><i class="dsh">-</i>${b[lang]}</span></span></button>`).join("");
     $("branches").querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
       branch = +btn.dataset.b; renderBranches(); $("note").textContent = "";
     }));
@@ -820,6 +862,7 @@ body.hm .body { padding: 0; }
     $("langBtn").hidden = !["home", "form", "done"].includes(name);
     document.body.classList.toggle("lm", name === "lang"); // yashil-oltin dizayn faqat til tanlashda
     document.body.classList.toggle("hm", name === "home"); // mavzular: osh rasmi bilan
+    document.body.classList.toggle("fm", name === "form");
     if (name !== "admin" && location.hash === "#admin") history.replaceState(null, "", location.pathname + location.search);
     window.scrollTo(0, 0);
   }
