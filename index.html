@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261109121117";
+  const APP_VERSION = "20261109121330";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1315,6 +1315,11 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     if (!a) a = z; if (!z) z = a;
     if (a > z) [a, z] = [z, a];
     setRange(a, z);
+  }));
+  // Kompyuterda ham sana oynasi ochilsin (sana ustiga bosilganda)
+  document.querySelectorAll(".dpick, .dmon, .dcf").forEach(l => l.addEventListener("click", e => {
+    const inp = l.querySelector("input"); if (!inp || !inp.showPicker) return;
+    try { e.preventDefault(); inp.showPicker(); } catch (_) {}
   }));
   function markPresets() {
     const f = curDate(), to = view.to || f;
