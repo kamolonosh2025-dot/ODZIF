@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261109115923";
+  const APP_VERSION = "20261109120420";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -970,7 +970,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     document.body.classList.toggle("lm", name === "lang"); // yashil-oltin dizayn faqat til tanlashda
     document.body.classList.toggle("hm", name === "home"); // mavzular: osh rasmi bilan
     document.body.classList.toggle("fm", name === "form");
-    if (name !== "admin" && location.hash === "#admin") history.replaceState(null, "", location.pathname + location.search);
+    if (!["admin", "alist", "pin"].includes(name) && location.hash === "#admin") history.replaceState(null, "", location.pathname + location.search);
     window.scrollTo(0, 0);
   }
 
@@ -1381,7 +1381,10 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 
   applyLang("uz");
   // Sahifa yangilansa, admin o'sha joyida ochiladi
-  if (adminPin) loadAdmin();
+  // To'g'ridan-to'g'ri admin havolasi: .../ODZIF/#admin yoki .../ODZIF/admin.html
+  const goAdminLink = () => { if (location.hash === "#admin") $("adminDot").click(); };
+  if (adminPin) loadAdmin(); else goAdminLink();
+  window.addEventListener("hashchange", goAdminLink);
 </script>
 </body>
 </html>
