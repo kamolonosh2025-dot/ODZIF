@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261113054028";
+  const APP_VERSION = "20261113055113";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -593,6 +593,48 @@ body.lm .lpast { display: block; width: 100%; height: auto; margin-top: -6px; }
   body.lm .lpast { padding-bottom: env(safe-area-inset-bottom); background: #2a0c08; }
 }
 
+/* ===== Admin panel: jigarrang-oltin (osh rasmi bilan) ===== */
+.ahero, .actop, .apast, .abadge { display: none; }
+body.am { --brand: #6b1d12; --brand-2: #3a0f0b; --gold: #d9a441; background: radial-gradient(ellipse at 50% 0%, #5a1d14, #1f0705 70%) fixed; }
+body.am::before, body.am::after { display: none; }
+body.am header { display: none; }
+body.am .shell { background: #fff; padding-bottom: 0; display: flex; flex-direction: column; border: 1px solid rgba(201,161,74,.35); box-shadow: 0 40px 80px -30px rgba(0,0,0,.6); }
+body.am .body { flex: 1; }
+body.am .ahero { display: block; margin: 0 -24px 14px; position: relative; }
+body.am .actop { display: block; margin: 0 -24px 14px; line-height: 0; }
+body.am .actop img { width: 100%; height: auto; display: block; }
+body.am .abadge { display: inline-block; position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%); line-height: 1; padding: 7px 14px; border-radius: 999px; background: rgba(42,12,8,.82); color: #f6d9a0; border: 1px solid rgba(241,181,72,.6); font-weight: 800; font-size: .74rem; letter-spacing: .18em; white-space: nowrap; }
+body.am .apast { display: block; width: 100%; height: auto; margin-top: 28px; background: #2a0c08; padding-bottom: env(safe-area-inset-bottom); }
+body.am .atitle { font-family: "Fraunces", Georgia, serif; color: #3a0f0b; font-size: 1.9rem; margin: 6px 0 4px; letter-spacing: -.01em; }
+body.am .atitle::after { content: ""; display: block; width: 56px; height: 3px; border-radius: 3px; background: #c98a24; margin-top: 8px; }
+body.am p.lead { color: #6d5a52; }
+body.am #s-pin { text-align: center; }
+body.am #s-pin .atitle::after { margin: 8px auto 0; }
+body.am #pin { text-align: center; font-size: 1.6rem; letter-spacing: .5em; height: 60px; border: 1.5px solid #ecd9c3; border-radius: 16px; background: #fff; max-width: 320px; margin: 0 auto; display: block; }
+body.am #pin:focus { border-color: #d9a441; box-shadow: 0 0 0 4px rgba(217,164,65,.18); }
+body.am .send { background: linear-gradient(180deg, #7a2416, #4a120b) !important; border: 1.5px solid #e2b04f !important; box-shadow: 0 14px 26px -14px rgba(74,18,11,.9) !important; color: #fff6e6 !important; border-radius: 16px; }
+body.am #pinForm .send { max-width: 320px; margin: 14px auto 0; }
+body.am .back { background: #fff; border: 1px solid #ecd9c3; color: #3a0f0b; }
+body.am .admin-top .arefresh { color: #8a5a10; border-color: #e7c27a; background: #fffaf0; }
+body.am .datebar, body.am .dcustom { border-color: #f0e2d2; box-shadow: 0 2px 4px rgba(60,20,10,.04), 0 12px 24px -18px rgba(60,20,10,.35); }
+body.am .dpick { background: #fff8ec; border-color: #e7c27a; color: #3a0f0b; }
+body.am .dtoday, body.am .dcgo { background: linear-gradient(180deg, #7a2416, #4a120b); color: #fff6e6; }
+body.am .datebar.range .drange { border-color: #d9a441; color: #6b1d12; }
+body.am .dpb { border-color: #ecd9c3; color: #3a0f0b; }
+body.am .dpb.on { background: #3a0f0b; border-color: #3a0f0b; color: #f6d9a0; }
+body.am .dcf input { border-color: #e7c27a; background: #fff8ec; }
+body.am .tile { border: 1px solid #f0e6df; border-left: 4px solid var(--c); border-radius: 18px; background: #fff; box-shadow: 0 2px 4px rgba(60,20,10,.04), 0 12px 24px -18px rgba(60,20,10,.35); }
+body.am .tile .t { color: #3a0f0b; }
+body.am .entry { border-color: #f0e6df; box-shadow: 0 2px 4px rgba(60,20,10,.04), 0 12px 24px -18px rgba(60,20,10,.35); }
+body.am .entry .when { color: #8a5a10; }
+body.am .entry .row a { color: #6b1d12; }
+body.am #alistHead h1 { font-family: "Fraunces", Georgia, serif; color: #3a0f0b; }
+@media (max-width: 560px) {
+  body.am .shell { margin: 0; border-radius: 0; border: 0; box-shadow: none; min-height: 100vh; min-height: 100dvh; }
+  body.am .ahero, body.am .actop { margin: 0 -16px 12px; }
+  body.am .atitle { font-size: 1.6rem; }
+}
+
 /* ===== Forma (to'ldirish) — ixcham dizayn ===== */
 .fctop, .fcpast, .lico, .ricon, .rq-ico { display: none; }
 body.fm.fc .fhero { display: none; }
@@ -787,8 +829,8 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 
   <!-- 5. Admin: PIN -->
   <section id="s-pin" hidden>
-    <button class="back" data-go="lang"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
-    <h1 style="margin-top:14px">Admin panel</h1>
+    <div class="hhero ahero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712"><span class="abadge">ADMIN PANEL</span><button class="hback" data-go="lang" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button></div>
+    <h1 class="atitle">Admin panel</h1>
     <p class="lead">PIN kodni kiriting</p>
     <form id="pinForm" novalidate>
       <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="••••">
@@ -799,11 +841,12 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 
   <!-- 6. Admin: bo'limlar -->
   <section id="s-admin" hidden>
+    <div class="hhero ahero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712"><span class="abadge">ADMIN PANEL</span></div>
     <div class="admin-top">
       <button class="back" id="adminExit"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
       <button class="back arefresh" id="adminRefresh" style="margin-left:auto"><b class="rico">↻</b> <span>Yangilash</span></button>
     </div>
-    <h1 style="margin-top:14px">Feedbacklar</h1>
+    <h1 class="atitle">Feedbacklar</h1>
     <span class="demo" id="adminMode" hidden></span>
     <div class="datebar">
       <button type="button" class="dbtn aprev" aria-label="Oldingi kun">‹</button>
@@ -834,6 +877,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 
   <!-- 7. Admin: ro'yxat -->
   <section id="s-alist" hidden>
+    <div class="actop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166"></div>
     <div class="admin-top">
       <button class="back" id="alistBack"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
       <button class="back arefresh" id="alistRefresh" style="margin-left:auto"><b class="rico">↻</b> <span>Yangilash</span></button>
@@ -867,6 +911,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   </section>
 
   </div>
+  <img class="apast" src="img/forma-past-v3.webp" alt="" width="851" height="167">
   <div class="lbottom">
     <div class="lbase"><svg class="lsky lsky-l" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg><img class="lbig" src="img/logo-jigar-v3.webp" alt="Kamolon Osh" width="300" height="286"><svg class="lsky lsky-r" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
     <img class="lpast" src="img/til-past-v3.webp" alt="" width="851" height="257">
@@ -1016,6 +1061,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     document.body.classList.toggle("lm", name === "lang"); // yashil-oltin dizayn faqat til tanlashda
     document.body.classList.toggle("hm", name === "home"); // mavzular: osh rasmi bilan
     document.body.classList.toggle("fm", name === "form");
+    document.body.classList.toggle("am", ["pin", "admin", "alist"].includes(name)); // admin: jigarrang-oltin
     if (!["admin", "alist", "pin"].includes(name) && location.hash === "#admin") history.replaceState(null, "", location.pathname + location.search);
     window.scrollTo(0, 0);
   }
@@ -1199,7 +1245,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   // Joriy ko'rinish: qaysi sana, bo'lim va filial (yangilaganda shu joyda qoladi)
   let view = { screen: "admin", cat: null, br: null, date: null, to: null };
   try {
-    adminPin = sessionStorage.getItem("kamolon_pin") || "";
+    adminPin = localStorage.getItem("kamolon_pin") || "";
     view = Object.assign(view, JSON.parse(sessionStorage.getItem("kamolon_view") || "{}"));
   } catch (_) {}
   const saveView = () => { try { sessionStorage.setItem("kamolon_view", JSON.stringify(view)); } catch (_) {} };
@@ -1236,7 +1282,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   });
   $("adminExit").addEventListener("click", () => {
     adminPin = ""; adminData = null;
-    try { sessionStorage.removeItem("kamolon_pin"); sessionStorage.removeItem("kamolon_view"); } catch (_) {}
+    try { localStorage.removeItem("kamolon_pin"); localStorage.removeItem("kamolon_cache"); sessionStorage.removeItem("kamolon_view"); } catch (_) {}
     show("lang");
   });
   $("adminRefresh").addEventListener("click", () => loadAdmin());
@@ -1322,13 +1368,17 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     $("pinNote").style.color = "var(--muted)";
     $("pinNote").textContent = "Yuklanmoqda...";
     document.querySelectorAll(".arefresh").forEach(b => b.classList.add("spin"));
+    // Tez kirish: oxirgi saqlangan ma'lumot darhol ko'rinadi, yangisi fonda yuklanadi
+    if (!adminData) {
+      try { const c = JSON.parse(localStorage.getItem("kamolon_cache") || "null"); if (c && c.pin === adminPin && c.data) { adminData = c.data; render(); } } catch (_) {}
+    }
     try {
       adminData = await loadEntries(adminPin);
     } catch (err) {
       document.querySelectorAll(".arefresh").forEach(b => b.classList.remove("spin"));
       if (String(err.message) !== "pin" && adminData) return; // internet uzilsa, eski ko'rinish qoladi
       adminPin = "";
-      try { sessionStorage.removeItem("kamolon_pin"); } catch (_) {}
+      try { localStorage.removeItem("kamolon_pin"); localStorage.removeItem("kamolon_cache"); } catch (_) {}
       $("pinNote").style.color = "";
       $("pinNote").textContent = String(err.message) === "pin" ? "PIN noto'g'ri" : "Yuklab bo'lmadi. Internetni tekshiring.";
       show("pin");
@@ -1336,7 +1386,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     }
     document.querySelectorAll(".arefresh").forEach(b => b.classList.remove("spin"));
     $("pinNote").textContent = "";
-    try { sessionStorage.setItem("kamolon_pin", adminPin); } catch (_) {}
+    try { localStorage.setItem("kamolon_pin", adminPin); localStorage.setItem("kamolon_cache", JSON.stringify({ pin: adminPin, data: adminData })); } catch (_) {}
     render();
   }
 
