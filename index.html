@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261113055113";
+  const APP_VERSION = "20261113055817";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -629,6 +629,15 @@ body.am .entry { border-color: #f0e6df; box-shadow: 0 2px 4px rgba(60,20,10,.04)
 body.am .entry .when { color: #8a5a10; }
 body.am .entry .row a { color: #6b1d12; }
 body.am #alistHead h1 { font-family: "Fraunces", Georgia, serif; color: #3a0f0b; }
+.axls { display: none; }
+body.am .axls { display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 12px; padding: 12px 16px; border-radius: 16px; border: 1.5px solid #9fd3b2; background: linear-gradient(90deg, #eefaf2, #fff); color: #14532d; font: inherit; cursor: pointer; text-align: left; box-shadow: 0 10px 22px -16px rgba(20,90,50,.6); }
+body.am .axls svg { width: 34px; height: 34px; flex: none; }
+body.am .axls span { display: flex; flex-direction: column; line-height: 1.25; }
+body.am .axls b { font-size: 1rem; }
+body.am .axls small { color: #4b7a5c; font-size: .82rem; font-weight: 600; }
+body.am .axls.busy { opacity: .6; pointer-events: none; }
+.tile.sk .skbar { display: inline-block; width: 90px; height: 12px; border-radius: 6px; background: linear-gradient(90deg, #f3e9df 25%, #fbf5ee 50%, #f3e9df 75%); background-size: 200% 100%; animation: skm 1.1s linear infinite; }
+@keyframes skm { to { background-position: -200% 0; } }
 @media (max-width: 560px) {
   body.am .shell { margin: 0; border-radius: 0; border: 0; box-shadow: none; min-height: 100vh; min-height: 100dvh; }
   body.am .ahero, body.am .actop { margin: 0 -16px 12px; }
@@ -872,6 +881,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       </div>
       <button type="button" class="dcgo">Ko'rsatish</button>
     </div>
+    <button type="button" class="axls" id="xlsBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" fill="#1d6f42"/><path d="M8 8l8 8M16 8l-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg><span><b>Excel'ga yuklab olish</b><small id="xlsPeriod"></small></span></button>
     <div class="grid" id="adminTiles" style="margin-top:18px"></div>
   </section>
 
@@ -1271,8 +1281,22 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   });
 
   $("adminDot2").addEventListener("click", () => $("adminDot").click());
+  // Server (Apps Script) uxlab qolgan bo'lsa, PIN oynasi ochilishi bilan uyg'otib qo'yamiz
+  let warmed = false;
+  function warmUp() { if (warmed || !API_URL) return; warmed = true; fetch(API_URL + "?action=ping", { mode: "no-cors" }).catch(() => {}); }
+  // PIN kiritilishi bilan admin oynasi darhol ochiladi, ma'lumot orqada yuklanadi
+  function skeleton() {
+    $("adminTiles").innerHTML = Object.keys(CAT_NAMES).map(c => `
+      <div class="tile sk" data-cat="${c}">
+        <div class="ico"><svg class="i"><use href="#${ICONS[c]}"/></svg></div>
+        <div class="t">${CAT_NAMES[c]}</div>
+        <div class="d"><span class="skbar"></span></div>
+      </div>`).join("");
+    document.querySelectorAll(".adaylabel").forEach(el => el.textContent = fmtDay(curDate()));
+    show("admin");
+  }
   $("adminDot").addEventListener("click", () => {
-    if (adminPin) loadAdmin(); else { $("pin").value = ""; $("pinNote").textContent = ""; show("pin"); setTimeout(() => $("pin").focus(), 50); }
+    if (adminPin) loadAdmin(); else { warmUp(); $("pin").value = ""; $("pinNote").textContent = ""; show("pin"); setTimeout(() => $("pin").focus(), 50); }
   });
   $("pinForm").addEventListener("submit", e => {
     e.preventDefault();
@@ -1364,6 +1388,110 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     document.querySelectorAll(".amonth").forEach(inp => { inp.max = today().slice(0, 7); inp.value = isMonth ? f.slice(0, 7) : ""; });
   }
 
+  // ===== Excel'ga yuklab olish (rangli, formatlangan) =====
+  let xlsLib = null;
+  function loadXlsLib() {
+    if (window.ExcelJS) return Promise.resolve(window.ExcelJS);
+    if (xlsLib) return xlsLib;
+    xlsLib = new Promise((ok, no) => { const sc = document.createElement("script"); sc.src = "lib/exceljs.min.js"; sc.onload = () => ok(window.ExcelJS); sc.onerror = () => { xlsLib = null; no(new Error("lib")); }; document.head.appendChild(sc); });
+    return xlsLib;
+  }
+  async function exportXls() {
+    if (!adminData) return;
+    const btn = $("xlsBtn"), lbl = btn.querySelector("b"), old = "Excel'ga yuklab olish";
+    btn.classList.add("busy"); lbl.textContent = "Tayyorlanmoqda...";
+    try {
+      const ExcelJS = await loadXlsLib();
+      const wb = new ExcelJS.Workbook(); wb.creator = "Kamolon Osh markazi";
+      const MAROON = "FF4A120B", GOLD = "FFF6D9A0", CREAM = "FFFFF8EC", LINE = "FFE7D3BC";
+      const from = curDate(), to = view.to || curDate();
+      const period = fmtDay(from).replace(" (bugun)", "") + (to !== from ? " – " + fmtDay(to).replace(" (bugun)", "") : "");
+      const side = { style: "thin", color: { argb: LINE } };
+      const border = { top: side, left: side, bottom: side, right: side };
+      const fill = c => ({ type: "pattern", pattern: "solid", fgColor: { argb: c } });
+      const rateFill = n => n >= 5 ? "FFC6EFCE" : n >= 4 ? "FFE2F5D3" : n >= 3 ? "FFFFF2B3" : "FFFFC7CE";
+      const rateFont = n => n >= 4 ? "FF14532D" : n >= 3 ? "FF7A5A00" : "FF9C0006";
+      function titleRows(ws, title, ncol) {
+        ws.mergeCells(1, 1, 1, ncol); ws.mergeCells(2, 1, 2, ncol);
+        const t = ws.getCell(1, 1); t.value = "KAMOLON OSH MARKAZI — " + title; t.font = { bold: true, size: 15, color: { argb: GOLD } }; t.fill = fill(MAROON); t.alignment = { vertical: "middle", horizontal: "center" };
+        ws.getRow(1).height = 30;
+        const d = ws.getCell(2, 1); d.value = "Davr: " + period + "   •   Yuklab olingan: " + new Date().toLocaleString("ru-RU", { timeZone: TZ }); d.font = { italic: true, size: 10, color: { argb: "FF6B4A3A" } }; d.fill = fill("FFFBEFD9"); d.alignment = { horizontal: "center" };
+      }
+      function header(ws, rowNo, names) {
+        const r = ws.getRow(rowNo); r.values = names; r.height = 22;
+        r.eachCell(c => { c.font = { bold: true, color: { argb: GOLD } }; c.fill = fill("FF6B1D12"); c.alignment = { vertical: "middle", horizontal: "center", wrapText: true }; c.border = border; });
+      }
+      const sorted = list => ofDay(list).slice().sort((a, b) => new Date(a.time) - new Date(b.time));
+      const dd = iso => { const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleDateString("ru-RU", { timeZone: TZ }); };
+      const tt = iso => { const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleTimeString("ru-RU", { timeZone: TZ, hour: "2-digit", minute: "2-digit" }); };
+
+      // 1) Umumiy
+      const sum = wb.addWorksheet("Umumiy", { properties: { tabColor: { argb: "FF6B1D12" } }, views: [{ showGridLines: false }] });
+      sum.columns = [{ width: 30 }, { width: 12 }, { width: 12 }, { width: 12 }, { width: 12 }];
+      titleRows(sum, "FEEDBACK HISOBOT", 5);
+      header(sum, 4, ["Bo'lim", "Soni"]);
+      let rn = 5;
+      Object.keys(CAT_NAMES).forEach((c, i) => {
+        const r = sum.getRow(rn++); r.values = [CAT_NAMES[c], ofDay(adminData[c]).length];
+        r.eachCell(cell => { cell.border = border; cell.fill = fill(i % 2 ? "FFFFFFFF" : CREAM); });
+        r.getCell(2).alignment = { horizontal: "center" }; r.getCell(2).font = { bold: true, color: { argb: "FF6B1D12" } };
+      });
+      const tot = sum.getRow(rn++); tot.values = ["JAMI", Object.keys(CAT_NAMES).reduce((n, c) => n + ofDay(adminData[c]).length, 0)];
+      tot.eachCell(cell => { cell.font = { bold: true, color: { argb: GOLD } }; cell.fill = fill(MAROON); cell.border = border; }); tot.getCell(2).alignment = { horizontal: "center" };
+      rn += 1;
+      header(sum, rn++, ["Filial (Fikr qoldirish)", "Soni", "Taom ⌀", "Xizmat ⌀", "Muhit ⌀"]);
+      const rev = ofDay(adminData.review);
+      const avg = (arr, k) => { const v = arr.map(x => +x[k]).filter(n => n > 0); return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length * 10) / 10 : ""; };
+      BRANCHES.forEach((b, i) => {
+        const name = b.uz.replace(" filiali", ""), arr = rev.filter(x => String(x.branch || "").toLowerCase() === name.toLowerCase());
+        const r = sum.getRow(rn++); r.values = [b.uz, arr.length, avg(arr, "food"), avg(arr, "service"), avg(arr, "atmos")];
+        for (let col = 1; col <= 5; col++) {
+          const cell = r.getCell(col); cell.border = border; cell.fill = fill(i % 2 ? "FFFFFFFF" : CREAM); if (col > 1) cell.alignment = { horizontal: "center" };
+          if (col > 2 && cell.value !== "" && cell.value != null) { cell.fill = fill(rateFill(cell.value)); cell.font = { bold: true, color: { argb: rateFont(cell.value) } }; cell.numFmt = "0.0"; }
+        }
+      });
+
+      // 2) Har bir bo'lim alohida varaqda
+      const SHEETS = {
+        review: { name: "Fikrlar", tab: "FFD9A441", cols: [["Sana", 12], ["Vaqt", 8], ["Filial", 14], ["Stol", 7], ["Taom", 12], ["Xizmat", 12], ["Muhit", 12], ["Ism", 18], ["Telefon", 17], ["Xabar", 50]],
+          row: x => [dd(x.time), tt(x.time), x.branch, x.table, +x.food || "", +x.service || "", +x.atmos || "", x.name, x.phone, x.msg], rate: [5, 6, 7] },
+        idea: { name: "G'oyalar", tab: "FFF97316", cols: [["Sana", 12], ["Vaqt", 8], ["Ism", 18], ["Telefon", 17], ["G'oya", 60]], row: x => [dd(x.time), tt(x.time), x.name, x.phone, x.msg] },
+        partner: { name: "Hamkorlik", tab: "FFE8503A", cols: [["Sana", 12], ["Vaqt", 8], ["Kompaniya", 22], ["Ism", 18], ["Telefon", 17], ["Taklif", 50]], row: x => [dd(x.time), tt(x.time), x.company, x.name, x.phone, x.msg] },
+        problem: { name: "Murojaatlar", tab: "FFD9304F", cols: [["Sana", 12], ["Vaqt", 8], ["Ism", 18], ["Telefon", 17], ["Murojaat", 60]], row: x => [dd(x.time), tt(x.time), x.name, x.phone, x.msg] }
+      };
+      Object.keys(SHEETS).forEach(c => {
+        const S = SHEETS[c], n = S.cols.length;
+        const ws = wb.addWorksheet(S.name, { properties: { tabColor: { argb: S.tab } }, views: [{ state: "frozen", ySplit: 4, showGridLines: false }] });
+        ws.columns = S.cols.map(([, w]) => ({ width: w }));
+        titleRows(ws, CAT_NAMES[c].toUpperCase(), n);
+        header(ws, 4, S.cols.map(([h]) => h));
+        const list = sorted(adminData[c]);
+        if (!list.length) { ws.mergeCells(5, 1, 5, n); const e = ws.getCell(5, 1); e.value = "Bu davrda feedback yo'q"; e.alignment = { horizontal: "center" }; e.font = { italic: true, color: { argb: "FF8A7A70" } }; return; }
+        list.forEach((x, i) => {
+          const r = ws.getRow(5 + i); r.values = S.row(x).map(v => v == null ? "" : v);
+          for (let col = 1; col <= n; col++) {
+            const cell = r.getCell(col), isRate = S.rate && S.rate.includes(col);
+            cell.border = border; cell.fill = fill(i % 2 ? "FFFFFFFF" : CREAM);
+            cell.alignment = { vertical: "top", wrapText: col === n, horizontal: col <= 2 || isRate || (c === "review" && col === 4) ? "center" : "left" };
+            if (isRate && cell.value) { const v = +cell.value; cell.value = "★".repeat(v) + " " + v; cell.fill = fill(rateFill(v)); cell.font = { bold: true, color: { argb: rateFont(v) } }; }
+          }
+        });
+        ws.autoFilter = { from: { row: 4, column: 1 }, to: { row: 4 + list.length, column: n } };
+      });
+
+      const buf = await wb.xlsx.writeBuffer();
+      const blob = new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+      a.download = "Kamolon-Osh-feedback_" + from + (to !== from ? "_" + to : "") + ".xlsx";
+      document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+      lbl.textContent = "Yuklab olindi ✓"; setTimeout(() => lbl.textContent = old, 2500);
+    } catch (err) {
+      console.error(err);
+      lbl.textContent = "Xato. Qayta urinib ko'ring"; setTimeout(() => lbl.textContent = old, 3000);
+    } finally { btn.classList.remove("busy"); }
+  }
+  $("xlsBtn").addEventListener("click", exportXls);
+
   async function loadAdmin() {
     $("pinNote").style.color = "var(--muted)";
     $("pinNote").textContent = "Yuklanmoqda...";
@@ -1373,6 +1501,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       try { const c = JSON.parse(localStorage.getItem("kamolon_cache") || "null"); if (c && c.pin === adminPin && c.data) { adminData = c.data; render(); } } catch (_) {}
     }
     try {
+      if (!adminData) skeleton();
       adminData = await loadEntries(adminPin);
     } catch (err) {
       document.querySelectorAll(".arefresh").forEach(b => b.classList.remove("spin"));
@@ -1402,6 +1531,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     document.querySelectorAll(".arange").forEach(el => el.textContent = isRange() ? "✕ Oraliq" : "Oraliq");
     document.querySelectorAll(".anext").forEach(el => el.disabled = k >= today());
     markPresets();
+    if ($("xlsPeriod")) $("xlsPeriod").textContent = "Davr: " + fmtDay(curDate()).replace(" (bugun)", "") + (view.to && view.to !== curDate() ? " – " + fmtDay(view.to).replace(" (bugun)", "") : "");
     if (view.screen === "alist" && view.cat) renderList(); else renderAdmin();
   }
 
