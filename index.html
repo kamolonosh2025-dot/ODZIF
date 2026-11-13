@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261113055817";
+  const APP_VERSION = "20261113060219";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -638,6 +638,18 @@ body.am .axls small { color: #4b7a5c; font-size: .82rem; font-weight: 600; }
 body.am .axls.busy { opacity: .6; pointer-events: none; }
 .tile.sk .skbar { display: inline-block; width: 90px; height: 12px; border-radius: 6px; background: linear-gradient(90deg, #f3e9df 25%, #fbf5ee 50%, #f3e9df 75%); background-size: 200% 100%; animation: skm 1.1s linear infinite; }
 @keyframes skm { to { background-position: -200% 0; } }
+.xcard { display: none; }
+body.am .xcard .dcrow[hidden] { display: none; }
+body.am .xcard { display: block; margin-top: 14px; padding: 14px; border-radius: 18px; border: 1.5px solid #9fd3b2; background: linear-gradient(180deg, #f1fbf4, #fff 60%); box-shadow: 0 12px 24px -18px rgba(20,90,50,.6); }
+body.am .xhead { display: flex; align-items: center; gap: 10px; color: #14532d; font-size: 1.05rem; margin-bottom: 10px; }
+body.am .xhead svg { width: 30px; height: 30px; flex: none; }
+body.am .xtabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 12px; background: #e3f3e8; margin-bottom: 10px; }
+body.am .xtab { height: 38px; border: 0; border-radius: 9px; background: transparent; color: #2f6b45; font: inherit; font-weight: 700; font-size: .9rem; cursor: pointer; }
+body.am .xtab.on { background: #fff; color: #14532d; box-shadow: 0 2px 6px rgba(20,90,50,.18); }
+body.am .xcard .dcf input { border-color: #9fd3b2; background: #fff; }
+body.am .xper { margin: 10px 2px 0; color: #2f6b45; font-weight: 700; font-size: .88rem; }
+body.am .xcard .axls { justify-content: center; margin-top: 10px; height: 48px; padding: 0; background: linear-gradient(180deg, #23824f, #17643b); border: 0; color: #fff; box-shadow: 0 12px 22px -14px rgba(20,90,50,.9); }
+body.am .xcard .axls b { font-size: 1rem; }
 @media (max-width: 560px) {
   body.am .shell { margin: 0; border-radius: 0; border: 0; box-shadow: none; min-height: 100vh; min-height: 100dvh; }
   body.am .ahero, body.am .actop { margin: 0 -16px 12px; }
@@ -881,7 +893,20 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       </div>
       <button type="button" class="dcgo">Ko'rsatish</button>
     </div>
-    <button type="button" class="axls" id="xlsBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" fill="#1d6f42"/><path d="M8 8l8 8M16 8l-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg><span><b>Excel'ga yuklab olish</b><small id="xlsPeriod"></small></span></button>
+    <div class="xcard">
+      <div class="xhead"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" fill="#1d6f42"/><path d="M8 8l8 8M16 8l-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg><b>Excel'ga yuklab olish</b></div>
+      <div class="xtabs"><button type="button" class="xtab on" data-x="m">Oydan oygacha</button><button type="button" class="xtab" data-x="d">Kundan kungacha</button></div>
+      <div class="dcrow xm">
+        <label class="dcf"><span>Qaysi oydan</span><input type="month" id="xmFrom"></label>
+        <label class="dcf"><span>Qaysi oygacha</span><input type="month" id="xmTo"></label>
+      </div>
+      <div class="dcrow xd" hidden>
+        <label class="dcf"><span>Qaysi kundan</span><input type="date" id="xdFrom"></label>
+        <label class="dcf"><span>Qaysi kungacha</span><input type="date" id="xdTo"></label>
+      </div>
+      <div class="xper" id="xlsPeriod"></div>
+      <button type="button" class="axls" id="xlsBtn"><b>⬇ Yuklab olish</b></button>
+    </div>
     <div class="grid" id="adminTiles" style="margin-top:18px"></div>
   </section>
 
@@ -1398,13 +1423,14 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   }
   async function exportXls() {
     if (!adminData) return;
-    const btn = $("xlsBtn"), lbl = btn.querySelector("b"), old = "Excel'ga yuklab olish";
+    const btn = $("xlsBtn"), lbl = btn.querySelector("b"), old = "⬇ Yuklab olish";
     btn.classList.add("busy"); lbl.textContent = "Tayyorlanmoqda...";
     try {
       const ExcelJS = await loadXlsLib();
       const wb = new ExcelJS.Workbook(); wb.creator = "Kamolon Osh markazi";
       const MAROON = "FF4A120B", GOLD = "FFF6D9A0", CREAM = "FFFFF8EC", LINE = "FFE7D3BC";
-      const from = curDate(), to = view.to || curDate();
+      const [from, to] = xRange();
+      const ofDay = list => (list || []).filter(x => { const k = dayKey(x.time); return k >= from && k <= to; });
       const period = fmtDay(from).replace(" (bugun)", "") + (to !== from ? " – " + fmtDay(to).replace(" (bugun)", "") : "");
       const side = { style: "thin", color: { argb: LINE } };
       const border = { top: side, left: side, bottom: side, right: side };
@@ -1491,6 +1517,37 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     } finally { btn.classList.remove("busy"); }
   }
   $("xlsBtn").addEventListener("click", exportXls);
+  // Excel davri: oydan oygacha yoki kundan kungacha
+  let xMode = "m";
+  function xRange() {
+    let a, z;
+    if (xMode === "m") {
+      a = $("xmFrom").value || today().slice(0, 7); z = $("xmTo").value || a;
+      if (a > z) [a, z] = [z, a];
+      return [a + "-01", lastOfMonth(z)];
+    }
+    a = $("xdFrom").value || today(); z = $("xdTo").value || a;
+    if (a > z) [a, z] = [z, a];
+    return [a, z];
+  }
+  function xUpd() {
+    const [a, z] = xRange(), f = k => fmtDay(k).replace(" (bugun)", "");
+    let n = 0; if (adminData) Object.keys(CAT_NAMES).forEach(c => n += (adminData[c] || []).filter(x => { const k = dayKey(x.time); return k >= a && k <= z; }).length);
+    $("xlsPeriod").textContent = f(a) + " – " + f(z) + (adminData ? " • " + n + " ta feedback" : "");
+  }
+  (() => {
+    const m = today().slice(0, 7);
+    $("xmFrom").value = m; $("xmTo").value = m; $("xmFrom").max = $("xmTo").max = m;
+    $("xdFrom").value = m + "-01"; $("xdTo").value = today(); $("xdFrom").max = $("xdTo").max = today();
+    ["xmFrom", "xmTo", "xdFrom", "xdTo"].forEach(id => $(id).addEventListener("change", xUpd));
+    document.querySelectorAll(".xtab").forEach(t => t.addEventListener("click", () => {
+      xMode = t.dataset.x;
+      document.querySelectorAll(".xtab").forEach(o => o.classList.toggle("on", o === t));
+      document.querySelector(".xm").hidden = xMode !== "m"; document.querySelector(".xd").hidden = xMode !== "d";
+      xUpd();
+    }));
+    xUpd();
+  })();
 
   async function loadAdmin() {
     $("pinNote").style.color = "var(--muted)";
@@ -1531,7 +1588,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     document.querySelectorAll(".arange").forEach(el => el.textContent = isRange() ? "✕ Oraliq" : "Oraliq");
     document.querySelectorAll(".anext").forEach(el => el.disabled = k >= today());
     markPresets();
-    if ($("xlsPeriod")) $("xlsPeriod").textContent = "Davr: " + fmtDay(curDate()).replace(" (bugun)", "") + (view.to && view.to !== curDate() ? " – " + fmtDay(view.to).replace(" (bugun)", "") : "");
+    xUpd();
     if (view.screen === "alist" && view.cat) renderList(); else renderAdmin();
   }
 
