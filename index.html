@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261116051736";
+  const APP_VERSION = "20261116080154";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -675,6 +675,10 @@ body.fm.frv .consent { display: block; color: #8a7a70; font-size: .78rem; line-h
 #brCard.err { border-color: #e5383b; box-shadow: 0 0 0 3px rgba(229,56,59,.15); }
 #brCard.err .rvt::after { content: " *"; color: #e5383b; }
 .chekth { display: block; margin-top: 10px; border-radius: 14px; overflow: hidden; border: 1px solid #f0e6df; line-height: 0; background: #faf5ef; }
+.dbph { width: 100%; padding: 0; font: inherit; cursor: zoom-in; min-height: 60px; display: grid; place-items: center; color: #8a6a50; font-size: .9rem; font-weight: 600; }
+.dbph img { max-height: 320px; object-fit: contain; background: #fff; }
+.dbph.zoom { position: fixed; inset: 0; z-index: 99; max-height: none; border-radius: 0; border: 0; background: rgba(20,6,4,.92); cursor: zoom-out; }
+.dbph.zoom img { max-height: 100vh; max-width: 100vw; width: auto; object-fit: contain; background: transparent; }
 .chekth img { width: 100%; max-height: 260px; object-fit: cover; }
 body.am #adminMode { display: block; margin: 10px 0 0; padding: 10px 12px; border-radius: 12px; background: #fff3d6; color: #7a4a00; font-size: .88rem; font-weight: 600; line-height: 1.45; }
 body.am #adminMode[hidden] { display: none; }
@@ -1296,10 +1300,17 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     return new Promise((ok, no) => {
       const img = new Image();
       img.onload = () => {
-        const k = Math.min(1, 1280 / Math.max(img.width, img.height));
-        const c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
-        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
-        URL.revokeObjectURL(img.src); ok(c.toDataURL("image/jpeg", 0.72));
+        // Jadvalga sig'ishi uchun ~170 000 belgigacha siqiladi (taxminan 120 KB)
+        let side = 1100, q = 0.7, out = "";
+        for (let n = 0; n < 12; n++) {
+          const k = Math.min(1, side / Math.max(img.width, img.height));
+          const c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+          const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+          out = c.toDataURL("image/jpeg", q);
+          if (out.length <= 170000) break;
+          if (q > 0.45) q -= 0.1; else side = Math.round(side * 0.8);
+        }
+        URL.revokeObjectURL(img.src); ok(out);
       };
       img.onerror = no; img.src = URL.createObjectURL(file);
     });
@@ -1669,7 +1680,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       // 2) Har bir bo'lim alohida varaqda
       const SHEETS = {
         review: { name: "Fikrlar", tab: "FFD9A441", cols: [["Sana", 12], ["Vaqt", 8], ["Filial", 13], ["Stol", 7], ["Tavsiya (0–10)", 10], ["Ta'm", 12], ["Tezlik", 12], ["Xushmuomala", 12], ["Xizmat", 12], ["Tozalik", 12], ["Muhit (eski)", 12], ["Yana qachon", 13], ["Menejer keldi", 10], ["Birinchi marta", 10], ["Ism", 16], ["Telefon", 16], ["Chek", 12], ["Izoh", 50]],
-          row: x => [dd(x.time), tt(x.time), x.branch, x.table, x.nps === "" || x.nps == null ? "" : +x.nps, +x.food || "", +x.speed || "", +x.polite || "", +x.service || "", +x.clean || "", +x.atmos || "", x.when, x.manager, x.first, x.name, x.phone, x.photo && !/^XATO/.test(String(x.photo)) ? { text: "📷 Ko'rish", hyperlink: String(x.photo) } : (x.photo ? "saqlanmadi" : ""), x.msg], rate: [6, 7, 8, 9, 10, 11], nps: 5, center: [4, 5, 13, 14] },
+          row: x => [dd(x.time), tt(x.time), x.branch, x.table, x.nps === "" || x.nps == null ? "" : +x.nps, +x.food || "", +x.speed || "", +x.polite || "", +x.service || "", +x.clean || "", +x.atmos || "", x.when, x.manager, x.first, x.name, x.phone, x.photo === "db" ? "📷 bor (admin panelda)" : x.photo && !/^XATO/.test(String(x.photo)) ? { text: "📷 Ko'rish", hyperlink: String(x.photo) } : (x.photo ? "saqlanmadi" : ""), x.msg], rate: [6, 7, 8, 9, 10, 11], nps: 5, center: [4, 5, 13, 14] },
         idea: { name: "G'oyalar", tab: "FFF97316", cols: [["Sana", 12], ["Vaqt", 8], ["Ism", 18], ["Telefon", 17], ["G'oya", 60]], row: x => [dd(x.time), tt(x.time), x.name, x.phone, x.msg] },
         partner: { name: "Hamkorlik", tab: "FFE8503A", cols: [["Sana", 12], ["Vaqt", 8], ["Kompaniya", 22], ["Ism", 18], ["Telefon", 17], ["Taklif", 50]], row: x => [dd(x.time), tt(x.time), x.company, x.name, x.phone, x.msg] },
         problem: { name: "Murojaatlar", tab: "FFD9304F", cols: [["Sana", 12], ["Vaqt", 8], ["Ism", 18], ["Telefon", 17], ["Murojaat", 60]], row: x => [dd(x.time), tt(x.time), x.name, x.phone, x.msg] }
@@ -1815,10 +1826,10 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       x.when ? `<span class="chip">Yana: ${esc(x.when)}</span>` : "",
       x.manager ? `<span class="chip">Menejer keldi: ${esc(x.manager)}</span>` : "",
       x.first ? `<span class="chip">Birinchi marta: ${esc(x.first)}</span>` : "",
-      photoErr ? `<span class="chip cnps r" style="white-space:normal">📷 Chek saqlanmadi: ${esc(String(x.photo).replace(/^XATO:\s*/, ""))}</span>` : x.photo ? `<a class="chip chekl" href="${esc(x.photo)}" target="_blank" rel="noopener">📷 Chek surati</a>` : ""
+      x.photo === "db" ? "" : photoErr ? `<span class="chip cnps r" style="white-space:normal">📷 Chek saqlanmadi: ${esc(String(x.photo).replace(/^XATO:\s*/, ""))}</span>` : x.photo ? `<a class="chip chekl" href="${esc(x.photo)}" target="_blank" rel="noopener">📷 Chek surati</a>` : ""
     ].join("");
-    const pid = x.photo && !photoErr ? (String(x.photo).match(/\/d\/([\w-]+)/) || [])[1] : "";
-    const thumb = pid ? `<a class="chekth" href="${esc(x.photo)}" target="_blank" rel="noopener"><img src="https://drive.google.com/thumbnail?id=${esc(pid)}&sz=w600" alt="Chek surati" loading="lazy"></a>` : "";
+    const pid = x.photo && !photoErr && x.photo !== "db" ? (String(x.photo).match(/\/d\/([\w-]+)/) || [])[1] : "";
+    const thumb = x.photo === "db" ? `<button type="button" class="chekth dbph" data-pcat="${esc(x.cat || view.cat)}" data-pid="${esc(x.id)}"><span>📷 Chek yuklanmoqda…</span></button>` : pid ? `<a class="chekth" href="${esc(x.photo)}" target="_blank" rel="noopener"><img src="https://drive.google.com/thumbnail?id=${esc(pid)}&sz=w600" alt="Chek surati" loading="lazy"></a>` : "";
     return (chips ? `<div class="echips rvchips">${chips}</div>` : "") + (rates ? `<div class="rates">${rates}</div>` : "") + thumb;
   }
   function renderList() {
@@ -1858,7 +1869,26 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
         </div>`).join("") : `<p class="lead">${isRange() ? "Bu kunlarda" : "Bu kunda"} feedback yo'q.</p>`;
     }
     if ($("s-alist").hidden) show("alist");
+    loadPhotos();
   }
+  // Chek suratlari jadvaldan alohida, kerak bo'lganda yuklanadi
+  const photoCache = {};
+  async function getPhoto(cat, id) {
+    if (photoCache[id]) return photoCache[id];
+    const r = await fetch(API_URL + "?action=photo&pin=" + encodeURIComponent(adminPin) + "&cat=" + encodeURIComponent(cat) + "&id=" + encodeURIComponent(id));
+    const j = await r.json(); if (!j.ok || !j.data) throw new Error(j.error || "photo");
+    return (photoCache[id] = j.data);
+  }
+  function loadPhotos() {
+    document.querySelectorAll(".dbph:not(.done)").forEach(async el => {
+      el.classList.add("done");
+      try { const d = await getPhoto(el.dataset.pcat, el.dataset.pid); el.innerHTML = `<img src="${d}" alt="Chek surati">`; }
+      catch (_) { el.innerHTML = "<span>📷 Chekni yuklab bo'lmadi</span>"; el.classList.remove("done"); }
+    });
+  }
+  document.addEventListener("click", e => {
+    const t = e.target.closest(".dbph"); if (t && t.querySelector("img")) t.classList.toggle("zoom");
+  });
 
   // ⋮ menyu: o'chirish
   $("items").addEventListener("click", async e => {
