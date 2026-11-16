@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261116045416";
+  const APP_VERSION = "20261116045906";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -667,6 +667,13 @@ body.fm.frv .consent { display: block; color: #8a7a70; font-size: .78rem; line-h
 .wsig { margin-top: 10px; display: flex; flex-direction: column; }
 .wsig b { color: #3a0f0b; font-size: .95rem; }
 .wsig span { color: #8a6a50; font-size: .88rem; }
+.bsel { position: relative; }
+.bsel::after { content: ""; position: absolute; right: 16px; top: 50%; width: 9px; height: 9px; margin-top: -7px; border-right: 2px solid #3a1d16; border-bottom: 2px solid #3a1d16; transform: rotate(45deg); pointer-events: none; }
+.bsel select { width: 100%; height: 52px; padding: 0 44px 0 16px; border-radius: 14px; border: 1.5px solid #3a1d16; background: #fff; font: inherit; font-size: 1.02rem; font-weight: 700; color: #2b120d; -webkit-appearance: none; appearance: none; cursor: pointer; }
+.bsel select.empty { color: #2b120d; }
+.bsel select:focus { outline: none; border-color: #d9a441; box-shadow: 0 0 0 4px rgba(217,164,65,.2); }
+#brCard.err { border-color: #e5383b; box-shadow: 0 0 0 3px rgba(229,56,59,.15); }
+#brCard.err .rvt::after { content: " *"; color: #e5383b; }
 .rvc { margin-top: 12px; padding: 16px; border-radius: 20px; background: #fff; border: 1px solid #f0e6df; box-shadow: 0 2px 4px rgba(60,20,10,.04), 0 12px 24px -18px rgba(60,20,10,.35); }
 .rvt { font-weight: 800; font-size: 1.05rem; color: #2b120d; margin-bottom: 12px; }
 .nps { display: grid; grid-template-columns: repeat(11, 1fr); gap: 4px; }
@@ -853,6 +860,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       <div id="fields">
       <div class="rvx">
         <div class="wcard"><b class="wt" data-i18n="wTitle"></b><p data-i18n="w1"></p><p data-i18n="w2"></p><p data-i18n="w3"></p><div class="wsig"><b data-i18n="wSig"></b><span data-i18n="wSig2"></span></div></div>
+        <div class="rvc" id="brCard"><div class="rvt" data-i18n="qBranch"></div><div class="bsel"><select id="branchSel"></select></div></div>
         <div class="rvc"><div class="rvt" data-i18n="qNps"></div><div class="nps" id="nps"></div><div class="npsl"><span data-i18n="npsNo"></span><span data-i18n="npsYes"></span></div></div>
         <div class="rvc"><div class="rvt" data-i18n="qWhen"></div><div class="chips" data-q="when"><button type="button" data-v="week" data-i18n="wWeek"></button><button type="button" data-v="month" data-i18n="wMonth"></button><button type="button" data-v="later" data-i18n="wLater"></button><button type="button" data-v="unknown" data-i18n="wDunno"></button></div></div>
         <div class="rvc"><div class="rvt" data-i18n="qRate"></div><div class="emo-row" data-key="food"><span data-i18n="e_food"></span><div class="emos"></div></div><div class="emo-row" data-key="speed"><span data-i18n="e_speed"></span><div class="emos"></div></div><div class="emo-row" data-key="polite"><span data-i18n="e_polite"></span><div class="emos"></div></div><div class="emo-row" data-key="service"><span data-i18n="e_service"></span><div class="emos"></div></div><div class="emo-row" data-key="clean"><span data-i18n="e_clean"></span><div class="emos"></div></div><p class="rvhint" data-i18n="rateHint"></p></div>
@@ -1043,7 +1051,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       back: "Orqaga", toHome: "Bosh sahifaga",
       rateQ: "Bahoyingiz",
       r_food: "Taom", r_service: "Xizmat", r_atmos: "Muhit",
-      wTitle: "Hurmatli mehmon!", w1: "Har bir fikringizni biz o'zimiz shaxsan o'qiymiz.", w2: "Agar nimadir ko'nglingizdagidek bo'lmagan bo'lsa, uzr so'raymiz. Bizga yozing, albatta tuzatamiz.", w3: "Sizga yoqqan bo'lsa, bu haqda ham yozing, jamoamiz juda xursand bo'ladi.", wSig: "Kamolon Osh markazi", wSig2: "jamoasi", qNps: "Bizni do'stlaringizga tavsiya qilasizmi?", npsNo: "Yo'q", npsYes: "Albatta", qWhen: "Sizni yana qachon kutaylik?", wWeek: "Shu hafta", wMonth: "Shu oy", wLater: "Keyinroq", wDunno: "Bilmayman", qRate: "Baholang", e_food: "Ta'm", e_speed: "Buyurtma tezligi", e_polite: "Xushmuomalalik", e_service: "Xizmat", e_clean: "Tozalik", rateHint: "Ta'm: taom, ichimlik va shirinlik. 1 juda yomon, 5 a'lo.", qMgr: "Menejer stolingizga keldimi?", qFirst: "Birinchi marta keldingizmi?", yes: "Ha", no: "Yo'q", qCmt: "Izoh va takliflar", rvMsg: "Izoh va takliflaringiz", rvName: "Ismingiz (ixtiyoriy)", qChek: "Chek surati yoki telefon", chekSub: "Fikringiz haqiqiy ekanini tasdiqlash uchun chekni suratga oling yoki telefon raqamingizni qoldiring.", chekBtn: "📷 Chekni suratga olish", chekNote: "Muammo bo'lsa, menejer siz bilan bog'lanadi.", rvPhone: "Yoki telefon raqamingiz", consent: "«Xabarni jo'natish» tugmasini bosib, siz ismingiz, telefon raqamingiz va chek suratingiz Kamolon Osh markazi tomonidan fikringizga javob berish va xizmat sifatini yaxshilash uchun ishlatilishiga rozilik bildirasiz.",
+      qBranch: "Qaysi filialdasiz?", pickBranch: "Filialni tanlang", wTitle: "Hurmatli mehmon!", w1: "Har bir fikringizni biz o'zimiz shaxsan o'qiymiz.", w2: "Agar nimadir ko'nglingizdagidek bo'lmagan bo'lsa, uzr so'raymiz. Bizga yozing, albatta tuzatamiz.", w3: "Sizga yoqqan bo'lsa, bu haqda ham yozing, jamoamiz juda xursand bo'ladi.", wSig: "Kamolon Osh markazi", wSig2: "jamoasi", qNps: "Bizni do'stlaringizga tavsiya qilasizmi?", npsNo: "Yo'q", npsYes: "Albatta", qWhen: "Sizni yana qachon kutaylik?", wWeek: "Shu hafta", wMonth: "Shu oy", wLater: "Keyinroq", wDunno: "Bilmayman", qRate: "Baholang", e_food: "Ta'm", e_speed: "Buyurtma tezligi", e_polite: "Xushmuomalalik", e_service: "Xizmat", e_clean: "Tozalik", rateHint: "Ta'm: taom, ichimlik va shirinlik. 1 juda yomon, 5 a'lo.", qMgr: "Menejer stolingizga keldimi?", qFirst: "Birinchi marta keldingizmi?", yes: "Ha", no: "Yo'q", qCmt: "Izoh va takliflar", rvMsg: "Izoh va takliflaringiz", rvName: "Ismingiz (ixtiyoriy)", qChek: "Chek surati yoki telefon", chekSub: "Fikringiz haqiqiy ekanini tasdiqlash uchun chekni suratga oling yoki telefon raqamingizni qoldiring.", chekBtn: "📷 Chekni suratga olish", chekNote: "Muammo bo'lsa, menejer siz bilan bog'lanadi.", rvPhone: "Yoki telefon raqamingiz", consent: "«Xabarni jo'natish» tugmasini bosib, siz ismingiz, telefon raqamingiz va chek suratingiz Kamolon Osh markazi tomonidan fikringizga javob berish va xizmat sifatini yaxshilash uchun ishlatilishiga rozilik bildirasiz.",
       name: "Ismingiz", optional: "(ixtiyoriy)", namePh: "Masalan: Aziz",
       phone: "Telefon raqamingiz", company: "Kompaniya nomi",
       msg: "Xabaringiz", msgPh: "Shu yerga yozing...",
@@ -1070,7 +1078,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       back: "Назад", toHome: "На главную",
       rateQ: "Ваша оценка",
       r_food: "Еда", r_service: "Сервис", r_atmos: "Атмосфера",
-      wTitle: "Уважаемый гость!", w1: "Каждый ваш отзыв мы читаем лично.", w2: "Если что-то было не так, как вам хотелось, просим прощения. Напишите нам, мы обязательно исправим.", w3: "Если вам понравилось, напишите и об этом, наша команда будет очень рада.", wSig: "Kamolon Osh markazi", wSig2: "команда", qNps: "Порекомендуете нас друзьям?", npsNo: "Нет", npsYes: "Обязательно", qWhen: "Когда вас снова ждать?", wWeek: "На этой неделе", wMonth: "В этом месяце", wLater: "Позже", wDunno: "Не знаю", qRate: "Оцените", e_food: "Вкус", e_speed: "Скорость заказа", e_polite: "Вежливость", e_service: "Сервис", e_clean: "Чистота", rateHint: "Вкус: еда, напитки и десерты. 1 очень плохо, 5 отлично.", qMgr: "Подходил ли менеджер к вашему столу?", qFirst: "Вы у нас впервые?", yes: "Да", no: "Нет", qCmt: "Комментарии и пожелания", rvMsg: "Ваши комментарии", rvName: "Ваше имя (необязательно)", qChek: "Фото чека или телефон", chekSub: "Чтобы подтвердить отзыв, сфотографируйте чек или оставьте номер телефона.", chekBtn: "📷 Сфотографировать чек", chekNote: "Если возникла проблема, менеджер свяжется с вами.", rvPhone: "Или ваш номер телефона", consent: "Нажимая «Отправить», вы соглашаетесь, что ваше имя, телефон и фото чека будут использованы Kamolon Osh markazi для ответа на отзыв и улучшения качества сервиса.",
+      qBranch: "В каком вы филиале?", pickBranch: "Выберите филиал", wTitle: "Уважаемый гость!", w1: "Каждый ваш отзыв мы читаем лично.", w2: "Если что-то было не так, как вам хотелось, просим прощения. Напишите нам, мы обязательно исправим.", w3: "Если вам понравилось, напишите и об этом, наша команда будет очень рада.", wSig: "Kamolon Osh markazi", wSig2: "команда", qNps: "Порекомендуете нас друзьям?", npsNo: "Нет", npsYes: "Обязательно", qWhen: "Когда вас снова ждать?", wWeek: "На этой неделе", wMonth: "В этом месяце", wLater: "Позже", wDunno: "Не знаю", qRate: "Оцените", e_food: "Вкус", e_speed: "Скорость заказа", e_polite: "Вежливость", e_service: "Сервис", e_clean: "Чистота", rateHint: "Вкус: еда, напитки и десерты. 1 очень плохо, 5 отлично.", qMgr: "Подходил ли менеджер к вашему столу?", qFirst: "Вы у нас впервые?", yes: "Да", no: "Нет", qCmt: "Комментарии и пожелания", rvMsg: "Ваши комментарии", rvName: "Ваше имя (необязательно)", qChek: "Фото чека или телефон", chekSub: "Чтобы подтвердить отзыв, сфотографируйте чек или оставьте номер телефона.", chekBtn: "📷 Сфотографировать чек", chekNote: "Если возникла проблема, менеджер свяжется с вами.", rvPhone: "Или ваш номер телефона", consent: "Нажимая «Отправить», вы соглашаетесь, что ваше имя, телефон и фото чека будут использованы Kamolon Osh markazi для ответа на отзыв и улучшения качества сервиса.",
       name: "Ваше имя", optional: "(необязательно)", namePh: "Например: Азиз",
       phone: "Номер телефона", company: "Название компании",
       msg: "Ваше сообщение", msgPh: "Напишите здесь...",
@@ -1097,7 +1105,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       back: "Back", toHome: "Back to home",
       rateQ: "Your rating",
       r_food: "Food", r_service: "Service", r_atmos: "Atmosphere",
-      wTitle: "Dear guest!", w1: "We read every piece of feedback personally.", w2: "If something wasn't as you wished, we apologise. Write to us and we will fix it.", w3: "If you enjoyed it, tell us that too, our team will be delighted.", wSig: "Kamolon Osh markazi", wSig2: "team", qNps: "Would you recommend us to friends?", npsNo: "No", npsYes: "Definitely", qWhen: "When can we expect you again?", wWeek: "This week", wMonth: "This month", wLater: "Later", wDunno: "Not sure", qRate: "Rate us", e_food: "Taste", e_speed: "Order speed", e_polite: "Politeness", e_service: "Service", e_clean: "Cleanliness", rateHint: "Taste: food, drinks and desserts. 1 very bad, 5 excellent.", qMgr: "Did a manager visit your table?", qFirst: "Is this your first visit?", yes: "Yes", no: "No", qCmt: "Comments and suggestions", rvMsg: "Your comments", rvName: "Your name (optional)", qChek: "Receipt photo or phone", chekSub: "To confirm your feedback, take a photo of the receipt or leave your phone number.", chekBtn: "📷 Photograph the receipt", chekNote: "If there is a problem, a manager will contact you.", rvPhone: "Or your phone number", consent: "By pressing Send, you agree that your name, phone number and receipt photo may be used by Kamolon Osh markazi to reply to your feedback and improve our service.",
+      qBranch: "Which branch are you at?", pickBranch: "Choose a branch", wTitle: "Dear guest!", w1: "We read every piece of feedback personally.", w2: "If something wasn't as you wished, we apologise. Write to us and we will fix it.", w3: "If you enjoyed it, tell us that too, our team will be delighted.", wSig: "Kamolon Osh markazi", wSig2: "team", qNps: "Would you recommend us to friends?", npsNo: "No", npsYes: "Definitely", qWhen: "When can we expect you again?", wWeek: "This week", wMonth: "This month", wLater: "Later", wDunno: "Not sure", qRate: "Rate us", e_food: "Taste", e_speed: "Order speed", e_polite: "Politeness", e_service: "Service", e_clean: "Cleanliness", rateHint: "Taste: food, drinks and desserts. 1 very bad, 5 excellent.", qMgr: "Did a manager visit your table?", qFirst: "Is this your first visit?", yes: "Yes", no: "No", qCmt: "Comments and suggestions", rvMsg: "Your comments", rvName: "Your name (optional)", qChek: "Receipt photo or phone", chekSub: "To confirm your feedback, take a photo of the receipt or leave your phone number.", chekBtn: "📷 Photograph the receipt", chekNote: "If there is a problem, a manager will contact you.", rvPhone: "Or your phone number", consent: "By pressing Send, you agree that your name, phone number and receipt photo may be used by Kamolon Osh markazi to reply to your feedback and improve our service.",
       name: "Your name", optional: "(optional)", namePh: "e.g. Aziz",
       phone: "Phone number", company: "Company name",
       msg: "Your message", msgPh: "Write here...",
@@ -1151,15 +1159,24 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       branch = +btn.dataset.b; renderBranches(); $("note").textContent = "";
     }));
     const isReview = cat === "review";
-    $("branchWrap").hidden = !isReview || branch >= 0;
-    $("branchPicked").hidden = !isReview || branch < 0;
-    $("fields").hidden = isReview && branch < 0;
+    // Filial alohida ekranda emas, forma ichidagi ro'yxatdan tanlanadi
+    $("branchWrap").hidden = true;
+    $("branchPicked").hidden = true;
+    $("fields").hidden = false;
+    $("branchSel").innerHTML = `<option value="">${T[lang].pickBranch}</option>` + BRANCHES.map((b, i) => `<option value="${i}">${b[lang]}</option>`).join("");
+    $("branchSel").value = branch >= 0 ? String(branch) : "";
+    $("branchSel").classList.toggle("empty", branch < 0);
     document.body.classList.toggle("fc", !$("fields").hidden); // forma ochiq: ixcham tepa qism
     document.body.classList.toggle("frv", isReview);
     placeFields(isReview);
     if (branch >= 0) $("branchName").innerHTML = '<b class="cn">' + T[lang].center + '</b><span class="nw"> – ' + BRANCHES[branch][lang] + "</span>";
   }
   $("branchChange").addEventListener("click", () => { branch = -1; renderBranches(); });
+  $("branchSel").addEventListener("change", () => {
+    branch = $("branchSel").value === "" ? -1 : +$("branchSel").value;
+    $("branchSel").classList.toggle("empty", branch < 0);
+    $("brCard").classList.remove("err"); $("note").textContent = "";
+  });
 
   function show(name) {
     ["lang", "home", "form", "done", "pin", "admin", "alist"].forEach(s => $("s-" + s).hidden = s !== name);
@@ -1324,7 +1341,11 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     clearErrs();
 
     let text = m.head + "\n" + m.cat + ": " + t["c_" + cat + "_t"] + "\n" + m.lang + ": " + t.code + "\n";
-    if (cat === "review" && branch < 0) { $("note").textContent = t.needBranch; return; }
+    if (cat === "review" && branch < 0) {
+      $("brCard").classList.add("err");
+      $("brCard").scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
     if (cat === "review") text += m.branch + ": " + t.center + "-" + BRANCHES[branch][lang] + "\n";
     if (cat === "review") {
       const U = T.uz;
