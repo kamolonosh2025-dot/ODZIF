@@ -39,7 +39,7 @@ function doPost(e) {
     const id = Utilities.getUuid();
     const time = new Date().toISOString();
     let photo = "";
-    if (x.photo && /^data:image\//.test(x.photo)) { try { photo = savePhoto(x.photo); } catch (err) { photo = ""; } }
+    if (x.photo && /^data:image\//.test(x.photo)) { try { photo = savePhoto(x.photo); } catch (err) { photo = "XATO: " + String(err.message || err).slice(0, 200); } }
     const row = HEAD.map(function (h) { return h === "id" ? id : h === "time" ? time : h === "photo" ? photo : x[h]; });
     sh.appendRow(row.map(clean));
     if (TG_TOKEN && TG_CHAT_ID && data.text) {
@@ -53,6 +53,14 @@ function doPost(e) {
   } catch (err) {
     return out({ ok: false, error: String(err.message || err) });
   }
+}
+
+// BIR MARTA ishga tushiring (Выполнить): Google Drive'ga ruxsat berish uchun.
+// Shundan keyin chek suratlari Drive'ga saqlana boshlaydi.
+function ruxsatBerish() {
+  const it = DriveApp.getFoldersByName(PHOTO_FOLDER);
+  const folder = it.hasNext() ? it.next() : DriveApp.createFolder(PHOTO_FOLDER);
+  Logger.log("Tayyor! Papka: " + folder.getUrl());
 }
 
 // Chek suratini Drive'ga saqlab, havolasini qaytaradi
