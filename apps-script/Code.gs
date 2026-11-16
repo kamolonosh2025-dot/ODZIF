@@ -6,7 +6,9 @@ const TG_TOKEN = "";        // Ixtiyoriy: Telegram bot tokeni (@BotFather'dan)
 const TG_CHAT_ID = "";      // Ixtiyoriy: xabarlar boradigan chat/guruh ID
 
 const SHEETS = { review: "Fikrlar", idea: "G'oyalar", partner: "Hamkorlik", problem: "Rahbariyat" };
-const HEAD = ["id", "time", "lang", "branch", "table", "food", "service", "atmos", "name", "phone", "company", "msg"];
+const HEAD = ["id", "time", "lang", "branch", "table", "food", "service", "atmos", "name", "phone", "company", "msg",
+              "nps", "when", "speed", "polite", "clean", "manager", "first", "photo"];
+const PHOTO_FOLDER = "Kamolon Osh — cheklar"; // Chek suratlari Google Drive'dagi shu papkaga saqlanadi
 
 function sheetFor(cat) {
   const name = SHEETS[cat];
@@ -14,6 +16,7 @@ function sheetFor(cat) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sh = ss.getSheetByName(name);
   if (!sh) { sh = ss.insertSheet(name); sh.appendRow(HEAD); sh.setFrozenRows(1); }
+  else if (sh.getLastColumn() < HEAD.length) sh.getRange(1, 1, 1, HEAD.length).setValues([HEAD]); // yangi ustunlar
   return sh;
 }
 
@@ -35,7 +38,10 @@ function doPost(e) {
     const sh = sheetFor(x.cat);
     const id = Utilities.getUuid();
     const time = new Date().toISOString();
-    sh.appendRow([id, time, x.lang, x.branch, x.table, x.food, x.service, x.atmos, x.name, x.phone, x.company, x.msg].map(clean));
+    let photo = "";
+    if (x.photo && /^data:image\//.test(x.photo)) { try { photo = savePhoto(x.photo); } catch (err) { photo = ""; } }
+    const row = HEAD.map(function (h) { return h === "id" ? id : h === "time" ? time : h === "photo" ? photo : x[h]; });
+    sh.appendRow(row.map(clean));
     if (TG_TOKEN && TG_CHAT_ID && data.text) {
       try {
         UrlFetchApp.fetch("https://api.telegram.org/bot" + TG_TOKEN + "/sendMessage", {
@@ -47,6 +53,18 @@ function doPost(e) {
   } catch (err) {
     return out({ ok: false, error: String(err.message || err) });
   }
+}
+
+// Chek suratini Drive'ga saqlab, havolasini qaytaradi
+function savePhoto(dataUrl) {
+  const m = String(dataUrl).match(/^data:(image\/[\w+.-]+);base64,(.+)$/);
+  if (!m) return "";
+  const it = DriveApp.getFoldersByName(PHOTO_FOLDER);
+  const folder = it.hasNext() ? it.next() : DriveApp.createFolder(PHOTO_FOLDER);
+  const name = "chek_" + Utilities.formatDate(new Date(), "Asia/Tashkent", "yyyy-MM-dd_HH-mm-ss") + ".jpg";
+  const f = folder.createFile(Utilities.newBlob(Utilities.base64Decode(m[2]), m[1], name));
+  try { f.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW); } catch (err) {}
+  return "https://drive.google.com/file/d/" + f.getId() + "/view";
 }
 
 // Admin paneldan murojaatni o'chirish (id bo'yicha)
