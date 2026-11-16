@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261116051445";
+  const APP_VERSION = "20261116051736";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1815,7 +1815,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       x.when ? `<span class="chip">Yana: ${esc(x.when)}</span>` : "",
       x.manager ? `<span class="chip">Menejer keldi: ${esc(x.manager)}</span>` : "",
       x.first ? `<span class="chip">Birinchi marta: ${esc(x.first)}</span>` : "",
-      photoErr ? `<span class="chip cnps r" title="${esc(x.photo)}">📷 Chek saqlanmadi (Drive ruxsati yo'q)</span>` : x.photo ? `<a class="chip chekl" href="${esc(x.photo)}" target="_blank" rel="noopener">📷 Chek surati</a>` : ""
+      photoErr ? `<span class="chip cnps r" style="white-space:normal">📷 Chek saqlanmadi: ${esc(String(x.photo).replace(/^XATO:\s*/, ""))}</span>` : x.photo ? `<a class="chip chekl" href="${esc(x.photo)}" target="_blank" rel="noopener">📷 Chek surati</a>` : ""
     ].join("");
     const pid = x.photo && !photoErr ? (String(x.photo).match(/\/d\/([\w-]+)/) || [])[1] : "";
     const thumb = pid ? `<a class="chekth" href="${esc(x.photo)}" target="_blank" rel="noopener"><img src="https://drive.google.com/thumbnail?id=${esc(pid)}&sz=w600" alt="Chek surati" loading="lazy"></a>` : "";
