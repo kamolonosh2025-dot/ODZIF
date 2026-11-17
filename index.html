@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261116080154";
+  const APP_VERSION = "20261117062424";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -674,6 +674,8 @@ body.fm.frv .consent { display: block; color: #8a7a70; font-size: .78rem; line-h
 .bsel select:focus { outline: none; border-color: #d9a441; box-shadow: 0 0 0 4px rgba(217,164,65,.2); }
 #brCard.err { border-color: #e5383b; box-shadow: 0 0 0 3px rgba(229,56,59,.15); }
 #brCard.err .rvt::after { content: " *"; color: #e5383b; }
+.aerr { margin: 12px 0 0; padding: 12px 14px; border-radius: 14px; background: #fde4e6; color: #9c0006; border: 1px solid #f5b5bb; font-size: .9rem; font-weight: 600; line-height: 1.45; }
+.aerr[hidden] { display: none; }
 .chekth { display: block; margin-top: 10px; border-radius: 14px; overflow: hidden; border: 1px solid #f0e6df; line-height: 0; background: #faf5ef; }
 .dbph { width: 100%; padding: 0; font: inherit; cursor: zoom-in; min-height: 60px; display: grid; place-items: center; color: #8a6a50; font-size: .9rem; font-weight: 600; }
 .dbph img { max-height: 320px; object-fit: contain; background: #fff; }
@@ -949,6 +951,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       <button class="back" id="adminExit"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
       <button class="back arefresh" id="adminRefresh" style="margin-left:auto"><b class="rico">↻</b> <span>Yangilash</span></button>
     </div>
+    <div class="aerr" hidden></div>
     <h1 class="atitle">Feedbacklar</h1>
     <span class="demo" id="adminMode" hidden></span>
     <div class="datebar">
@@ -999,6 +1002,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       <button class="back" id="alistBack"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
       <button class="back arefresh" id="alistRefresh" style="margin-left:auto"><b class="rico">↻</b> <span>Yangilash</span></button>
     </div>
+    <div class="aerr" hidden></div>
     <div class="form-head" id="alistHead"><div class="ico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="alistIcon"></svg></div><h1 id="alistTitle"></h1></div>
     <div class="datebar" style="margin-top:16px">
       <button type="button" class="dbtn aprev" aria-label="Oldingi kun">‹</button>
@@ -1461,7 +1465,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   async function loadEntries(pin) {
     if (API_URL) {
       const r = await fetch(API_URL + "?action=list&pin=" + encodeURIComponent(pin));
-      const j = await r.json();
+      let j; try { j = await r.json(); } catch (_) { throw new Error("auth"); } // JSON emas: Google ruxsat sahifasini qaytardi
       if (!j.ok) throw new Error(j.error || "load");
       return j.entries;
     }
@@ -1764,15 +1768,22 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       adminData = await loadEntries(adminPin);
     } catch (err) {
       document.querySelectorAll(".arefresh").forEach(b => b.classList.remove("spin"));
-      if (String(err.message) !== "pin" && adminData) return; // internet uzilsa, eski ko'rinish qoladi
+      if (String(err.message) !== "pin" && adminData) { // internet uzilsa, eski ko'rinish qoladi, lekin ogohlantiramiz
+        const m = String(err.message);
+        document.querySelectorAll(".aerr").forEach(el => { el.hidden = false; el.textContent = m === "auth"
+          ? "⚠️ Yangi ma'lumot kelmadi: Google Apps Script ruxsat so'rayapti. Apps Script'da \"tekshirish\"ni ishga tushirib, ruxsat bering. Hozir eski (saqlangan) ma'lumot ko'rsatilmoqda."
+          : "⚠️ Yangi ma'lumot kelmadi (" + m + "). Internetni tekshiring. Hozir eski (saqlangan) ma'lumot ko'rsatilmoqda."; });
+        return;
+      }
       adminPin = "";
       try { localStorage.removeItem("kamolon_pin"); localStorage.removeItem("kamolon_cache"); } catch (_) {}
       $("pinNote").style.color = "";
-      $("pinNote").textContent = String(err.message) === "pin" ? "PIN noto'g'ri" : "Yuklab bo'lmadi. Internetni tekshiring.";
+      $("pinNote").textContent = String(err.message) === "pin" ? "PIN noto'g'ri" : String(err.message) === "auth" ? "Google Apps Script ruxsat so'rayapti: Apps Script'da \"tekshirish\"ni ishga tushirib, ruxsat bering." : "Yuklab bo'lmadi. Internetni tekshiring.";
       show("pin");
       return;
     }
     document.querySelectorAll(".arefresh").forEach(b => b.classList.remove("spin"));
+    document.querySelectorAll(".aerr").forEach(el => el.hidden = true);
     $("pinNote").textContent = "";
     try { localStorage.setItem("kamolon_pin", adminPin); localStorage.setItem("kamolon_cache", JSON.stringify({ pin: adminPin, data: adminData })); } catch (_) {}
     render();
