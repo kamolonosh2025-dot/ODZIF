@@ -15,7 +15,14 @@ const HEAD = ["id", "time", "lang", "branch", "table", "food", "service", "atmos
 
 // Ruxsat berish uchun BIR MARTA ishga tushiring (Выполнить). Faqat shu jadvalga kirish so'raladi.
 function tekshirish() {
-  Logger.log("Tayyor! Jadval: " + SpreadsheetApp.getActiveSpreadsheet().getName());
+  const name = SpreadsheetApp.getActiveSpreadsheet().getName();
+  Logger.log("Tayyor! Jadval: " + name);
+  try { SpreadsheetApp.getUi().alert("Tayyor! Ruxsat berildi. Endi Apps Script'da Новая версия bilan qayta joylang."); } catch (e) {}
+}
+
+// Jadval ochilganda tepada "Kamolon Osh" menyusi chiqadi: ruxsatni jadvalning o'zidan berish mumkin
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu("Kamolon Osh").addItem("Ruxsat berish", "tekshirish").addToUi();
 }
 
 function sheetFor(cat) {
