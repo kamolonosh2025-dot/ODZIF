@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118102451";
+  const APP_VERSION = "20261118102820";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1022,6 +1022,20 @@ body.kb:not(.am) .send { background: var(--gh), var(--go) !important; background
 @media (prefers-reduced-motion: reduce) { #s-main .ksteam { display: none; } }
 #s-main .kst i { left: -24px; width: 48px; height: 70px; background: radial-gradient(ellipse at 50% 60%, rgba(255,255,255,.9), rgba(255,255,255,.4) 40%, rgba(255,255,255,0) 70%); filter: blur(2px); }
 @keyframes ksteam { 0% { opacity: 0; transform: translate(0, 6px) scale(.5, .55); } 30% { opacity: .85; } 100% { opacity: 0; transform: translate(8px, -70px) scale(1.5, 1.8); } }
+/* ---- Filial tanlash ro'yxati ---- */
+body.kb:not(.am) #branchSel { display: none; }
+body.kb:not(.am) .bsel::after { display: none; }
+.ksel-btn { position: relative; width: 100%; height: 54px; padding: 0 46px 0 16px; border-radius: 12px; border: 1.5px solid var(--kb); background: #fff; color: var(--kb); font: 700 1.02rem var(--ktx); text-align: left; cursor: pointer; }
+.ksel-btn.empty { color: #5b6b8f; }
+.ksel-btn::after { content: ""; position: absolute; right: 18px; top: 50%; width: 9px; height: 9px; margin-top: -7px; border-right: 2.4px solid var(--kb); border-bottom: 2.4px solid var(--kb); transform: rotate(45deg); transition: transform .2s; }
+.ksel.open .ksel-btn::after { transform: rotate(-135deg); margin-top: -2px; }
+.ksel-list { display: grid; gap: 8px; margin-top: 10px; }
+.ksel-list[hidden] { display: none; }
+.ksel-list button { height: 50px; padding: 0 16px; border-radius: 12px; border: 1.5px solid #d5dcea; background: #f6f9ff; color: var(--kb); font: 700 1rem var(--ktx); text-align: left; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+.ksel-list button::before { content: ""; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #9fb0d0; flex: none; }
+.ksel-list button.on { border-color: var(--kb); background: #e8f0ff; }
+.ksel-list button.on::before { border-color: var(--kb); background: radial-gradient(circle, var(--kb) 45%, transparent 50%); }
+#brCard.err .ksel-btn { border-color: var(--danger); }
 </style>
 </head>
 <body class="lm">
@@ -1446,10 +1460,32 @@ body.kb:not(.am) .send { background: var(--gh), var(--go) !important; background
     $("branchSel").innerHTML = `<option value="" disabled hidden>${T[lang].pickBranch}</option>` + BRANCHES.map((b, i) => `<option value="${i}">${b[lang]}</option>`).join("");
     $("branchSel").value = branch >= 0 ? String(branch) : "";
     $("branchSel").classList.toggle("empty", branch < 0);
+    kselRender();
     document.body.classList.toggle("fc", !$("fields").hidden); // forma ochiq: ixcham tepa qism
     document.body.classList.toggle("frv", isReview);
     placeFields(isReview);
     if (branch >= 0) $("branchName").innerHTML = '<b class="cn">' + T[lang].center + '</b><span class="nw"> – ' + BRANCHES[branch][lang] + "</span>";
+  }
+  // Filial tanlash: telefonda ham faqat 5 ta filial chiqadi (o'zimizning ro'yxat)
+  function kselRender() {
+    const sel = $("branchSel"); if (!sel) return;
+    let box = document.getElementById("kSel");
+    if (!box) {
+      box = document.createElement("div"); box.id = "kSel"; box.className = "ksel";
+      box.innerHTML = '<button type="button" class="ksel-btn"></button><div class="ksel-list" hidden></div>';
+      sel.parentNode.insertBefore(box, sel);
+      box.querySelector(".ksel-btn").addEventListener("click", () => {
+        const l = box.querySelector(".ksel-list"); l.hidden = !l.hidden; box.classList.toggle("open", !l.hidden);
+      });
+    }
+    const btn = box.querySelector(".ksel-btn"), list = box.querySelector(".ksel-list");
+    btn.textContent = branch >= 0 ? BRANCHES[branch][lang] : T[lang].pickBranch;
+    btn.classList.toggle("empty", branch < 0);
+    list.innerHTML = BRANCHES.map((b, i) => `<button type="button" data-kb="${i}" class="${i === branch ? "on" : ""}">${b[lang]}</button>`).join("");
+    list.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+      sel.value = b.dataset.kb; sel.dispatchEvent(new Event("change"));
+      list.hidden = true; box.classList.remove("open"); kselRender();
+    }));
   }
   $("branchChange").addEventListener("click", () => { branch = -1; renderBranches(); });
   $("branchSel").addEventListener("change", () => {
@@ -1461,7 +1497,8 @@ body.kb:not(.am) .send { background: var(--gh), var(--go) !important; background
   function show(name) {
     if (name === "main" && cat !== "review") { branch = -1; setCat("review"); }
     ["main", "lang", "home", "form", "done", "pin", "admin", "alist"].forEach(s => $("s-" + s).hidden = !(s === name || (name === "main" && s === "form")));
-    document.body.classList.toggle("mm", name === "main"); // bosh sahifa: tugmalar + tagida baholash formasi
+    document.body.classList.toggle("mm", name === "main");
+    kselRender(); // bosh sahifa: tugmalar + tagida baholash formasi
     $("langBtn").hidden = !["home", "form", "done"].includes(name);
     document.body.classList.toggle("lm", name === "lang"); // yashil-oltin dizayn faqat til tanlashda
     document.body.classList.toggle("hm", name === "home"); // mavzular: osh rasmi bilan
