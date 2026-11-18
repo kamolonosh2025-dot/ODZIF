@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118101901";
+  const APP_VERSION = "20261118102104";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -997,6 +997,10 @@ body.am .kfall { display: none; }
 @keyframes kspin { to { transform: translateX(-50%) rotate(360deg); } }
 #s-main .kcontacts { position: relative; z-index: 1; margin-top: 0; }
 @media (prefers-reduced-motion: reduce) { #s-main .kflower { animation: none; } }
+#s-main .kplate2 { animation: kspin 45s linear infinite; }
+#s-main .kflower { animation-direction: reverse; }
+body.kb:not(.am) .send { animation: none !important; background-position: -30% 0, 0 0, 0 0 !important; filter: drop-shadow(0 8px 12px rgba(255,110,0,.45)); }
+@media (prefers-reduced-motion: reduce) { #s-main .kplate2 { animation: none; } }
 </style>
 </head>
 <body class="lm">
