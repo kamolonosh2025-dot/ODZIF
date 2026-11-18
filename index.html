@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118100902";
+  const APP_VERSION = "20261118101008";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -949,6 +949,15 @@ body.kb:not(.am) .chips button.on, body.kb:not(.am) .nps button.on { background:
 #s-main .khero img { width: 100%; height: auto; display: block; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 261' preserveAspectRatio='none'%3E%3Cpath d='M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46V261H0Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 261' preserveAspectRatio='none'%3E%3Cpath d='M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46V261H0Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; }
 #s-main .kharch { position: absolute; inset: 0; width: 100%; height: 100%; }
 #s-main .kcontacts { margin: 4px 0 0; }
+
+/* ---- Sarlavha eski dizayndagidek: KAMOLON OSH / — MARKAZI — / Fikr-mulohaza markazi ---- */
+#s-main .kname { font-size: 2.6rem !important; line-height: .95; margin-bottom: 4px !important; }
+#s-main .kname::after { display: none; }
+#s-main .kmark { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 6px; font-size: 1.35rem; letter-spacing: .14em; color: var(--ky); text-shadow: 0 0 14px rgba(239,191,72,.45); }
+#s-main .kmark::before, #s-main .kmark::after { content: ""; width: 30px; height: 2px; background: var(--ky); border-radius: 2px; }
+#s-main .ksub { display: block; margin-top: 7px; font: 700 .98rem/1 var(--ktx); text-transform: none; letter-spacing: 0; color: #e6eeff; text-shadow: none; }
+#s-main .khero img { filter: saturate(1.08); }
+#s-main .ktop { padding-top: 72px !important; }
 </style>
 </head>
 <body class="lm">
@@ -993,7 +1002,7 @@ body.kb:not(.am) .chips button.on, body.kb:not(.am) .nps button.on { background:
   <section id="s-main" hidden>
     <div class="ktop">
       <div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div>
-      <div class="kname">Kamolon Osh</div>
+      <div class="kname">Kamolon Osh<span class="kmark">Markazi</span><span class="ksub" data-i18n="tag"></span></div>
       <div class="khero"><img src="img/brand/osh-hero.webp" alt="Kamolon Osh" width="1360" height="910"><svg class="kharch" viewBox="0 0 390 261" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46" fill="none" stroke="#EFBF48" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 246C80 228 150 260 240 248S350 228 390 236V262H0Z" fill="#fff"/><path d="M0 246C80 228 150 260 240 248S350 228 390 236" fill="none" stroke="#19C0E9" stroke-width="3" vector-effect="non-scaling-stroke"/></svg></div>
     </div>
     <div class="kcontacts">
