@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261117062424";
+  const APP_VERSION = "20261118093001";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -25,7 +25,7 @@
 <link rel="preload" as="image" href="img/hero-til-v4.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Fira+Sans+Extra+Condensed:wght@600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #ffffff;
@@ -783,6 +783,123 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 }
 
 [hidden] { display: none !important; }
+/* ===================== KAMOLON OSH BRENDBUK USLUBI ===================== */
+:root { --kb: #023181; --kb2: #01245f; --klb: #19C0E9; --ko: #FF7C10; --ky: #EFBF48; --kl: #F9EBBE; --kc: #F2F2F2;
+  --khd: "Fira Sans Extra Condensed", "Arial Narrow", sans-serif; --ktx: "Manrope", "Inter", system-ui, sans-serif; }
+body.kb:not(.am) { font-family: var(--ktx); color: #0d1b3d; background: var(--kc) url(img/brand/pattern-soft.svg) repeat; background-size: 120px auto; }
+body.kb:not(.am) .shell { background: #fff; box-shadow: 0 30px 60px -30px rgba(2,49,129,.35); padding-bottom: 0; }
+body.kb:not(.am) .shell > header, body.kb:not(.am) .hhero, body.kb:not(.am) .fctop, body.kb:not(.am) .fcpast,
+body.kb:not(.am) .hvals, body.kb:not(.am) .lbottom, body.kb:not(.am) #s-form > .back, body.kb:not(.am) .form-head,
+body.kb:not(.am) .wcard, body.kb:not(.am) .lline, body.kb:not(.am) .fmosque { display: none !important; }
+body.kb:not(.am) .body { padding: 0 18px 22px; }
+body.kb:not(.am) .body > section { animation: none; }
+
+/* ---- Bosh sahifa tepasi ---- */
+#s-main .ktop { position: relative; margin: 0 -18px; padding: 26px 18px 30px; text-align: center; color: #fff;
+  background: var(--kb) url(img/brand/pattern-blue.svg) repeat; background-size: 104px auto;
+  border-radius: 0 0 28px 28px; overflow: hidden; }
+#s-main .ktop::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 62% at 50% 45%, var(--kb) 55%, rgba(2,49,129,.55) 80%, rgba(2,49,129,.15)); }
+#s-main .ktop > * { position: relative; }
+.kglobe { position: absolute !important; right: 14px; top: 14px; z-index: 2; display: inline-flex; align-items: center; gap: 5px; height: 38px; padding: 0 12px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.7); background: rgba(2,49,129,.6); color: #fff; font: 700 .82rem var(--ktx); cursor: pointer; }
+.kglobe svg { width: 18px; height: 18px; }
+#s-main .klogo { width: 132px; height: auto; display: block; margin: 8px auto 18px; }
+#s-main .kcontacts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; }
+/* Brendbukdagi naqshli "ramka" shakli */
+.kp, .kbtn, body.kb:not(.am) .send { position: relative; --cap: blue; }
+.kp::before, .kp::after, .kbtn::before, .kbtn::after, body.kb:not(.am) .send::before, body.kb:not(.am) .send::after {
+  content: ""; position: absolute; top: 0; height: 100%; aspect-ratio: 51 / 132; background: no-repeat 0 0 / 100% 100%; pointer-events: none; }
+.kp::before, .kbtn::before, body.kb:not(.am) .send::before { right: calc(100% - 1px); }
+.kp::after, .kbtn::after, body.kb:not(.am) .send::after { left: calc(100% - 1px); }
+.kp { display: inline-flex; align-items: center; height: 36px; padding: 0 6px; margin: 0 14px; background: var(--klb); color: var(--kb); text-decoration: none; font: 700 1.12rem/1 var(--khd); letter-spacing: .01em; }
+.kp::before { background-image: url(img/brand/cap-l-lblue.svg); } .kp::after { background-image: url(img/brand/cap-r-lblue.svg); }
+
+/* ---- Ikki asosiy tugma ---- */
+#s-main .kbtns { display: grid; gap: 14px; margin: 22px 26px 4px; }
+.kbtn { display: flex; align-items: center; gap: 12px; width: 100%; height: 62px; padding: 0 4px; border: 0; color: #fff; font: 800 1.2rem/1.05 var(--khd); letter-spacing: .01em; text-align: left; cursor: pointer; text-transform: uppercase; }
+.kbtn-o { background: var(--ko); } .kbtn-o::before { background-image: url(img/brand/cap-l-orange.svg); } .kbtn-o::after { background-image: url(img/brand/cap-r-orange.svg); }
+.kbtn-b { background: var(--kb); } .kbtn-b::before { background-image: url(img/brand/cap-l-blue.svg); } .kbtn-b::after { background-image: url(img/brand/cap-r-blue.svg); }
+.kbtn:active { transform: scale(.985); }
+.kbtn .kic { width: 40px; height: 40px; border-radius: 50%; background: #fff; display: grid; place-items: center; flex: none; }
+.kbtn-o .kic { color: var(--ko); } .kbtn-b .kic { color: var(--kb); }
+.kbtn .kic svg { width: 22px; height: 22px; }
+.kbtn .kt { flex: 1; }
+.kbtn .kchev { transform: rotate(180deg); width: 22px; height: 22px; stroke-width: 2.6; }
+#s-main .krate { text-align: center; margin: 30px 0 2px; }
+#s-main .krate h2 { font: 800 2.1rem/1 var(--khd); color: var(--kb); text-transform: uppercase; margin: 0; letter-spacing: .01em; }
+#s-main .krate h2::after { content: ""; display: block; width: 74px; height: 14px; margin: 10px auto 0; background: url(img/brand/flower-yellow.svg) center/14px no-repeat, linear-gradient(var(--ky), var(--ky)) left center/26px 3px no-repeat, linear-gradient(var(--ky), var(--ky)) right center/26px 3px no-repeat; }
+.karrow { width: 30px; height: 30px; margin-top: 6px; color: var(--ko); stroke-width: 2.4; animation: kbob 1.6s ease-in-out infinite; }
+@keyframes kbob { 50% { transform: translateY(5px); } }
+
+/* ---- Forma sahifasi tepasi ---- */
+.khead, .ktitle { display: none; }
+body.kb:not(.am):not(.mm) #s-form .khead { display: flex; align-items: center; justify-content: space-between; margin: 0 -18px; padding: 14px 14px 30px; background: var(--kb) url(img/brand/pattern-blue.svg) repeat; background-size: 104px auto; position: relative; }
+body.kb:not(.am):not(.mm) #s-form .khead::before { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(2,49,129,.55), var(--kb) 75%); }
+.khead > * { position: relative; }
+.khead .kglobe { position: relative !important; right: auto; top: auto; }
+.kback { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.7); background: rgba(2,49,129,.6); color: #fff; display: grid; place-items: center; cursor: pointer; }
+.kback svg { width: 22px; height: 22px; stroke-width: 2.4; }
+.khlogo { width: 74px; height: auto; }
+body.kb:not(.am):not(.mm) #s-form .ktitle { display: block; position: relative; margin: -20px 22px 6px; padding: 14px 10px; text-align: center; background: var(--ko); color: #fff; font: 800 1.5rem/1.05 var(--khd); text-transform: uppercase; }
+body.kb:not(.am):not(.mm) #s-form .ktitle::before, body.kb:not(.am):not(.mm) #s-form .ktitle::after { content: ""; position: absolute; top: 0; height: 100%; aspect-ratio: 51/132; background: no-repeat 0 0/100% 100%; }
+body.kb:not(.am):not(.mm) #s-form .ktitle::before { right: calc(100% - 1px); background-image: url(img/brand/cap-l-orange.svg); }
+body.kb:not(.am):not(.mm) #s-form .ktitle::after { left: calc(100% - 1px); background-image: url(img/brand/cap-r-orange.svg); }
+body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle { background: var(--klb); color: var(--kb); }
+body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle::before { background-image: url(img/brand/cap-l-lblue.svg); }
+body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle::after { background-image: url(img/brand/cap-r-lblue.svg); }
+
+/* ---- Forma elementlari ---- */
+body.kb:not(.am) #form { margin-top: 6px; }
+body.kb:not(.am) label, body.kb:not(.am) .label { color: var(--kb); font-weight: 800; font-family: var(--ktx); }
+body.kb:not(.am) .lico { color: var(--ko); }
+body.kb:not(.am) input, body.kb:not(.am) textarea { font-family: var(--ktx); border: 1.5px solid #d5dcea; border-radius: 12px; background: #fff; color: #0d1b3d; }
+body.kb:not(.am) input:focus, body.kb:not(.am) textarea:focus { border-color: var(--kb); box-shadow: 0 0 0 4px rgba(25,192,233,.25); }
+body.kb:not(.am) input::placeholder, body.kb:not(.am) textarea::placeholder { color: #9aa6bf; }
+body.kb:not(.am) .rvc { border: 0; border-radius: 18px; background: #fff; box-shadow: 0 0 0 1.5px #e3e8f2, 0 14px 26px -22px rgba(2,49,129,.5); position: relative; overflow: hidden; }
+body.kb:not(.am) .rvc::before { content: ""; position: absolute; left: 0; top: 18px; width: 4px; height: 22px; border-radius: 0 4px 4px 0; background: var(--ko); }
+body.kb:not(.am) .rvt { font: 800 1.3rem/1.1 var(--khd); color: var(--kb); letter-spacing: .01em; }
+body.kb:not(.am) .bsel select { border: 1.5px solid var(--kb); color: var(--kb); border-radius: 12px; font-family: var(--ktx); }
+body.kb:not(.am) .bsel::after { border-color: var(--kb); }
+body.kb:not(.am) .nps button { border: 1.5px solid #c9d2e4; color: var(--kb); border-radius: 9px; font-family: var(--ktx); }
+body.kb:not(.am) .nps .r { background: #fff; } body.kb:not(.am) .nps .y { background: #fdf5dc; } body.kb:not(.am) .nps .g { background: #dff6fc; }
+body.kb:not(.am) .nps button.on { background: var(--kb); color: #fff; border-color: var(--kb); }
+body.kb:not(.am) .npsl { color: #6b7894; }
+body.kb:not(.am) .chips button { border: 1.5px solid #c9d2e4; color: var(--kb); border-radius: 999px; font-family: var(--ktx); font-weight: 700; }
+body.kb:not(.am) .chips button.on { background: var(--kb); border-color: var(--kb); color: #fff; }
+body.kb:not(.am) .emo-row { border-bottom-color: #edf0f6; }
+body.kb:not(.am) .emo-row > span { color: #0d1b3d; font-weight: 700; }
+body.kb:not(.am) .emos button { border: 1.5px solid #c9d2e4; }
+body.kb:not(.am) .emos button.on { border: 2.5px solid var(--ko); background: #fff1e4; }
+body.kb:not(.am) .rvhint, body.kb:not(.am) .rvsub, body.kb:not(.am) .consent, body.kb:not(.am) p.rvnote { color: #6b7894; }
+body.kb:not(.am) .chek { border: 2px dashed var(--klb); color: var(--kb); background: #f0fbfe; border-radius: 14px; }
+body.kb:not(.am) .send { display: flex; align-items: center; justify-content: center; gap: 10px; width: calc(100% - 52px); margin: 22px 26px 0; height: 60px; padding: 0; border: 0; border-radius: 0; background: var(--ko); color: #fff; box-shadow: none; font: 800 1.35rem/1 var(--khd); text-transform: uppercase; letter-spacing: .02em; }
+body.kb:not(.am) .send::before { background-image: url(img/brand/cap-l-orange.svg); } body.kb:not(.am) .send::after { background-image: url(img/brand/cap-r-orange.svg); }
+body.kb:not(.am) .send:hover { transform: none; box-shadow: none; }
+body.kb:not(.am) .consent { font-size: .78rem; text-align: center; margin-top: 14px; }
+
+/* ---- Til tanlash ---- */
+body.kb:not(.am) #s-lang { text-align: center; padding-top: 34px; }
+body.kb:not(.am) .klogo-l { width: 120px; display: block; margin: 0 auto 14px; }
+.klogo-l { display: none; }
+body.kb:not(.am) .lname { color: var(--kb) !important; font: 800 2.3rem/1 var(--khd) !important; text-transform: uppercase; }
+body.kb:not(.am) #s-lang .lang-title, body.kb:not(.am) #s-lang .lang-title span { color: #4b5a7a !important; font-family: var(--ktx) !important; }
+body.kb:not(.am) #s-lang .lang-title i { color: var(--ko); }
+body.kb:not(.am) .lrow { border: 1.5px solid #d5dcea !important; border-radius: 16px !important; background: #fff !important; box-shadow: none !important; }
+body.kb:not(.am) .lrow .t { color: var(--kb) !important; font-family: var(--ktx) !important; font-weight: 800 !important; }
+body.kb:not(.am) .lrow.sel { border-color: var(--kb) !important; box-shadow: 0 0 0 3px rgba(25,192,233,.3) !important; }
+
+/* ---- Rahmat ---- */
+.kdlogo { display: none; }
+body.kb:not(.am) .done { border: 0; box-shadow: none; margin-top: 30px; }
+body.kb:not(.am) .kdlogo { display: block; width: 96px; margin: 0 auto 18px; }
+body.kb:not(.am) .done .circle { background: var(--klb); box-shadow: 0 14px 30px -14px var(--klb); }
+body.kb:not(.am) .done h1 { font: 800 2rem/1 var(--khd); color: var(--kb); text-transform: uppercase; }
+body.kb:not(.am) .done .back { color: var(--kb); font-weight: 800; }
+
+/* ---- Pastki naqshli tasma ---- */
+body.kb:not(.am) .shell::after { content: ""; display: block; height: 64px; margin-top: 26px; background: var(--kb) url(img/brand/pattern-blue.svg) repeat; background-size: 104px auto; }
+body.kb.am .shell::after { display: none; }
+#complaintWrap textarea { min-height: 110px; }
+body.kb:not(.am) .done p { color: #6b7894; }
 </style>
 </head>
 <body class="lm">
@@ -823,9 +940,27 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   </header>
   <div class="body">
 
+  <!-- 0. Bosh sahifa (QR koddan ochiladi) -->
+  <section id="s-main" hidden>
+    <div class="ktop">
+      <button type="button" class="kglobe" data-go="lang" aria-label="Til / Язык / Language"><svg class="i"><use href="#ic-globe"/></svg><span id="kLangCode">UZ</span></button>
+      <img class="klogo" src="img/brand/logo-white.svg" alt="Kamolon Osh" width="341" height="322">
+      <div class="kcontacts">
+        <a class="kp" id="mBot" target="_blank" rel="noopener"><span id="mBotT"></span></a>
+        <a class="kp" id="mPhone"><span id="mPhoneT"></span></a>
+      </div>
+    </div>
+    <div class="kbtns">
+      <button type="button" class="kbtn kbtn-o" data-cat="problem"><span class="kic"><svg class="i"><use href="#ic-chat"/></svg></span><span class="kt" data-i18n="c_problem_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
+      <button type="button" class="kbtn kbtn-b" data-cat="partner"><span class="kic"><svg class="i"><use href="#ic-hand"/></svg></span><span class="kt" data-i18n="c_partner_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
+    </div>
+    <div class="krate"><h2 data-i18n="rateTitle"></h2><svg class="i karrow" viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>
+  </section>
+
   <!-- 1. Til tanlash -->
   <section id="s-lang">
     <div class="hhero lhero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712" fetchpriority="high"></div>
+    <img class="klogo-l" src="img/brand/logo-blue.svg" alt="Kamolon Osh">
     <div class="lname">Kamolon Osh<button type="button" class="adot2" id="adminDot2" aria-label="Admin"></button></div>
     <h1 class="lang-title lone">Tilni tanlang <i>•</i> <span>Выберите язык</span> <i>•</i> <span>Choose language</span></h1>
     <span class="lline"></span>
@@ -851,9 +986,11 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 
   <!-- 3. Forma -->
   <section id="s-form" hidden>
-    <button class="back" data-go="home"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="back"></span></button>
-    <div class="hhero fhero"><img src="img/hero-forma-v4.webp" alt="Kamolon Osh markazi" width="1080" height="710"><button class="hback" data-go="home" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
-    <div class="fctop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166"><button class="hback" data-go="home" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button></div>
+    <button class="back" data-go="main"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="back"></span></button>
+    <div class="hhero fhero"><img src="img/hero-forma-v4.webp" alt="Kamolon Osh markazi" width="1080" height="710"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
+    <div class="fctop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button></div>
+    <div class="khead"><button type="button" class="kback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><img class="khlogo" src="img/brand/logo-white.svg" alt="Kamolon Osh"><button type="button" class="kglobe kglobe-s" data-go="lang" aria-label="Til"><svg class="i"><use href="#ic-globe"/></svg></button></div>
+    <h1 class="ktitle" id="kTitle"></h1>
     <div class="form-head" id="formHead" data-cat="review"><div class="tile-ico ico fico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="formIcon"><use href="#ic-star"/></svg></div><div class="fht"><h1 id="formTitle"></h1><p class="lead" id="formDesc" style="color:var(--muted)"></p></div><svg class="hmosque fmosque" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
 
     <form id="form" novalidate>
@@ -910,6 +1047,9 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       <div id="msgWrap"><label for="msg"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z"/><path d="M8 10h8M8 13h5"/></svg></i><span data-i18n="msg"></span></label>
       <textarea id="msg"></textarea></div>
 
+      <div id="complaintWrap"><label for="complaint"><i class="lico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg></i><span data-i18n="complaint"></span></label>
+      <textarea id="complaint"></textarea></div>
+
       <button class="send" type="submit">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1-1 .2-1.5L20.5 2.8c.9-.3 1.6.2 1.4 1.5z"/></svg>
         <span data-i18n="send"></span>
@@ -925,10 +1065,11 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   <!-- 4. Rahmat -->
   <section id="s-done" hidden>
     <div class="done">
+      <img class="kdlogo" src="img/brand/logo-blue.svg" alt="Kamolon Osh">
       <div class="circle"><svg class="i"><use href="#ic-check"/></svg></div>
       <h1 data-i18n="thanks"></h1>
       <p data-i18n-html="doneText"></p>
-      <button class="back" data-go="home" style="margin-top:18px"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="toHome"></span></button>
+      <button class="back" data-go="main" style="margin-top:18px"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="toHome"></span></button>
     </div>
   </section>
 
@@ -1045,20 +1186,23 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   // Bo'sh bo'lsa, sayt "sinov rejimi"da ishlaydi: murojaatlar faqat shu qurilmada saqlanadi.
   const API_URL = "https://script.google.com/macros/s/AKfycbygt2qgM_B_-wubOyiRs2MbVbEmqiVU5eS1GFgsC1XV0QfaEPAoWqeioE_JGBY_9JgP/exec";
   const LOCAL_PIN = "1234"; // sinov rejimidagi admin PIN
+  // === Bosh sahifadagi aloqa ma'lumotlari ===
+  const PHONE = "+998 55-500-16-61";
+  const BOT = "Kamolonosh_bot";
 
   const ICONS = { review: "ic-star", idea: "ic-bulb", partner: "ic-hand", problem: "ic-brief" };
 
   const T = {
     uz: {
       code: "UZ", admin: "Murojaatlar (admin)",
-      a_title: "Murojaatlar", a_demo: "Namuna ma'lumotlar", a_total: "Jami murojaatlar", a_new: "Yangi", a_attention: "E'tibor talab qiladi", a_closed: "Yopilgan", t_all: "Hammasi", t_review: "Fikrlar", t_partner: "Hamkorlar", t_idea: "G'oyalar", t_problem: "Rahbariyat", s_urgent: "Shoshilinch", s_new: "Yangi", s_review: "Ko'rib chiqilmoqda", s_closed: "Yopilgan",
+      a_title: "Murojaatlar", a_demo: "Namuna ma'lumotlar", a_total: "Jami murojaatlar", a_new: "Yangi", a_attention: "E'tibor talab qiladi", a_closed: "Yopilgan", t_all: "Hammasi", t_review: "Fikrlar", t_partner: "Hamkorlar", t_idea: "G'oyalar", t_problem: "Taklif va shikoyatlar", s_urgent: "Shoshilinch", s_new: "Yangi", s_review: "Ko'rib chiqilmoqda", s_closed: "Yopilgan",
       tag: "Fikr-mulohaza markazi",
       title: "Biz sizning fikringizni qadrlaymiz",
       lead: "Murojaat mavzusini tanlang. Xabaringiz mas'ul mutaxassisga yetkaziladi.",
       c_review_t: "Fikr qoldirish", c_review_d: "Taom, xizmat va muhitga baho bering",
       c_idea_t: "G'oya taklif qilish", c_idea_d: "Yangi taklif va g'oyalaringizni yuboring",
       c_partner_t: "Hamkorlik", c_partner_d: "Yetkazib beruvchilar, ijara, hamkorlik",
-      c_problem_t: "Rahbariyatga murojaat", c_problem_d: "Rahbariyatga to'g'ridan-to'g'ri yozing",
+      c_problem_t: "Takliflar va shikoyatlar", c_problem_d: "Taklif yoki shikoyatingizni yozing", sugg: "Takliflaringiz", complaint: "Shikoyatlaringiz", purpose: "Hamkorlik maqsadi", rateTitle: "Sifatimizni baholang", mSugg: "Taklif", mComp: "Shikoyat",
       homeT: "Fikr va takliflaringiz biz uchun muhim!", homeD: "Xizmat, taomlar va umumiy taassurot bo'yicha fikringizni qoldiring.", v1: "Sifatli taomlar", v2: "E'tiborli xizmat", v3: "Ishonchli hamkorlik", v4: "Doimiy takomillashuv", v5: "Taomlar sifati", v6: "Xizmat sifati", v7: "Muhit va qulaylik", v8: "Taklif va yangiliklar",
       back: "Orqaga", toHome: "Bosh sahifaga",
       rateQ: "Bahoyingiz",
@@ -1078,14 +1222,14 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     },
     ru: {
       code: "RU", admin: "Обращения (админ)",
-      a_title: "Обращения", a_demo: "Демонстрационные данные", a_total: "Всего обращений", a_new: "Новые", a_attention: "Требуют внимания", a_closed: "Закрытые", t_all: "Все", t_review: "Отзывы", t_partner: "Партнёры", t_idea: "Идеи", t_problem: "Руководство", s_urgent: "Срочно", s_new: "Новое", s_review: "На рассмотрении", s_closed: "Закрыто",
+      a_title: "Обращения", a_demo: "Демонстрационные данные", a_total: "Всего обращений", a_new: "Новые", a_attention: "Требуют внимания", a_closed: "Закрытые", t_all: "Все", t_review: "Отзывы", t_partner: "Партнёры", t_idea: "Идеи", t_problem: "Предложения и жалобы", s_urgent: "Срочно", s_new: "Новое", s_review: "На рассмотрении", s_closed: "Закрыто",
       tag: "Центр обратной связи",
       title: "Мы ценим ваше мнение",
       lead: "Выберите тему обращения. Ваше сообщение будет передано ответственному специалисту.",
       c_review_t: "Оставить отзыв", c_review_d: "Оценка еды, сервиса и атмосферы",
       c_idea_t: "Предложить идею", c_idea_d: "Идеи и пожелания для руководства",
       c_partner_t: "Сотрудничество", c_partner_d: "Поставщики, аренда, партнёрства",
-      c_problem_t: "Обращение к руководству", c_problem_d: "Написать напрямую руководству",
+      c_problem_t: "Предложения и жалобы", c_problem_d: "Напишите предложение или жалобу", sugg: "Ваши предложения", complaint: "Ваши жалобы", purpose: "Цель сотрудничества", rateTitle: "Оцените наше качество", mSugg: "Предложение", mComp: "Жалоба",
       homeT: "Ваши отзывы и предложения важны для нас!", homeD: "Поделитесь мнением о сервисе, блюдах и общем впечатлении.", v1: "Качественные блюда", v2: "Внимательный сервис", v3: "Надёжное партнёрство", v4: "Постоянное развитие", v5: "Качество блюд", v6: "Качество сервиса", v7: "Атмосфера и уют", v8: "Предложения и новости",
       back: "Назад", toHome: "На главную",
       rateQ: "Ваша оценка",
@@ -1105,14 +1249,14 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     },
     en: {
       code: "EN", admin: "Requests (admin)",
-      a_title: "Requests", a_demo: "Demo data", a_total: "Total requests", a_new: "New", a_attention: "Need attention", a_closed: "Closed", t_all: "All", t_review: "Reviews", t_partner: "Partners", t_idea: "Ideas", t_problem: "Management", s_urgent: "Urgent", s_new: "New", s_review: "Under review", s_closed: "Closed",
+      a_title: "Requests", a_demo: "Demo data", a_total: "Total requests", a_new: "New", a_attention: "Need attention", a_closed: "Closed", t_all: "All", t_review: "Reviews", t_partner: "Partners", t_idea: "Ideas", t_problem: "Suggestions & complaints", s_urgent: "Urgent", s_new: "New", s_review: "Under review", s_closed: "Closed",
       tag: "Feedback center",
       title: "We value your opinion",
       lead: "Choose a topic. Your message will be passed to the responsible specialist.",
       c_review_t: "Leave a review", c_review_d: "Rate the food, service and atmosphere",
       c_idea_t: "Suggest an idea", c_idea_d: "Ideas and wishes for management",
       c_partner_t: "Partnership", c_partner_d: "Suppliers, rent, partnerships",
-      c_problem_t: "Contact management", c_problem_d: "Write directly to management",
+      c_problem_t: "Suggestions and complaints", c_problem_d: "Write your suggestion or complaint", sugg: "Your suggestions", complaint: "Your complaints", purpose: "Purpose of partnership", rateTitle: "Rate our quality", mSugg: "Suggestion", mComp: "Complaint",
       homeT: "Your feedback and ideas matter to us!", homeD: "Share your thoughts on our service, food and overall experience.", v1: "Quality food", v2: "Attentive service", v3: "Reliable partnership", v4: "Constant improvement", v5: "Food quality", v6: "Service quality", v7: "Atmosphere & comfort", v8: "Ideas & news",
       back: "Back", toHome: "Back to home",
       rateQ: "Your rating",
@@ -1191,11 +1335,13 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
   });
 
   function show(name) {
-    ["lang", "home", "form", "done", "pin", "admin", "alist"].forEach(s => $("s-" + s).hidden = s !== name);
+    if (name === "main" && cat !== "review") { branch = -1; setCat("review"); }
+    ["main", "lang", "home", "form", "done", "pin", "admin", "alist"].forEach(s => $("s-" + s).hidden = !(s === name || (name === "main" && s === "form")));
+    document.body.classList.toggle("mm", name === "main"); // bosh sahifa: tugmalar + tagida baholash formasi
     $("langBtn").hidden = !["home", "form", "done"].includes(name);
     document.body.classList.toggle("lm", name === "lang"); // yashil-oltin dizayn faqat til tanlashda
     document.body.classList.toggle("hm", name === "home"); // mavzular: osh rasmi bilan
-    document.body.classList.toggle("fm", name === "form");
+    document.body.classList.toggle("fm", name === "form" || name === "main");
     document.body.classList.toggle("am", ["pin", "admin", "alist"].includes(name)); // admin: jigarrang-oltin
     if (!["admin", "alist", "pin"].includes(name) && location.hash === "#admin") history.replaceState(null, "", location.pathname + location.search);
     window.scrollTo(0, 0);
@@ -1205,6 +1351,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     lang = l;
     const t = T[l];
     document.documentElement.lang = l;
+    if ($("kLangCode")) $("kLangCode").textContent = l.toUpperCase();
     document.querySelectorAll(".lrow").forEach(b => b.classList.toggle("sel", b.dataset.lang === l));
     document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t[el.dataset.i18n]);
     document.querySelectorAll("[data-i18n-html]").forEach(el => el.innerHTML = t[el.dataset.i18nHtml]);
@@ -1220,12 +1367,15 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     cat = c;
     const t = T[lang];
     $("formTitle").textContent = t["c_" + c + "_t"];
+    $("kTitle").textContent = t["c_" + c + "_t"];
+    document.body.dataset.catNow = c;
     $("formDesc").textContent = t["c_" + c + "_d"];
     $("formIcon").innerHTML = '<use href="#' + ICONS[c] + '"/>';
     $("formHead").dataset.cat = c;
     $("ratings").hidden = c !== "review";
     renderBranches();
     $("companyWrap").hidden = c !== "partner";
+    $("complaintWrap").hidden = c !== "problem";
     $("tableWrap").hidden = c !== "review";
     clearErrs();
     $("note").textContent = "";
@@ -1293,9 +1443,9 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
       $("rvContact").insertBefore($("phoneWrap"), $("chekNote"));
     } else {
       const send = $("fields").querySelector(".send");
-      [$("nameWrap"), $("phoneWrap"), $("tableWrap"), $("companyWrap"), $("msgWrap")].forEach(el => $("fields").insertBefore(el, send));
+      [$("nameWrap"), $("phoneWrap"), $("tableWrap"), $("companyWrap"), $("msgWrap"), $("complaintWrap")].forEach(el => $("fields").insertBefore(el, send));
     }
-    setLbl($("msgWrap"), isReview ? "rvMsg" : "msg");
+    setLbl($("msgWrap"), isReview ? "rvMsg" : cat === "problem" ? "sugg" : cat === "partner" ? "purpose" : "msg");
     setLbl($("nameWrap"), isReview ? "rvName" : "name");
     setLbl($("phoneWrap"), isReview ? "rvPhone" : "phone");
   }
@@ -1337,7 +1487,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 
   document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => {
     applyLang(b.dataset.lang);
-    show("home");
+    show("main");
   }));
   $("langBtn").addEventListener("click", () => show("lang"));
   document.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => {
@@ -1353,7 +1503,10 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     const name = $("name").value.trim();
     const phone = $("phone").value.trim();
     const company = $("company").value.trim();
-    const msg = $("msg").value.trim();
+    let msg = $("msg").value.trim();
+    const complaint = $("complaint").value.trim();
+    if (cat === "problem" && complaint) msg = (msg ? T.uz.mSugg + ": " + msg + "\n\n" : "") + T.uz.mComp + ": " + complaint;
+    else if (cat === "problem" && msg) msg = T.uz.mSugg + ": " + msg;
     const table = $("table").value.trim();
 
     // Hech qaysi maydon majburiy emas: xohlasa yozadi, xohlamasa yo'q
@@ -1939,7 +2092,11 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
     loadAdmin();
   }, 60000);
 
+  document.body.classList.add("kb");
   applyLang("uz");
+  $("mPhoneT").textContent = PHONE; $("mPhone").href = "tel:" + PHONE.replace(/[^+\d]/g, "");
+  $("mBotT").textContent = "@" + BOT; $("mBot").href = "https://t.me/" + BOT;
+  show("main");
   // Sahifa yangilansa, admin o'sha joyida ochiladi
   // To'g'ridan-to'g'ri admin havolasi: .../ODZIF/#admin yoki .../ODZIF/admin.html
   const goAdminLink = () => { if (location.hash === "#admin") $("adminDot").click(); };
