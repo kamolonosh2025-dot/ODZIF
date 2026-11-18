@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118101455";
+  const APP_VERSION = "20261118101901";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -986,6 +986,17 @@ body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle { background: 
 @keyframes kfall { 0% { transform: translate3d(0, 0, 0) rotate(0deg); } 25% { transform: translate3d(18px, 25vh, 0) rotate(90deg); } 50% { transform: translate3d(-12px, 50vh, 0) rotate(180deg); } 75% { transform: translate3d(16px, 75vh, 0) rotate(270deg); } 100% { transform: translate3d(-6px, 106vh, 0) rotate(360deg); } }
 body.am .kfall { display: none; }
 @media (prefers-reduced-motion: reduce) { .kfall { display: none; } .kbtn, body.kb:not(.am) .send { animation: none !important; } }
+
+/* ===== Yangi tepa qism: ko'k fon, katta naqshli gul ustida 5 xil osh tovog'i ===== */
+#s-main .ktop { padding: 70px 0 0 !important; border-radius: 0 0 44px 44px !important; overflow: visible !important; margin-bottom: 150px; }
+#s-main .kname { font-size: 2.9rem !important; margin: 0 !important; letter-spacing: .03em; }
+#s-main .kname::after { display: block !important; content: ""; width: 74px; height: 14px; margin: 10px auto 0; background: url(img/brand/flower-yellow.svg) center/14px no-repeat, linear-gradient(90deg, transparent, #FFD86B) left center/28px 3px no-repeat, linear-gradient(90deg, #FFD86B, transparent) right center/28px 3px no-repeat; filter: drop-shadow(0 0 4px rgba(255,216,107,.8)); }
+#s-main .kstage { position: relative; height: 200px; margin-top: 10px; }
+#s-main .kflower { position: absolute; left: 50%; top: 0; width: 360px; max-width: 94vw; transform: translateX(-50%); opacity: .95; animation: kspin 60s linear infinite; filter: drop-shadow(0 0 22px rgba(138,235,255,.55)); }
+#s-main .kplate2 { position: absolute; left: 50%; top: 22px; width: 316px; max-width: 82vw; height: auto; transform: translateX(-50%); border-radius: 50%; filter: drop-shadow(0 22px 26px rgba(0,0,0,.45)) drop-shadow(0 6px 8px rgba(0,0,0,.25)); }
+@keyframes kspin { to { transform: translateX(-50%) rotate(360deg); } }
+#s-main .kcontacts { position: relative; z-index: 1; margin-top: 0; }
+@media (prefers-reduced-motion: reduce) { #s-main .kflower { animation: none; } }
 </style>
 </head>
 <body class="lm">
@@ -1030,8 +1041,8 @@ body.am .kfall { display: none; }
   <section id="s-main" hidden>
     <div class="ktop">
       <div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div>
-      <div class="kname">Kamolon Osh<span class="kmark">Markazi</span><span class="ksub" data-i18n="tag"></span></div>
-      <div class="khero"><img src="img/brand/osh-hero.webp" alt="Kamolon Osh" width="1200" height="1042"><svg class="kharch" viewBox="0 0 390 339" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46" fill="none" stroke="#EFBF48" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 324C80 306 150 338 240 326S350 306 390 314V340H0Z" fill="#fff"/><path d="M0 324C80 306 150 338 240 326S350 306 390 314" fill="none" stroke="#19C0E9" stroke-width="3" vector-effect="non-scaling-stroke"/></svg></div>
+      <div class="kname">Kamolon Osh</div>
+      <div class="kstage"><img class="kflower" src="img/brand/flower-lblue.svg" alt=""><img class="kplate2" src="img/brand/osh-plate-cut.webp" alt="Kamolon Osh" width="900" height="900"></div>
     </div>
     <div class="kcontacts">
         <a class="kp" id="mBot" target="_blank" rel="noopener"><span id="mBotT"></span></a>
@@ -2188,8 +2199,8 @@ body.am .kfall { display: none; }
   (function () {
     const box = document.createElement("div"); box.className = "kfall"; box.setAttribute("aria-hidden", "true");
     const COLORS = ["#FF7C10", "#EFBF48", "#E25A00", "#F2A33A", "#C8501A"];
-    for (let k = 0; k < 22; k++) {
-      const leaf = k % 2 === 0, i = document.createElement("i");
+    for (let k = 0; k < 34; k++) {
+      const leaf = k % 3 !== 2, i = document.createElement("i");
       i.className = leaf ? "l" : "s";
       const size = leaf ? 8 + Math.random() * 7 : 3 + Math.random() * 4;
       i.style.cssText = "left:" + (Math.random() * 100) + "%;width:" + size + "px;height:" + size + "px;" +
