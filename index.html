@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118102104";
+  const APP_VERSION = "20261118102451";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1001,6 +1001,27 @@ body.am .kfall { display: none; }
 #s-main .kflower { animation-direction: reverse; }
 body.kb:not(.am) .send { animation: none !important; background-position: -30% 0, 0 0, 0 0 !important; filter: drop-shadow(0 8px 12px rgba(255,110,0,.45)); }
 @media (prefers-reduced-motion: reduce) { #s-main .kplate2 { animation: none; } }
+
+/* ---- Yaltiroqni biroz kamaytirish ---- */
+:root { --gh: linear-gradient(rgba(255,255,255,.24), rgba(255,255,255,.06) 48%, rgba(255,255,255,0) 50%); --sh: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.38) 50%, transparent 58%); }
+.kbtn-o { filter: drop-shadow(0 8px 12px rgba(255,110,0,.38)); }
+.kbtn-b { filter: drop-shadow(0 8px 12px rgba(5,56,160,.38)); }
+.kp { filter: drop-shadow(0 3px 6px rgba(8,150,196,.35)); }
+.kbtn { animation-duration: 4s !important; }
+@keyframes kshine { 0% { background-position: 130% 0, 0 0, 0 0; } 35%, 100% { background-position: -30% 0, 0 0, 0 0; } }
+#s-main .kflower { filter: drop-shadow(0 0 12px rgba(138,235,255,.35)); }
+/* Jo'natish tugmasi: hech qanday harakat yo'q */
+body.kb:not(.am) .send { background: var(--gh), var(--go) !important; background-size: 100% 100%, 100% 100% !important; animation: none !important; filter: drop-shadow(0 6px 10px rgba(255,110,0,.3)); transition: none; }
+
+/* ---- Oshdan chiqayotgan issiq bug' ---- */
+#s-main .ksteam { position: absolute; left: 50%; top: 22px; width: 316px; max-width: 82vw; aspect-ratio: 1; transform: translateX(-50%); animation: kspin 45s linear infinite; pointer-events: none; }
+#s-main .kst { position: absolute; width: 0; height: 0; animation: kspinback 45s linear infinite; }
+#s-main .kst i { position: absolute; left: -16px; bottom: 0; width: 32px; height: 46px; border-radius: 50%; background: radial-gradient(ellipse at 50% 60%, rgba(255,255,255,.55), rgba(255,255,255,.18) 45%, rgba(255,255,255,0) 70%); opacity: 0; animation: ksteam 3.2s ease-out infinite; }
+@keyframes kspinback { to { transform: rotate(-360deg); } }
+@keyframes ksteam { 0% { opacity: 0; transform: translate(0, 4px) scale(.55, .6); } 25% { opacity: .75; } 100% { opacity: 0; transform: translate(6px, -58px) scale(1.5, 1.7); } }
+@media (prefers-reduced-motion: reduce) { #s-main .ksteam { display: none; } }
+#s-main .kst i { left: -24px; width: 48px; height: 70px; background: radial-gradient(ellipse at 50% 60%, rgba(255,255,255,.9), rgba(255,255,255,.4) 40%, rgba(255,255,255,0) 70%); filter: blur(2px); }
+@keyframes ksteam { 0% { opacity: 0; transform: translate(0, 6px) scale(.5, .55); } 30% { opacity: .85; } 100% { opacity: 0; transform: translate(8px, -70px) scale(1.5, 1.8); } }
 </style>
 </head>
 <body class="lm">
@@ -1046,7 +1067,7 @@ body.kb:not(.am) .send { animation: none !important; background-position: -30% 0
     <div class="ktop">
       <div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div>
       <div class="kname">Kamolon Osh</div>
-      <div class="kstage"><img class="kflower" src="img/brand/flower-lblue.svg" alt=""><img class="kplate2" src="img/brand/osh-plate-cut.webp" alt="Kamolon Osh" width="900" height="900"></div>
+      <div class="kstage"><img class="kflower" src="img/brand/flower-lblue.svg" alt=""><img class="kplate2" src="img/brand/osh-plate-cut.webp" alt="Kamolon Osh" width="900" height="900"><div class="ksteam" aria-hidden="true"><span class="kst" style="left:46.7%;top:23.3%"><i style="animation-delay:-0.0s"></i><i style="animation-delay:-1.6s"></i></span><span class="kst" style="left:74%;top:39%"><i style="animation-delay:-0.7s"></i><i style="animation-delay:-2.3s"></i></span><span class="kst" style="left:67.5%;top:69%"><i style="animation-delay:-1.4s"></i><i style="animation-delay:-3.0s"></i></span><span class="kst" style="left:36.7%;top:71.7%"><i style="animation-delay:-2.1s"></i><i style="animation-delay:-3.7s"></i></span><span class="kst" style="left:23.3%;top:44%"><i style="animation-delay:-2.8s"></i><i style="animation-delay:-4.4s"></i></span></div></div>
     </div>
     <div class="kcontacts">
         <a class="kp" id="mBot" target="_blank" rel="noopener"><span id="mBotT"></span></a>
