@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118101008";
+  const APP_VERSION = "20261118101455";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -946,7 +946,7 @@ body.kb:not(.am) .chips button.on, body.kb:not(.am) .nps button.on { background:
 #s-main .ktop { padding: 60px 0 0 !important; border-radius: 0 !important; overflow: visible; }
 #s-main .kname { margin: 0 0 6px !important; position: relative; z-index: 1; }
 #s-main .khero { position: relative; margin: 0; line-height: 0; }
-#s-main .khero img { width: 100%; height: auto; display: block; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 261' preserveAspectRatio='none'%3E%3Cpath d='M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46V261H0Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 261' preserveAspectRatio='none'%3E%3Cpath d='M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46V261H0Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; }
+#s-main .khero img { width: 100%; height: auto; display: block; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 339' preserveAspectRatio='none'%3E%3Cpath d='M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46V339H0Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 339' preserveAspectRatio='none'%3E%3Cpath d='M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46V339H0Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; }
 #s-main .kharch { position: absolute; inset: 0; width: 100%; height: 100%; }
 #s-main .kcontacts { margin: 4px 0 0; }
 
@@ -958,6 +958,34 @@ body.kb:not(.am) .chips button.on, body.kb:not(.am) .nps button.on { background:
 #s-main .ksub { display: block; margin-top: 7px; font: 700 .98rem/1 var(--ktx); text-transform: none; letter-spacing: 0; color: #e6eeff; text-shadow: none; }
 #s-main .khero img { filter: saturate(1.08); }
 #s-main .ktop { padding-top: 72px !important; }
+
+/* ---- Kuchli yaltiroq ---- */
+:root { --go: linear-gradient(#FFB462, #FF7C10 55%, #E25A00); --gb: linear-gradient(#1E66E6, #0538A0 55%, #011B4F); --gl: linear-gradient(#8AEBFF, #19C0E9 55%, #0896C4);
+  --gh: linear-gradient(rgba(255,255,255,.42), rgba(255,255,255,.1) 48%, rgba(255,255,255,0) 50%); --sh: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.75) 50%, transparent 60%); }
+.kbtn-o, body.kb:not(.am) .send { background: var(--sh) no-repeat, var(--gh), var(--go) !important; background-size: 260% 100%, 100% 100%, 100% 100% !important; filter: drop-shadow(0 10px 14px rgba(255,110,0,.55)) drop-shadow(0 0 10px rgba(255,170,80,.45)); }
+.kbtn-b { background: var(--sh) no-repeat, var(--gh), var(--gb) !important; background-size: 260% 100%, 100% 100%, 100% 100% !important; filter: drop-shadow(0 10px 14px rgba(5,56,160,.55)) drop-shadow(0 0 10px rgba(60,130,255,.4)); }
+.kp { background: var(--gh), var(--gl) !important; filter: drop-shadow(0 4px 8px rgba(8,150,196,.5)) drop-shadow(0 0 8px rgba(138,235,255,.6)); }
+body.kb:not(.am):not(.mm) #s-form .ktitle { background: var(--gh), var(--go); }
+body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle { background: var(--gh), var(--gl); }
+.kbtn, body.kb:not(.am) .send { animation: kshine 2.4s ease-in-out infinite !important; }
+.kbtn-b { animation-delay: 1.2s !important; }
+@keyframes kshine { 0% { background-position: 130% 0, 0 0, 0 0; } 55%, 100% { background-position: -30% 0, 0 0, 0 0; } }
+#s-main .ktop { background: radial-gradient(circle at 50% 120px, rgba(90,170,255,.5) 0, rgba(40,120,240,.2) 140px, rgba(2,49,129,0) 230px), url(img/brand/pattern-blue-soft.svg) repeat 0 0 / 104px auto, linear-gradient(#0b46b3, #023181 60%, #012668) !important; }
+#s-main .kname { background: linear-gradient(#fff 30%, #d8e6ff 70%, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none !important; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35)); }
+#s-main .kname .kmark { -webkit-text-fill-color: transparent; background: linear-gradient(#FFE89A, #EFBF48 55%, #D99A1C); -webkit-background-clip: text; background-clip: text; }
+#s-main .kname .kmark::before { background: linear-gradient(90deg, transparent, #FFD86B); box-shadow: 0 0 6px #FFD86B; }
+#s-main .kname .kmark::after { background: linear-gradient(90deg, #FFD86B, transparent); box-shadow: 0 0 6px #FFD86B; }
+#s-main .kname .ksub { -webkit-text-fill-color: #eaf2ff; }
+#s-main .khero img { filter: none; }
+#s-main .krate h2 { background: linear-gradient(#2a74f0, #0538A0 60%, #022a7a); -webkit-background-clip: text; background-clip: text; }
+/* ---- Barglar va qor ---- */
+.kfall { position: fixed; inset: 0; pointer-events: none; z-index: 50; overflow: hidden; }
+.kfall i { position: absolute; top: -30px; display: block; will-change: transform; animation: kfall linear infinite; }
+.kfall i.l { background: currentColor; border-radius: 0 80% 0 80%; }
+.kfall i.s { border-radius: 50%; background: #fff; box-shadow: 0 0 6px rgba(255,255,255,.9), 0 0 0 1px rgba(150,190,255,.35); }
+@keyframes kfall { 0% { transform: translate3d(0, 0, 0) rotate(0deg); } 25% { transform: translate3d(18px, 25vh, 0) rotate(90deg); } 50% { transform: translate3d(-12px, 50vh, 0) rotate(180deg); } 75% { transform: translate3d(16px, 75vh, 0) rotate(270deg); } 100% { transform: translate3d(-6px, 106vh, 0) rotate(360deg); } }
+body.am .kfall { display: none; }
+@media (prefers-reduced-motion: reduce) { .kfall { display: none; } .kbtn, body.kb:not(.am) .send { animation: none !important; } }
 </style>
 </head>
 <body class="lm">
@@ -1003,7 +1031,7 @@ body.kb:not(.am) .chips button.on, body.kb:not(.am) .nps button.on { background:
     <div class="ktop">
       <div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div>
       <div class="kname">Kamolon Osh<span class="kmark">Markazi</span><span class="ksub" data-i18n="tag"></span></div>
-      <div class="khero"><img src="img/brand/osh-hero.webp" alt="Kamolon Osh" width="1360" height="910"><svg class="kharch" viewBox="0 0 390 261" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46" fill="none" stroke="#EFBF48" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 246C80 228 150 260 240 248S350 228 390 236V262H0Z" fill="#fff"/><path d="M0 246C80 228 150 260 240 248S350 228 390 236" fill="none" stroke="#19C0E9" stroke-width="3" vector-effect="non-scaling-stroke"/></svg></div>
+      <div class="khero"><img src="img/brand/osh-hero.webp" alt="Kamolon Osh" width="1200" height="1042"><svg class="kharch" viewBox="0 0 390 339" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46C70 44 128 36 160 16C176 7 186 2 195 0C204 2 214 7 230 16C262 36 320 44 390 46" fill="none" stroke="#EFBF48" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 324C80 306 150 338 240 326S350 306 390 314V340H0Z" fill="#fff"/><path d="M0 324C80 306 150 338 240 326S350 306 390 314" fill="none" stroke="#19C0E9" stroke-width="3" vector-effect="non-scaling-stroke"/></svg></div>
     </div>
     <div class="kcontacts">
         <a class="kp" id="mBot" target="_blank" rel="noopener"><span id="mBotT"></span></a>
@@ -2156,6 +2184,21 @@ body.kb:not(.am) .chips button.on, body.kb:not(.am) .nps button.on { background:
   }, 60000);
 
   document.body.classList.add("kb");
+  // Kuz-qish: tepadan mayda barglar va qor uchqunlari (sekin, ko'zga zo'rg'a ko'rinadi)
+  (function () {
+    const box = document.createElement("div"); box.className = "kfall"; box.setAttribute("aria-hidden", "true");
+    const COLORS = ["#FF7C10", "#EFBF48", "#E25A00", "#F2A33A", "#C8501A"];
+    for (let k = 0; k < 22; k++) {
+      const leaf = k % 2 === 0, i = document.createElement("i");
+      i.className = leaf ? "l" : "s";
+      const size = leaf ? 8 + Math.random() * 7 : 3 + Math.random() * 4;
+      i.style.cssText = "left:" + (Math.random() * 100) + "%;width:" + size + "px;height:" + size + "px;" +
+        "animation-duration:" + (11 + Math.random() * 10) + "s;animation-delay:-" + (Math.random() * 20) + "s;" +
+        (leaf ? "color:" + COLORS[k % COLORS.length] + ";opacity:" + (0.35 + Math.random() * 0.3) + ";" : "opacity:" + (0.5 + Math.random() * 0.4) + ";");
+      box.appendChild(i);
+    }
+    document.body.appendChild(box);
+  })();
   applyLang("uz");
   $("mPhoneT").textContent = PHONE; $("mPhone").href = "tel:" + PHONE.replace(/[^+\d]/g, "");
   $("mBotT").textContent = "@" + BOT; $("mBot").href = "https://t.me/" + BOT;
