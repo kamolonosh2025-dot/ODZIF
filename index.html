@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118093001";
+  const APP_VERSION = "20261118094708";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -796,13 +796,22 @@ body.kb:not(.am) .body > section { animation: none; }
 
 /* ---- Bosh sahifa tepasi ---- */
 #s-main .ktop { position: relative; margin: 0 -18px; padding: 26px 18px 30px; text-align: center; color: #fff;
-  background: var(--kb) url(img/brand/pattern-blue.svg) repeat; background-size: 104px auto;
+  background: var(--kb) url(img/brand/pattern-blue-soft.svg) repeat; background-size: 104px auto;
   border-radius: 0 0 28px 28px; overflow: hidden; }
-#s-main .ktop::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 62% at 50% 45%, var(--kb) 55%, rgba(2,49,129,.55) 80%, rgba(2,49,129,.15)); }
+
 #s-main .ktop > * { position: relative; }
 .kglobe { position: absolute !important; right: 14px; top: 14px; z-index: 2; display: inline-flex; align-items: center; gap: 5px; height: 38px; padding: 0 12px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.7); background: rgba(2,49,129,.6); color: #fff; font: 700 .82rem var(--ktx); cursor: pointer; }
 .kglobe svg { width: 18px; height: 18px; }
-#s-main .klogo { width: 132px; height: auto; display: block; margin: 8px auto 18px; }
+#s-main .ktop { padding-top: 62px; }
+#s-main .kplate { width: 172px; height: 172px; margin: 0 auto; border-radius: 50%; padding: 5px; background: #fff; box-shadow: 0 0 0 5px var(--klb), 0 18px 34px -14px rgba(0,0,0,.55); }
+#s-main .kplate img { width: 100%; height: 100%; border-radius: 50%; display: block; }
+#s-main .kname { font: 800 1.9rem/1 var(--khd); text-transform: uppercase; letter-spacing: .02em; margin: 16px 0 14px; }
+.klang { position: absolute; right: 14px; top: 14px; z-index: 2; display: flex; padding: 3px; gap: 2px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1.5px solid rgba(255,255,255,.55); }
+.klang button { height: 32px; min-width: 40px; padding: 0 8px; border: 0; border-radius: 999px; background: transparent; color: #fff; font: 800 .9rem/1 var(--ktx); letter-spacing: .03em; cursor: pointer; }
+.klang button.on { background: #fff; color: var(--kb); }
+#s-main .ktop > .klang { position: absolute; right: 14px; top: 14px; }
+.khead .klang { position: relative; right: auto; top: auto; }
+.khead .klang button { min-width: 34px; height: 30px; font-size: .8rem; }
 #s-main .kcontacts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; }
 /* Brendbukdagi naqshli "ramka" shakli */
 .kp, .kbtn, body.kb:not(.am) .send { position: relative; --cap: blue; }
@@ -832,13 +841,14 @@ body.kb:not(.am) .body > section { animation: none; }
 
 /* ---- Forma sahifasi tepasi ---- */
 .khead, .ktitle { display: none; }
-body.kb:not(.am):not(.mm) #s-form .khead { display: flex; align-items: center; justify-content: space-between; margin: 0 -18px; padding: 14px 14px 30px; background: var(--kb) url(img/brand/pattern-blue.svg) repeat; background-size: 104px auto; position: relative; }
-body.kb:not(.am):not(.mm) #s-form .khead::before { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(2,49,129,.55), var(--kb) 75%); }
+body.kb:not(.am):not(.mm) #s-form .khead { display: flex; align-items: center; justify-content: space-between; margin: 0 -18px; padding: 14px 14px 30px; background: var(--kb) url(img/brand/pattern-blue-soft.svg) repeat; background-size: 104px auto; position: relative; }
+
 .khead > * { position: relative; }
 .khead .kglobe { position: relative !important; right: auto; top: auto; }
 .kback { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.7); background: rgba(2,49,129,.6); color: #fff; display: grid; place-items: center; cursor: pointer; }
 .kback svg { width: 22px; height: 22px; stroke-width: 2.4; }
-.khlogo { width: 74px; height: auto; }
+.khlogo { width: 66px; height: 66px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 3px var(--klb); position: absolute !important; left: 50%; top: 10px; transform: translateX(-50%); }
+body.kb:not(.am):not(.mm) #s-form .khead { min-height: 96px; align-items: flex-start; }
 body.kb:not(.am):not(.mm) #s-form .ktitle { display: block; position: relative; margin: -20px 22px 6px; padding: 14px 10px; text-align: center; background: var(--ko); color: #fff; font: 800 1.5rem/1.05 var(--khd); text-transform: uppercase; }
 body.kb:not(.am):not(.mm) #s-form .ktitle::before, body.kb:not(.am):not(.mm) #s-form .ktitle::after { content: ""; position: absolute; top: 0; height: 100%; aspect-ratio: 51/132; background: no-repeat 0 0/100% 100%; }
 body.kb:not(.am):not(.mm) #s-form .ktitle::before { right: calc(100% - 1px); background-image: url(img/brand/cap-l-orange.svg); }
@@ -896,10 +906,20 @@ body.kb:not(.am) .done h1 { font: 800 2rem/1 var(--khd); color: var(--kb); text-
 body.kb:not(.am) .done .back { color: var(--kb); font-weight: 800; }
 
 /* ---- Pastki naqshli tasma ---- */
-body.kb:not(.am) .shell::after { content: ""; display: block; height: 64px; margin-top: 26px; background: var(--kb) url(img/brand/pattern-blue.svg) repeat; background-size: 104px auto; }
-body.kb.am .shell::after { display: none; }
+.kfoot { display: none; }
+body.kb:not(.am) .kfoot { display: block; margin-top: 28px; padding: 20px 16px 22px; text-align: center; color: #fff; background: var(--kb) url(img/brand/pattern-blue-soft.svg) repeat; background-size: 104px auto; }
+.kfoot-t { font: 800 1.35rem/1 var(--khd); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 12px; }
+.kbr { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.kbr span { padding: 7px 14px; border-radius: 999px; background: #fff; color: var(--kb); font: 700 .95rem/1 var(--ktx); }
+body.kb:not(.am) #rvComment #tableWrap label { display: none; }
+body.kb:not(.am) #rvContact #chekNote { display: none; }
 #complaintWrap textarea { min-height: 110px; }
 body.kb:not(.am) .done p { color: #6b7894; }
+
+body.kb:not(.am) .emos { gap: 4px; }
+body.kb:not(.am) .emos button { width: 35px; height: 35px; font-size: 1.15rem; }
+body.kb:not(.am) .emo-row > span { line-height: 1.2; font-size: .9rem; }
+body.kb:not(.am) .emos { gap: 3px; }
 </style>
 </head>
 <body class="lm">
@@ -943,8 +963,9 @@ body.kb:not(.am) .done p { color: #6b7894; }
   <!-- 0. Bosh sahifa (QR koddan ochiladi) -->
   <section id="s-main" hidden>
     <div class="ktop">
-      <button type="button" class="kglobe" data-go="lang" aria-label="Til / Язык / Language"><svg class="i"><use href="#ic-globe"/></svg><span id="kLangCode">UZ</span></button>
-      <img class="klogo" src="img/brand/logo-white.svg" alt="Kamolon Osh" width="341" height="322">
+      <div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div>
+      <div class="kplate"><img src="img/brand/osh-5.webp" alt="Kamolon Osh" width="640" height="640"></div>
+      <div class="kname">Kamolon Osh</div>
       <div class="kcontacts">
         <a class="kp" id="mBot" target="_blank" rel="noopener"><span id="mBotT"></span></a>
         <a class="kp" id="mPhone"><span id="mPhoneT"></span></a>
@@ -989,7 +1010,7 @@ body.kb:not(.am) .done p { color: #6b7894; }
     <button class="back" data-go="main"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="back"></span></button>
     <div class="hhero fhero"><img src="img/hero-forma-v4.webp" alt="Kamolon Osh markazi" width="1080" height="710"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
     <div class="fctop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button></div>
-    <div class="khead"><button type="button" class="kback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><img class="khlogo" src="img/brand/logo-white.svg" alt="Kamolon Osh"><button type="button" class="kglobe kglobe-s" data-go="lang" aria-label="Til"><svg class="i"><use href="#ic-globe"/></svg></button></div>
+    <div class="khead"><button type="button" class="kback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><img class="khlogo" src="img/brand/osh-5.webp" alt="Kamolon Osh"><div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div></div>
     <h1 class="ktitle" id="kTitle"></h1>
     <div class="form-head" id="formHead" data-cat="review"><div class="tile-ico ico fico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="formIcon"><use href="#ic-star"/></svg></div><div class="fht"><h1 id="formTitle"></h1><p class="lead" id="formDesc" style="color:var(--muted)"></p></div><svg class="hmosque fmosque" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
 
@@ -1011,7 +1032,7 @@ body.kb:not(.am) .done p { color: #6b7894; }
         <div class="rvc"><div class="rvt" data-i18n="qNps"></div><div class="nps" id="nps"></div><div class="npsl"><span data-i18n="npsNo"></span><span data-i18n="npsYes"></span></div></div>
         <div class="rvc"><div class="rvt" data-i18n="qWhen"></div><div class="chips" data-q="when"><button type="button" data-v="week" data-i18n="wWeek"></button><button type="button" data-v="month" data-i18n="wMonth"></button><button type="button" data-v="later" data-i18n="wLater"></button><button type="button" data-v="unknown" data-i18n="wDunno"></button></div></div>
         <div class="rvc"><div class="rvt" data-i18n="qRate"></div><div class="emo-row" data-key="food"><span data-i18n="e_food"></span><div class="emos"></div></div><div class="emo-row" data-key="speed"><span data-i18n="e_speed"></span><div class="emos"></div></div><div class="emo-row" data-key="polite"><span data-i18n="e_polite"></span><div class="emos"></div></div><div class="emo-row" data-key="service"><span data-i18n="e_service"></span><div class="emos"></div></div><div class="emo-row" data-key="clean"><span data-i18n="e_clean"></span><div class="emos"></div></div><p class="rvhint" data-i18n="rateHint"></p></div>
-        <div class="rvc"><div class="rvt" data-i18n="qMgr"></div><div class="chips" data-q="manager"><button type="button" data-v="yes" data-i18n="yes"></button><button type="button" data-v="no" data-i18n="no"></button></div></div>
+        <div class="rvc" id="rvMgr" hidden><div class="rvt" data-i18n="qMgr"></div><div class="chips" data-q="manager"><button type="button" data-v="yes" data-i18n="yes"></button><button type="button" data-v="no" data-i18n="no"></button></div></div>
         <div class="rvc"><div class="rvt" data-i18n="qFirst"></div><div class="chips" data-q="first"><button type="button" data-v="yes" data-i18n="yes"></button><button type="button" data-v="no" data-i18n="no"></button></div></div>
         <div class="rvc" id="rvComment"><div class="rvt" data-i18n="qCmt"></div></div>
         <div class="rvc" id="rvContact"><div class="rvt" data-i18n="qChek"></div><p class="rvsub" data-i18n="chekSub"></p>
@@ -1179,6 +1200,7 @@ body.kb:not(.am) .done p { color: #6b7894; }
     <img class="lpast" src="img/til-past-v3.webp" alt="" width="851" height="257">
     <div class="lband"><svg class="lwave" viewBox="0 0 400 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V14C90 32 170 4 250 14S360 26 400 10V0Z" fill="#fff"/><path d="M0 14C90 32 170 4 250 14S360 26 400 10" fill="none" stroke="#c9a14a" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="lfl"><span></span><svg class="lflower" viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="#d9b66a" stroke-width="1.6"><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(0 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(45 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(90 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(135 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(225 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(270 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(315 20 20)"/><circle cx="20" cy="20" r="4" fill="#d9b66a"/></g></svg><span></span></div></div>
   </div>
+  <div class="kfoot"><div class="kfoot-t" data-i18n="ourBranches"></div><div class="kbr" id="kBranches"></div></div>
 </main>
 
 <script>
@@ -1202,12 +1224,12 @@ body.kb:not(.am) .done p { color: #6b7894; }
       c_review_t: "Fikr qoldirish", c_review_d: "Taom, xizmat va muhitga baho bering",
       c_idea_t: "G'oya taklif qilish", c_idea_d: "Yangi taklif va g'oyalaringizni yuboring",
       c_partner_t: "Hamkorlik", c_partner_d: "Yetkazib beruvchilar, ijara, hamkorlik",
-      c_problem_t: "Takliflar va shikoyatlar", c_problem_d: "Taklif yoki shikoyatingizni yozing", sugg: "Takliflaringiz", complaint: "Shikoyatlaringiz", purpose: "Hamkorlik maqsadi", rateTitle: "Sifatimizni baholang", mSugg: "Taklif", mComp: "Shikoyat",
+      c_problem_t: "Takliflar va shikoyatlar", c_problem_d: "Taklif yoki shikoyatingizni yozing", sugg: "Takliflaringiz", complaint: "Shikoyatlaringiz", purpose: "Hamkorlik maqsadi", rateTitle: "Sifatimizni baholang", ourBranches: "Bizning filiallarimiz", mSugg: "Taklif", mComp: "Shikoyat",
       homeT: "Fikr va takliflaringiz biz uchun muhim!", homeD: "Xizmat, taomlar va umumiy taassurot bo'yicha fikringizni qoldiring.", v1: "Sifatli taomlar", v2: "E'tiborli xizmat", v3: "Ishonchli hamkorlik", v4: "Doimiy takomillashuv", v5: "Taomlar sifati", v6: "Xizmat sifati", v7: "Muhit va qulaylik", v8: "Taklif va yangiliklar",
       back: "Orqaga", toHome: "Bosh sahifaga",
       rateQ: "Bahoyingiz",
       r_food: "Taom", r_service: "Xizmat", r_atmos: "Muhit",
-      qBranch: "Qaysi filialdasiz?", pickBranch: "Filialni tanlang", wTitle: "Hurmatli mehmon!", w1: "Har bir fikringizni biz o'zimiz shaxsan o'qiymiz.", w2: "Agar nimadir ko'nglingizdagidek bo'lmagan bo'lsa, uzr so'raymiz. Bizga yozing, albatta tuzatamiz.", w3: "Sizga yoqqan bo'lsa, bu haqda ham yozing, jamoamiz juda xursand bo'ladi.", wSig: "Kamolon Osh markazi", wSig2: "jamoasi", qNps: "Bizni do'stlaringizga tavsiya qilasizmi?", npsNo: "Yo'q", npsYes: "Albatta", qWhen: "Sizni yana qachon kutaylik?", wWeek: "Shu hafta", wMonth: "Shu oy", wLater: "Keyinroq", wDunno: "Bilmayman", qRate: "Baholang", e_food: "Ta'm", e_speed: "Buyurtma tezligi", e_polite: "Xushmuomalalik", e_service: "Xizmat", e_clean: "Tozalik", rateHint: "Ta'm: taom, ichimlik va shirinlik. 1 juda yomon, 5 a'lo.", qMgr: "Menejer stolingizga keldimi?", qFirst: "Birinchi marta keldingizmi?", yes: "Ha", no: "Yo'q", qCmt: "Izoh va takliflar", rvMsg: "Izoh va takliflaringiz", rvName: "Ismingiz (ixtiyoriy)", qChek: "Chek surati yoki telefon", chekSub: "Fikringiz haqiqiy ekanini tasdiqlash uchun chekni suratga oling yoki telefon raqamingizni qoldiring.", chekBtn: "📷 Chekni suratga olish", chekNote: "Muammo bo'lsa, menejer siz bilan bog'lanadi.", rvPhone: "Yoki telefon raqamingiz", consent: "«Xabarni jo'natish» tugmasini bosib, siz ismingiz, telefon raqamingiz va chek suratingiz Kamolon Osh markazi tomonidan fikringizga javob berish va xizmat sifatini yaxshilash uchun ishlatilishiga rozilik bildirasiz.",
+      qBranch: "Qaysi filialdasiz?", pickBranch: "Filialni tanlang", wTitle: "Hurmatli mehmon!", w1: "Har bir fikringizni biz o'zimiz shaxsan o'qiymiz.", w2: "Agar nimadir ko'nglingizdagidek bo'lmagan bo'lsa, uzr so'raymiz. Bizga yozing, albatta tuzatamiz.", w3: "Sizga yoqqan bo'lsa, bu haqda ham yozing, jamoamiz juda xursand bo'ladi.", wSig: "Kamolon Osh markazi", wSig2: "jamoasi", qNps: "Bizni do'stlaringizga tavsiya qilasizmi?", npsNo: "Yo'q", npsYes: "Albatta", qWhen: "Sizni yana qachon kutaylik?", wWeek: "Shu hafta", wMonth: "Shu oy", wLater: "Keyinroq", wDunno: "Bilmayman", qRate: "Baholang", e_food: "Ta'm", e_speed: "Buyurtma tezligi", e_polite: "Xushmuomalalik", e_service: "Xizmat", e_clean: "Tozalik", rateHint: "Ta'm: taom, ichimlik va shirinlik. 1 juda yomon, 5 a'lo.", qMgr: "Menejer stolingizga keldimi?", qFirst: "Birinchi marta keldingizmi?", yes: "Ha", no: "Yo'q", qCmt: "Stol raqamingiz", rvMsg: "Izoh va takliflaringiz", rvName: "Ismingiz (ixtiyoriy)", qChek: "Chek surati", chekSub: "Fikringiz haqiqiy ekanini tasdiqlash uchun chekni suratga oling (ixtiyoriy).", chekBtn: "📷 Chekni suratga olish", chekNote: "Muammo bo'lsa, menejer siz bilan bog'lanadi.", rvPhone: "Yoki telefon raqamingiz", consent: "«Xabarni jo'natish» tugmasini bosib, siz ismingiz, telefon raqamingiz va chek suratingiz Kamolon Osh markazi tomonidan fikringizga javob berish va xizmat sifatini yaxshilash uchun ishlatilishiga rozilik bildirasiz.",
       name: "Ismingiz", optional: "(ixtiyoriy)", namePh: "Masalan: Aziz",
       phone: "Telefon raqamingiz", company: "Kompaniya nomi",
       msg: "Xabaringiz", msgPh: "Shu yerga yozing...",
@@ -1229,12 +1251,12 @@ body.kb:not(.am) .done p { color: #6b7894; }
       c_review_t: "Оставить отзыв", c_review_d: "Оценка еды, сервиса и атмосферы",
       c_idea_t: "Предложить идею", c_idea_d: "Идеи и пожелания для руководства",
       c_partner_t: "Сотрудничество", c_partner_d: "Поставщики, аренда, партнёрства",
-      c_problem_t: "Предложения и жалобы", c_problem_d: "Напишите предложение или жалобу", sugg: "Ваши предложения", complaint: "Ваши жалобы", purpose: "Цель сотрудничества", rateTitle: "Оцените наше качество", mSugg: "Предложение", mComp: "Жалоба",
+      c_problem_t: "Предложения и жалобы", c_problem_d: "Напишите предложение или жалобу", sugg: "Ваши предложения", complaint: "Ваши жалобы", purpose: "Цель сотрудничества", rateTitle: "Оцените наше качество", ourBranches: "Наши филиалы", mSugg: "Предложение", mComp: "Жалоба",
       homeT: "Ваши отзывы и предложения важны для нас!", homeD: "Поделитесь мнением о сервисе, блюдах и общем впечатлении.", v1: "Качественные блюда", v2: "Внимательный сервис", v3: "Надёжное партнёрство", v4: "Постоянное развитие", v5: "Качество блюд", v6: "Качество сервиса", v7: "Атмосфера и уют", v8: "Предложения и новости",
       back: "Назад", toHome: "На главную",
       rateQ: "Ваша оценка",
       r_food: "Еда", r_service: "Сервис", r_atmos: "Атмосфера",
-      qBranch: "В каком вы филиале?", pickBranch: "Выберите филиал", wTitle: "Уважаемый гость!", w1: "Каждый ваш отзыв мы читаем лично.", w2: "Если что-то было не так, как вам хотелось, просим прощения. Напишите нам, мы обязательно исправим.", w3: "Если вам понравилось, напишите и об этом, наша команда будет очень рада.", wSig: "Kamolon Osh markazi", wSig2: "команда", qNps: "Порекомендуете нас друзьям?", npsNo: "Нет", npsYes: "Обязательно", qWhen: "Когда вас снова ждать?", wWeek: "На этой неделе", wMonth: "В этом месяце", wLater: "Позже", wDunno: "Не знаю", qRate: "Оцените", e_food: "Вкус", e_speed: "Скорость заказа", e_polite: "Вежливость", e_service: "Сервис", e_clean: "Чистота", rateHint: "Вкус: еда, напитки и десерты. 1 очень плохо, 5 отлично.", qMgr: "Подходил ли менеджер к вашему столу?", qFirst: "Вы у нас впервые?", yes: "Да", no: "Нет", qCmt: "Комментарии и пожелания", rvMsg: "Ваши комментарии", rvName: "Ваше имя (необязательно)", qChek: "Фото чека или телефон", chekSub: "Чтобы подтвердить отзыв, сфотографируйте чек или оставьте номер телефона.", chekBtn: "📷 Сфотографировать чек", chekNote: "Если возникла проблема, менеджер свяжется с вами.", rvPhone: "Или ваш номер телефона", consent: "Нажимая «Отправить», вы соглашаетесь, что ваше имя, телефон и фото чека будут использованы Kamolon Osh markazi для ответа на отзыв и улучшения качества сервиса.",
+      qBranch: "В каком вы филиале?", pickBranch: "Выберите филиал", wTitle: "Уважаемый гость!", w1: "Каждый ваш отзыв мы читаем лично.", w2: "Если что-то было не так, как вам хотелось, просим прощения. Напишите нам, мы обязательно исправим.", w3: "Если вам понравилось, напишите и об этом, наша команда будет очень рада.", wSig: "Kamolon Osh markazi", wSig2: "команда", qNps: "Порекомендуете нас друзьям?", npsNo: "Нет", npsYes: "Обязательно", qWhen: "Когда вас снова ждать?", wWeek: "На этой неделе", wMonth: "В этом месяце", wLater: "Позже", wDunno: "Не знаю", qRate: "Оцените", e_food: "Вкус", e_speed: "Скорость заказа", e_polite: "Вежливость", e_service: "Сервис", e_clean: "Чистота", rateHint: "Вкус: еда, напитки и десерты. 1 очень плохо, 5 отлично.", qMgr: "Подходил ли менеджер к вашему столу?", qFirst: "Вы у нас впервые?", yes: "Да", no: "Нет", qCmt: "Номер вашего стола", rvMsg: "Ваши комментарии", rvName: "Ваше имя (необязательно)", qChek: "Фото чека", chekSub: "Чтобы подтвердить отзыв, сфотографируйте чек (необязательно).", chekBtn: "📷 Сфотографировать чек", chekNote: "Если возникла проблема, менеджер свяжется с вами.", rvPhone: "Или ваш номер телефона", consent: "Нажимая «Отправить», вы соглашаетесь, что ваше имя, телефон и фото чека будут использованы Kamolon Osh markazi для ответа на отзыв и улучшения качества сервиса.",
       name: "Ваше имя", optional: "(необязательно)", namePh: "Например: Азиз",
       phone: "Номер телефона", company: "Название компании",
       msg: "Ваше сообщение", msgPh: "Напишите здесь...",
@@ -1256,12 +1278,12 @@ body.kb:not(.am) .done p { color: #6b7894; }
       c_review_t: "Leave a review", c_review_d: "Rate the food, service and atmosphere",
       c_idea_t: "Suggest an idea", c_idea_d: "Ideas and wishes for management",
       c_partner_t: "Partnership", c_partner_d: "Suppliers, rent, partnerships",
-      c_problem_t: "Suggestions and complaints", c_problem_d: "Write your suggestion or complaint", sugg: "Your suggestions", complaint: "Your complaints", purpose: "Purpose of partnership", rateTitle: "Rate our quality", mSugg: "Suggestion", mComp: "Complaint",
+      c_problem_t: "Suggestions and complaints", c_problem_d: "Write your suggestion or complaint", sugg: "Your suggestions", complaint: "Your complaints", purpose: "Purpose of partnership", rateTitle: "Rate our quality", ourBranches: "Our branches", mSugg: "Suggestion", mComp: "Complaint",
       homeT: "Your feedback and ideas matter to us!", homeD: "Share your thoughts on our service, food and overall experience.", v1: "Quality food", v2: "Attentive service", v3: "Reliable partnership", v4: "Constant improvement", v5: "Food quality", v6: "Service quality", v7: "Atmosphere & comfort", v8: "Ideas & news",
       back: "Back", toHome: "Back to home",
       rateQ: "Your rating",
       r_food: "Food", r_service: "Service", r_atmos: "Atmosphere",
-      qBranch: "Which branch are you at?", pickBranch: "Choose a branch", wTitle: "Dear guest!", w1: "We read every piece of feedback personally.", w2: "If something wasn't as you wished, we apologise. Write to us and we will fix it.", w3: "If you enjoyed it, tell us that too, our team will be delighted.", wSig: "Kamolon Osh markazi", wSig2: "team", qNps: "Would you recommend us to friends?", npsNo: "No", npsYes: "Definitely", qWhen: "When can we expect you again?", wWeek: "This week", wMonth: "This month", wLater: "Later", wDunno: "Not sure", qRate: "Rate us", e_food: "Taste", e_speed: "Order speed", e_polite: "Politeness", e_service: "Service", e_clean: "Cleanliness", rateHint: "Taste: food, drinks and desserts. 1 very bad, 5 excellent.", qMgr: "Did a manager visit your table?", qFirst: "Is this your first visit?", yes: "Yes", no: "No", qCmt: "Comments and suggestions", rvMsg: "Your comments", rvName: "Your name (optional)", qChek: "Receipt photo or phone", chekSub: "To confirm your feedback, take a photo of the receipt or leave your phone number.", chekBtn: "📷 Photograph the receipt", chekNote: "If there is a problem, a manager will contact you.", rvPhone: "Or your phone number", consent: "By pressing Send, you agree that your name, phone number and receipt photo may be used by Kamolon Osh markazi to reply to your feedback and improve our service.",
+      qBranch: "Which branch are you at?", pickBranch: "Choose a branch", wTitle: "Dear guest!", w1: "We read every piece of feedback personally.", w2: "If something wasn't as you wished, we apologise. Write to us and we will fix it.", w3: "If you enjoyed it, tell us that too, our team will be delighted.", wSig: "Kamolon Osh markazi", wSig2: "team", qNps: "Would you recommend us to friends?", npsNo: "No", npsYes: "Definitely", qWhen: "When can we expect you again?", wWeek: "This week", wMonth: "This month", wLater: "Later", wDunno: "Not sure", qRate: "Rate us", e_food: "Taste", e_speed: "Order speed", e_polite: "Politeness", e_service: "Service", e_clean: "Cleanliness", rateHint: "Taste: food, drinks and desserts. 1 very bad, 5 excellent.", qMgr: "Did a manager visit your table?", qFirst: "Is this your first visit?", yes: "Yes", no: "No", qCmt: "Your table number", rvMsg: "Your comments", rvName: "Your name (optional)", qChek: "Receipt photo", chekSub: "To confirm your feedback, take a photo of the receipt (optional).", chekBtn: "📷 Photograph the receipt", chekNote: "If there is a problem, a manager will contact you.", rvPhone: "Or your phone number", consent: "By pressing Send, you agree that your name, phone number and receipt photo may be used by Kamolon Osh markazi to reply to your feedback and improve our service.",
       name: "Your name", optional: "(optional)", namePh: "e.g. Aziz",
       phone: "Phone number", company: "Company name",
       msg: "Your message", msgPh: "Write here...",
@@ -1319,7 +1341,7 @@ body.kb:not(.am) .done p { color: #6b7894; }
     $("branchWrap").hidden = true;
     $("branchPicked").hidden = true;
     $("fields").hidden = false;
-    $("branchSel").innerHTML = `<option value="">${T[lang].pickBranch}</option>` + BRANCHES.map((b, i) => `<option value="${i}">${b[lang]}</option>`).join("");
+    $("branchSel").innerHTML = `<option value="" disabled hidden>${T[lang].pickBranch}</option>` + BRANCHES.map((b, i) => `<option value="${i}">${b[lang]}</option>`).join("");
     $("branchSel").value = branch >= 0 ? String(branch) : "";
     $("branchSel").classList.toggle("empty", branch < 0);
     document.body.classList.toggle("fc", !$("fields").hidden); // forma ochiq: ixcham tepa qism
@@ -1351,7 +1373,8 @@ body.kb:not(.am) .done p { color: #6b7894; }
     lang = l;
     const t = T[l];
     document.documentElement.lang = l;
-    if ($("kLangCode")) $("kLangCode").textContent = l.toUpperCase();
+    document.querySelectorAll("[data-setlang]").forEach(b => b.classList.toggle("on", b.dataset.setlang === l));
+    if ($("kBranches")) $("kBranches").innerHTML = BRANCHES.map(b => "<span>" + b[l] + "</span>").join("");
     document.querySelectorAll(".lrow").forEach(b => b.classList.toggle("sel", b.dataset.lang === l));
     document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t[el.dataset.i18n]);
     document.querySelectorAll("[data-i18n-html]").forEach(el => el.innerHTML = t[el.dataset.i18nHtml]);
@@ -1377,6 +1400,7 @@ body.kb:not(.am) .done p { color: #6b7894; }
     $("companyWrap").hidden = c !== "partner";
     $("complaintWrap").hidden = c !== "problem";
     $("tableWrap").hidden = c !== "review";
+    ["nameWrap", "msgWrap", "phoneWrap"].forEach(id => $(id).hidden = c === "review");
     clearErrs();
     $("note").textContent = "";
   }
@@ -1490,6 +1514,7 @@ body.kb:not(.am) .done p { color: #6b7894; }
     show("main");
   }));
   $("langBtn").addEventListener("click", () => show("lang"));
+  document.querySelectorAll("[data-setlang]").forEach(b => b.addEventListener("click", () => applyLang(b.dataset.setlang)));
   document.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => {
     branch = -1;
     setCat(b.dataset.cat);
