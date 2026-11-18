@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118102820";
+  const APP_VERSION = "20261118103043";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1022,20 +1022,11 @@ body.kb:not(.am) .send { background: var(--gh), var(--go) !important; background
 @media (prefers-reduced-motion: reduce) { #s-main .ksteam { display: none; } }
 #s-main .kst i { left: -24px; width: 48px; height: 70px; background: radial-gradient(ellipse at 50% 60%, rgba(255,255,255,.9), rgba(255,255,255,.4) 40%, rgba(255,255,255,0) 70%); filter: blur(2px); }
 @keyframes ksteam { 0% { opacity: 0; transform: translate(0, 6px) scale(.5, .55); } 30% { opacity: .85; } 100% { opacity: 0; transform: translate(8px, -70px) scale(1.5, 1.8); } }
-/* ---- Filial tanlash ro'yxati ---- */
-body.kb:not(.am) #branchSel { display: none; }
-body.kb:not(.am) .bsel::after { display: none; }
-.ksel-btn { position: relative; width: 100%; height: 54px; padding: 0 46px 0 16px; border-radius: 12px; border: 1.5px solid var(--kb); background: #fff; color: var(--kb); font: 700 1.02rem var(--ktx); text-align: left; cursor: pointer; }
-.ksel-btn.empty { color: #5b6b8f; }
-.ksel-btn::after { content: ""; position: absolute; right: 18px; top: 50%; width: 9px; height: 9px; margin-top: -7px; border-right: 2.4px solid var(--kb); border-bottom: 2.4px solid var(--kb); transform: rotate(45deg); transition: transform .2s; }
-.ksel.open .ksel-btn::after { transform: rotate(-135deg); margin-top: -2px; }
-.ksel-list { display: grid; gap: 8px; margin-top: 10px; }
-.ksel-list[hidden] { display: none; }
-.ksel-list button { height: 50px; padding: 0 16px; border-radius: 12px; border: 1.5px solid #d5dcea; background: #f6f9ff; color: var(--kb); font: 700 1rem var(--ktx); text-align: left; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-.ksel-list button::before { content: ""; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #9fb0d0; flex: none; }
-.ksel-list button.on { border-color: var(--kb); background: #e8f0ff; }
-.ksel-list button.on::before { border-color: var(--kb); background: radial-gradient(circle, var(--kb) 45%, transparent 50%); }
-#brCard.err .ksel-btn { border-color: var(--danger); }
+/* ---- Filial tanlash: telefon oynasi, faqat 5 ta filial ---- */
+body.kb:not(.am) .bsel { position: relative; }
+body.kb:not(.am) .bsel select { color: var(--kb); }
+.kph { position: absolute; left: 17px; top: 50%; transform: translateY(-50%); color: #5b6b8f; font: 700 1.02rem var(--ktx); pointer-events: none; }
+.kph[hidden] { display: none; }
 </style>
 </head>
 <body class="lm">
@@ -1457,7 +1448,7 @@ body.kb:not(.am) .bsel::after { display: none; }
     $("branchWrap").hidden = true;
     $("branchPicked").hidden = true;
     $("fields").hidden = false;
-    $("branchSel").innerHTML = `<option value="" disabled hidden>${T[lang].pickBranch}</option>` + BRANCHES.map((b, i) => `<option value="${i}">${b[lang]}</option>`).join("");
+    $("branchSel").innerHTML = BRANCHES.map((b, i) => `<option value="${i}">${b[lang]}</option>`).join("");
     $("branchSel").value = branch >= 0 ? String(branch) : "";
     $("branchSel").classList.toggle("empty", branch < 0);
     kselRender();
@@ -1466,31 +1457,20 @@ body.kb:not(.am) .bsel::after { display: none; }
     placeFields(isReview);
     if (branch >= 0) $("branchName").innerHTML = '<b class="cn">' + T[lang].center + '</b><span class="nw"> – ' + BRANCHES[branch][lang] + "</span>";
   }
-  // Filial tanlash: telefonda ham faqat 5 ta filial chiqadi (o'zimizning ro'yxat)
+  // Filial tanlash: telefonning o'z oynasi, unda faqat 5 ta filial. "Filialni tanlang" faqat maydon ustidagi yozuv.
   function kselRender() {
     const sel = $("branchSel"); if (!sel) return;
-    let box = document.getElementById("kSel");
-    if (!box) {
-      box = document.createElement("div"); box.id = "kSel"; box.className = "ksel";
-      box.innerHTML = '<button type="button" class="ksel-btn"></button><div class="ksel-list" hidden></div>';
-      sel.parentNode.insertBefore(box, sel);
-      box.querySelector(".ksel-btn").addEventListener("click", () => {
-        const l = box.querySelector(".ksel-list"); l.hidden = !l.hidden; box.classList.toggle("open", !l.hidden);
-      });
-    }
-    const btn = box.querySelector(".ksel-btn"), list = box.querySelector(".ksel-list");
-    btn.textContent = branch >= 0 ? BRANCHES[branch][lang] : T[lang].pickBranch;
-    btn.classList.toggle("empty", branch < 0);
-    list.innerHTML = BRANCHES.map((b, i) => `<button type="button" data-kb="${i}" class="${i === branch ? "on" : ""}">${b[lang]}</button>`).join("");
-    list.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
-      sel.value = b.dataset.kb; sel.dispatchEvent(new Event("change"));
-      list.hidden = true; box.classList.remove("open"); kselRender();
-    }));
+    sel.selectedIndex = branch >= 0 ? branch : -1;
+    let ph = document.getElementById("kPh");
+    if (!ph) { ph = document.createElement("span"); ph.id = "kPh"; ph.className = "kph"; sel.parentNode.appendChild(ph); }
+    ph.textContent = T[lang].pickBranch;
+    ph.hidden = branch >= 0;
   }
   $("branchChange").addEventListener("click", () => { branch = -1; renderBranches(); });
   $("branchSel").addEventListener("change", () => {
     branch = $("branchSel").value === "" ? -1 : +$("branchSel").value;
     $("branchSel").classList.toggle("empty", branch < 0);
+    kselRender();
     $("brCard").classList.remove("err"); $("note").textContent = "";
   });
 
