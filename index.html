@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118094708";
+  const APP_VERSION = "20261118100626";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -785,6 +785,7 @@ body.fm #branchName { min-width: 0; line-height: 1.3; }
 [hidden] { display: none !important; }
 /* ===================== KAMOLON OSH BRENDBUK USLUBI ===================== */
 :root { --kb: #023181; --kb2: #01245f; --klb: #19C0E9; --ko: #FF7C10; --ky: #EFBF48; --kl: #F9EBBE; --kc: #F2F2F2;
+  --go: linear-gradient(#FFA24A, #FF7C10 55%, #E8620A); --gb: linear-gradient(#1457CC, #023181 55%, #011B4F); --gl: linear-gradient(#7BE3FA, #19C0E9 55%, #0B9CC6);
   --khd: "Fira Sans Extra Condensed", "Arial Narrow", sans-serif; --ktx: "Manrope", "Inter", system-ui, sans-serif; }
 body.kb:not(.am) { font-family: var(--ktx); color: #0d1b3d; background: var(--kc) url(img/brand/pattern-soft.svg) repeat; background-size: 120px auto; }
 body.kb:not(.am) .shell { background: #fff; box-shadow: 0 30px 60px -30px rgba(2,49,129,.35); padding-bottom: 0; }
@@ -819,14 +820,14 @@ body.kb:not(.am) .body > section { animation: none; }
   content: ""; position: absolute; top: 0; height: 100%; aspect-ratio: 51 / 132; background: no-repeat 0 0 / 100% 100%; pointer-events: none; }
 .kp::before, .kbtn::before, body.kb:not(.am) .send::before { right: calc(100% - 1px); }
 .kp::after, .kbtn::after, body.kb:not(.am) .send::after { left: calc(100% - 1px); }
-.kp { display: inline-flex; align-items: center; height: 36px; padding: 0 6px; margin: 0 14px; background: var(--klb); color: var(--kb); text-decoration: none; font: 700 1.12rem/1 var(--khd); letter-spacing: .01em; }
-.kp::before { background-image: url(img/brand/cap-l-lblue.svg); } .kp::after { background-image: url(img/brand/cap-r-lblue.svg); }
+.kp { filter: drop-shadow(0 3px 6px rgba(0,0,0,.25)); display: inline-flex; align-items: center; height: 36px; padding: 0 6px; margin: 0 14px; background: var(--gl); color: var(--kb); text-decoration: none; font: 700 1.12rem/1 var(--khd); letter-spacing: .01em; }
+.kp::before { background-image: url(img/brand/capg-l-lblue.svg); } .kp::after { background-image: url(img/brand/capg-r-lblue.svg); }
 
 /* ---- Ikki asosiy tugma ---- */
 #s-main .kbtns { display: grid; gap: 14px; margin: 22px 26px 4px; }
 .kbtn { display: flex; align-items: center; gap: 12px; width: 100%; height: 62px; padding: 0 4px; border: 0; color: #fff; font: 800 1.2rem/1.05 var(--khd); letter-spacing: .01em; text-align: left; cursor: pointer; text-transform: uppercase; }
-.kbtn-o { background: var(--ko); } .kbtn-o::before { background-image: url(img/brand/cap-l-orange.svg); } .kbtn-o::after { background-image: url(img/brand/cap-r-orange.svg); }
-.kbtn-b { background: var(--kb); } .kbtn-b::before { background-image: url(img/brand/cap-l-blue.svg); } .kbtn-b::after { background-image: url(img/brand/cap-r-blue.svg); }
+.kbtn-o { background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.45) 50%, transparent 58%) no-repeat, var(--go); filter: drop-shadow(0 8px 12px rgba(232,98,10,.45)); } .kbtn-o::before { background-image: url(img/brand/capg-l-orange.svg); } .kbtn-o::after { background-image: url(img/brand/capg-r-orange.svg); }
+.kbtn-b { background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.3) 50%, transparent 58%) no-repeat, var(--gb); filter: drop-shadow(0 8px 12px rgba(2,49,129,.45)); } .kbtn-b::before { background-image: url(img/brand/capg-l-blue.svg); } .kbtn-b::after { background-image: url(img/brand/capg-r-blue.svg); }
 .kbtn:active { transform: scale(.985); }
 .kbtn .kic { width: 40px; height: 40px; border-radius: 50%; background: #fff; display: grid; place-items: center; flex: none; }
 .kbtn-o .kic { color: var(--ko); } .kbtn-b .kic { color: var(--kb); }
@@ -849,13 +850,13 @@ body.kb:not(.am):not(.mm) #s-form .khead { display: flex; align-items: center; j
 .kback svg { width: 22px; height: 22px; stroke-width: 2.4; }
 .khlogo { width: 66px; height: 66px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 3px var(--klb); position: absolute !important; left: 50%; top: 10px; transform: translateX(-50%); }
 body.kb:not(.am):not(.mm) #s-form .khead { min-height: 96px; align-items: flex-start; }
-body.kb:not(.am):not(.mm) #s-form .ktitle { display: block; position: relative; margin: -20px 22px 6px; padding: 14px 10px; text-align: center; background: var(--ko); color: #fff; font: 800 1.5rem/1.05 var(--khd); text-transform: uppercase; }
+body.kb:not(.am):not(.mm) #s-form .ktitle { display: block; position: relative; margin: -20px 22px 6px; padding: 14px 10px; text-align: center; background: var(--go); filter: drop-shadow(0 6px 10px rgba(232,98,10,.4)); color: #fff; font: 800 1.5rem/1.05 var(--khd); text-shadow: 0 1px 1px rgba(0,0,0,.18); text-transform: uppercase; }
 body.kb:not(.am):not(.mm) #s-form .ktitle::before, body.kb:not(.am):not(.mm) #s-form .ktitle::after { content: ""; position: absolute; top: 0; height: 100%; aspect-ratio: 51/132; background: no-repeat 0 0/100% 100%; }
-body.kb:not(.am):not(.mm) #s-form .ktitle::before { right: calc(100% - 1px); background-image: url(img/brand/cap-l-orange.svg); }
-body.kb:not(.am):not(.mm) #s-form .ktitle::after { left: calc(100% - 1px); background-image: url(img/brand/cap-r-orange.svg); }
-body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle { background: var(--klb); color: var(--kb); }
-body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle::before { background-image: url(img/brand/cap-l-lblue.svg); }
-body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle::after { background-image: url(img/brand/cap-r-lblue.svg); }
+body.kb:not(.am):not(.mm) #s-form .ktitle::before { right: calc(100% - 1px); background-image: url(img/brand/capg-l-orange.svg); }
+body.kb:not(.am):not(.mm) #s-form .ktitle::after { left: calc(100% - 1px); background-image: url(img/brand/capg-r-orange.svg); }
+body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle { background: var(--gl); filter: drop-shadow(0 6px 10px rgba(11,156,198,.4)); color: var(--kb); text-shadow: none; }
+body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle::before { background-image: url(img/brand/capg-l-lblue.svg); }
+body.kb[data-cat-now="partner"]:not(.am):not(.mm) #s-form .ktitle::after { background-image: url(img/brand/capg-r-lblue.svg); }
 
 /* ---- Forma elementlari ---- */
 body.kb:not(.am) #form { margin-top: 6px; }
@@ -881,8 +882,8 @@ body.kb:not(.am) .emos button { border: 1.5px solid #c9d2e4; }
 body.kb:not(.am) .emos button.on { border: 2.5px solid var(--ko); background: #fff1e4; }
 body.kb:not(.am) .rvhint, body.kb:not(.am) .rvsub, body.kb:not(.am) .consent, body.kb:not(.am) p.rvnote { color: #6b7894; }
 body.kb:not(.am) .chek { border: 2px dashed var(--klb); color: var(--kb); background: #f0fbfe; border-radius: 14px; }
-body.kb:not(.am) .send { display: flex; align-items: center; justify-content: center; gap: 10px; width: calc(100% - 52px); margin: 22px 26px 0; height: 60px; padding: 0; border: 0; border-radius: 0; background: var(--ko); color: #fff; box-shadow: none; font: 800 1.35rem/1 var(--khd); text-transform: uppercase; letter-spacing: .02em; }
-body.kb:not(.am) .send::before { background-image: url(img/brand/cap-l-orange.svg); } body.kb:not(.am) .send::after { background-image: url(img/brand/cap-r-orange.svg); }
+body.kb:not(.am) .send { display: flex; align-items: center; justify-content: center; gap: 10px; width: calc(100% - 52px); margin: 22px 26px 0; height: 60px; padding: 0; border: 0; border-radius: 0; background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.45) 50%, transparent 58%) no-repeat, var(--go); filter: drop-shadow(0 8px 12px rgba(232,98,10,.45)); background-size: 260% 100%, 100% 100%; animation: kshine 3.2s ease-in-out infinite; color: #fff; box-shadow: none; font: 800 1.35rem/1 var(--khd); text-shadow: 0 1px 1px rgba(0,0,0,.18); text-transform: uppercase; letter-spacing: .02em; }
+body.kb:not(.am) .send::before { background-image: url(img/brand/capg-l-orange.svg); } body.kb:not(.am) .send::after { background-image: url(img/brand/capg-r-orange.svg); }
 body.kb:not(.am) .send:hover { transform: none; box-shadow: none; }
 body.kb:not(.am) .consent { font-size: .78rem; text-align: center; margin-top: 14px; }
 
@@ -920,6 +921,26 @@ body.kb:not(.am) .emos { gap: 4px; }
 body.kb:not(.am) .emos button { width: 35px; height: 35px; font-size: 1.15rem; }
 body.kb:not(.am) .emo-row > span { line-height: 1.2; font-size: .9rem; }
 body.kb:not(.am) .emos { gap: 3px; }
+
+/* ---- Yaltiroq tugmalar va katta tovoq ---- */
+.kbtn { height: 70px; font-size: 1.17rem; white-space: nowrap; background-size: 260% 100%, 100% 100% !important; animation: kshine 3.2s ease-in-out infinite; text-shadow: 0 1px 1px rgba(0,0,0,.2); }
+.kbtn-b { animation-delay: 1.6s; }
+@keyframes kshine { 0% { background-position: 130% 0, 0 0; } 60%, 100% { background-position: -30% 0, 0 0; } }
+.kbtn .kic { width: 46px; height: 46px; background: radial-gradient(circle at 35% 30%, #fff 0, #fff 45%, #e9eef8 100%); box-shadow: inset 0 -2px 3px rgba(0,0,0,.12), 0 2px 5px rgba(0,0,0,.2); }
+.kbtn .kic svg { width: 25px; height: 25px; stroke-width: 2.1; }
+.kbtn .kchev { width: 30px; height: 30px; padding: 5px; border-radius: 50%; background: rgba(255,255,255,.22); }
+#s-main .kbtns { gap: 16px; margin-top: 26px; }
+#s-main .ktop { padding: 64px 18px 34px; background: radial-gradient(circle at 50% 205px, rgba(64,140,255,.55) 0, rgba(25,100,220,.25) 120px, rgba(2,49,129,0) 210px), url(img/brand/pattern-blue-soft.svg) repeat 0 0 / 104px auto, linear-gradient(#0a3c97, #023181 60%, #012668); }
+#s-main .kplate { width: min(292px, 76vw); height: min(292px, 76vw); padding: 7px; background: linear-gradient(145deg, #FFE7A0, #EFBF48 38%, #C58A12 70%, #F6D27A); box-shadow: 0 0 0 5px var(--klb), 0 0 0 9px rgba(255,255,255,.9), 0 0 46px 10px rgba(25,192,233,.55), 0 26px 40px -14px rgba(0,0,0,.65); position: relative; }
+#s-main .kplate::after { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: linear-gradient(160deg, rgba(255,255,255,.28), rgba(255,255,255,0) 38%); pointer-events: none; }
+#s-main .kname { font-size: 2.5rem; margin: 22px 0 14px; text-shadow: 0 2px 0 rgba(0,0,0,.25); }
+#s-main .kname::after { content: ""; display: block; width: 74px; height: 14px; margin: 8px auto 0; background: url(img/brand/flower-yellow.svg) center/14px no-repeat, linear-gradient(var(--ky), var(--ky)) left center/26px 3px no-repeat, linear-gradient(var(--ky), var(--ky)) right center/26px 3px no-repeat; }
+#s-main .krate h2 { background: linear-gradient(#1457CC, #023181); -webkit-background-clip: text; background-clip: text; color: transparent; }
+body.kb:not(.am) .rvc::before { background: var(--go); }
+body.kb:not(.am) .chips button.on, body.kb:not(.am) .nps button.on { background: var(--gb); box-shadow: 0 4px 10px -4px rgba(2,49,129,.6); }
+.kfoot { background-image: url(img/brand/pattern-blue-soft.svg), linear-gradient(#0a3c97, #012668) !important; background-size: 104px auto, 100% 100% !important; }
+.kbr span { background: linear-gradient(#fff, #eaf1fb); box-shadow: 0 3px 8px -3px rgba(0,0,0,.4); }
+.klang button.on { background: linear-gradient(#fff, #e3ebf8); box-shadow: 0 2px 6px rgba(0,0,0,.25); }
 </style>
 </head>
 <body class="lm">
@@ -964,7 +985,7 @@ body.kb:not(.am) .emos { gap: 3px; }
   <section id="s-main" hidden>
     <div class="ktop">
       <div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div>
-      <div class="kplate"><img src="img/brand/osh-5.webp" alt="Kamolon Osh" width="640" height="640"></div>
+      <div class="kplate"><img src="img/brand/osh-5-big.webp" alt="Kamolon Osh" width="960" height="960"></div>
       <div class="kname">Kamolon Osh</div>
       <div class="kcontacts">
         <a class="kp" id="mBot" target="_blank" rel="noopener"><span id="mBotT"></span></a>
