@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119091548";
+  const APP_VERSION = "20261119091939";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1276,6 +1276,11 @@ body.kb:not(.am) .done h1 { margin-top: 44px !important; }
 @keyframes dsettle { 0% { transform: scale(1.06); } 100% { transform: scale(1); } }
 .done p { animation-delay: 2.3s !important; }
 #s-done { overflow-x: clip; } html, body.kb { overflow-x: clip; }
+/* 100 000 zarra + tez aylanib to'xtash */
+.dcv { left: -70%; top: -70%; width: 240%; height: 240%; }
+.dstage.ok .dplate { animation: dwhirl 2.6s cubic-bezier(.12,.75,.2,1) forwards; }
+@keyframes dwhirl { from { transform: rotate(0deg); } to { transform: rotate(2160deg); } }
+.done p { animation-delay: 2.6s !important; }
 /* ===== ADMIN PANEL: brendbuk ranglari ===== */
 body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
 body.am .shell { border: 0 !important; }
@@ -2490,36 +2495,44 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   function kDoneFx() {
     const h = document.querySelector("#s-done h1"), st = document.querySelector("#s-done .dstage");
     if (!h || !st) return;
-    const s = T[lang].thanks, BASE = 1.75;
+    const s = T[lang].thanks, BASE = 2.0;
     st.classList.remove("ok");
-    h.innerHTML = [...s].map((ch, i) => `<span style="animation-delay:${(BASE + i * 0.07).toFixed(2)}s,${(BASE + 1.2 + i * 0.1).toFixed(2)}s">${ch === " " ? "&nbsp;" : ch}</span>`).join("");
+    h.innerHTML = [...s].map((ch, i) => `<span style="animation-delay:${(BASE + i * 0.07).toFixed(2)}s,${(BASE + 1.4 + i * 0.1).toFixed(2)}s">${ch === " " ? "&nbsp;" : ch}</span>`).join("");
     const img = st.querySelector(".dplate");
     let cv = st.querySelector(".dcv");
     if (!cv) { cv = document.createElement("canvas"); cv.className = "dcv"; st.appendChild(cv); }
     const finish = () => { cv.style.display = "none"; st.classList.add("ok"); };
     const run = () => {
-      const S = st.clientWidth, dpr = Math.min(window.devicePixelRatio || 1, 2), W = S * 3;
-      cv.width = W * dpr; cv.height = W * dpr; cv.style.display = "block";
-      const g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const N = 36, cell = S / N, src = img.naturalWidth / N, P = [];
-      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-        const cx = (x + .5) - N / 2, cy = (y + .5) - N / 2;
-        if (cx * cx + cy * cy > (N / 2 + .5) * (N / 2 + .5)) continue; // faqat lagan doirasi
-        const a = Math.random() * Math.PI * 2, r = S * (0.9 + Math.random() * 0.8);
-        P.push({ x, y, sx: Math.cos(a) * r, sy: Math.sin(a) * r, rot: (Math.random() - .5) * 12, d: Math.random() * 0.45 });
+      // 100 000 ta zarra: rasmning har bir nuqtasi o'z joyiga uchib keladi
+      const S = st.clientWidth, dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const D = Math.round(S * dpr), W = Math.round(D * 2.4), O = Math.round((W - D) / 2);
+      cv.width = W; cv.height = W; cv.style.display = "block";
+      const oc = document.createElement("canvas"); oc.width = D; oc.height = D;
+      const og = oc.getContext("2d"); og.drawImage(img, 0, 0, D, D);
+      let px; try { px = og.getImageData(0, 0, D, D).data; } catch (_) { return finish(); }
+      const R = D / 2, MAX = 100000, step = Math.max(1, Math.sqrt(Math.PI * R * R / MAX));
+      const tx = [], ty = [], sx = [], sy = [], dl = [], col = [];
+      for (let y = 0; y < D; y += step) for (let x = 0; x < D; x += step) {
+        const xi = x | 0, yi = y | 0, dx = xi - R, dy = yi - R;
+        if (dx * dx + dy * dy > R * R) continue;
+        const k = (yi * D + xi) * 4; if (px[k + 3] < 40) continue;
+        const a = Math.random() * 6.2832, r = W * (0.35 + Math.random() * 0.4);
+        tx.push(O + xi); ty.push(O + yi); sx.push(Math.cos(a) * r); sy.push(Math.sin(a) * r); dl.push(Math.random() * 0.5);
+        col.push((255 << 24) | (px[k + 2] << 16) | (px[k + 1] << 8) | px[k]);
       }
-      const T0 = performance.now(), DUR = 1.05, off = S; // lagan markazi canvas o'rtasida
-      const ease = t => 1 - Math.pow(1 - t, 3);
+      const n = tx.length, g = cv.getContext("2d"), id = g.createImageData(W, W), buf = new Uint32Array(id.data.buffer);
+      const sz = step > 1.4 ? 2 : 1, DUR = 1.15, T0 = performance.now();
       const frame = now => {
-        const t = (now - T0) / 1000; let done = true;
-        g.clearRect(0, 0, W, W);
-        for (const p of P) {
-          let k = (t - p.d) / DUR; if (k < 1) done = false; k = k < 0 ? 0 : k > 1 ? 1 : ease(k);
-          const tx = off + p.x * cell, ty = off + p.y * cell, x = tx + p.sx * (1 - k), y = ty + p.sy * (1 - k);
-          g.globalAlpha = 0.25 + 0.75 * k;
-          if (k < 1) { g.save(); g.translate(x + cell / 2, y + cell / 2); g.rotate(p.rot * (1 - k)); g.drawImage(img, p.x * src, p.y * src, src, src, -cell / 2, -cell / 2, cell + .6, cell + .6); g.restore(); }
-          else g.drawImage(img, p.x * src, p.y * src, src, src, x, y, cell + .6, cell + .6);
+        const t = (now - T0) / 1000; buf.fill(0); let done = true;
+        for (let i = 0; i < n; i++) {
+          let k = (t - dl[i]) / DUR; if (k < 1) done = false; k = k < 0 ? 0 : k > 1 ? 1 : 1 - (1 - k) * (1 - k) * (1 - k);
+          const sp = 1 - k, ang = sp * 2.2, ca = Math.cos(ang), sa = Math.sin(ang);
+          const x = (tx[i] + (sx[i] * ca - sy[i] * sa) * sp) | 0, y = (ty[i] + (sx[i] * sa + sy[i] * ca) * sp) | 0;
+          if (x < 0 || y < 0 || x >= W - 1 || y >= W - 1) continue;
+          const p = y * W + x, c = col[i]; buf[p] = c;
+          if (sz > 1) { buf[p + 1] = c; buf[p + W] = c; buf[p + W + 1] = c; }
         }
+        g.putImageData(id, 0, 0);
         if (!done && !$("s-done").hidden) requestAnimationFrame(frame); else finish();
       };
       requestAnimationFrame(frame);
