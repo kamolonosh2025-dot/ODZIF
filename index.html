@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261118103043";
+  const APP_VERSION = "20261119043841";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1027,6 +1027,17 @@ body.kb:not(.am) .bsel { position: relative; }
 body.kb:not(.am) .bsel select { color: var(--kb); }
 .kph { position: absolute; left: 17px; top: 50%; transform: translateY(-50%); color: #5b6b8f; font: 700 1.02rem var(--ktx); pointer-events: none; }
 .kph[hidden] { display: none; }
+/* ---- Ishga taklif: to'q ko'k tugma, neon yozuv ---- */
+.kbtn-n { background: var(--gh), var(--gb) !important; background-size: 100% 100%, 100% 100% !important; animation: none !important; filter: drop-shadow(0 8px 12px rgba(2,20,70,.45)) drop-shadow(0 0 10px rgba(57,255,20,.28)); }
+.kbtn-n::before { background-image: url(img/brand/capg-l-blue.svg); } .kbtn-n::after { background-image: url(img/brand/capg-r-blue.svg); }
+.kbtn-n .kic { background: #061a45; color: #39FF14; box-shadow: 0 0 0 2px #39FF14, 0 0 10px rgba(57,255,20,.8); }
+.kbtn-n .kic svg { filter: drop-shadow(0 0 3px #39FF14); }
+.kneon, .kbtn-n .kchev { color: #CCFF9E; text-shadow: 0 0 2px #fff, 0 0 6px #39FF14, 0 0 12px #39FF14, 0 0 22px #39FF14, 0 0 34px rgba(57,255,20,.7); }
+.kbtn-n .kchev { color: #39FF14; filter: drop-shadow(0 0 4px #39FF14); }
+.kneon { font-size: 1.32rem; letter-spacing: .04em; }
+body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle { background: var(--gh), var(--gb); filter: drop-shadow(0 6px 10px rgba(2,49,129,.4)); color: #CCFF9E; text-shadow: 0 0 2px #fff, 0 0 8px #39FF14, 0 0 18px #39FF14, 0 0 30px rgba(57,255,20,.7); }
+body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::before { background-image: url(img/brand/capg-l-blue.svg); }
+body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { background-image: url(img/brand/capg-r-blue.svg); }
 </style>
 </head>
 <body class="lm">
@@ -1081,6 +1092,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
     <div class="kbtns">
       <button type="button" class="kbtn kbtn-o" data-cat="problem"><span class="kic"><svg class="i"><use href="#ic-chat"/></svg></span><span class="kt" data-i18n="c_problem_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
       <button type="button" class="kbtn kbtn-b" data-cat="partner"><span class="kic"><svg class="i"><use href="#ic-hand"/></svg></span><span class="kt" data-i18n="c_partner_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
+      <button type="button" class="kbtn kbtn-n" data-cat="job"><span class="kic"><svg class="i"><use href="#ic-brief"/></svg></span><span class="kt kneon" data-i18n="c_job_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
     </div>
     <div class="krate"><h2 data-i18n="rateTitle"></h2><svg class="i karrow" viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>
   </section>
@@ -1170,6 +1182,17 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
       <div id="companyWrap">
         <label for="company"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M3 21h18M5 21V5h9v16M14 9h5v12M8 9h3M8 13h3M8 17h3"/></svg></i><span data-i18n="company"></span></label>
         <input id="company" autocomplete="organization">
+      </div>
+
+      <div id="ageWrap"><label for="age"><i class="lico"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i><span data-i18n="age"></span></label>
+      <input id="age" type="number" inputmode="numeric" min="14" max="80" autocomplete="off"></div>
+
+      <div id="positionWrap"><label for="position"><i class="lico"><svg class="i"><use href="#ic-brief"/></svg></i><span data-i18n="position"></span></label>
+      <input id="position" autocomplete="off"></div>
+
+      <div id="jobPhWrap"><label><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg></i><span data-i18n="jobPhoto"></span></label>
+        <label class="chek" id="jobPhBtn"><input type="file" accept="image/*" id="jobPh" hidden><span data-i18n="jobPhotoBtn"></span></label>
+        <div class="chekprev" id="jobPhPrev" hidden><img id="jobPhImg" alt=""><button type="button" id="jobPhDel" aria-label="O'chirish">✕</button></div>
       </div>
 
       <div id="msgWrap"><label for="msg"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z"/><path d="M8 10h8M8 13h5"/></svg></i><span data-i18n="msg"></span></label>
@@ -1319,7 +1342,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
   const PHONE = "+998 55-500-16-61";
   const BOT = "Kamolonosh_bot";
 
-  const ICONS = { review: "ic-star", idea: "ic-bulb", partner: "ic-hand", problem: "ic-brief" };
+  const ICONS = { review: "ic-star", idea: "ic-bulb", partner: "ic-hand", problem: "ic-brief", job: "ic-brief" };
 
   const T = {
     uz: {
@@ -1331,7 +1354,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
       c_review_t: "Fikr qoldirish", c_review_d: "Taom, xizmat va muhitga baho bering",
       c_idea_t: "G'oya taklif qilish", c_idea_d: "Yangi taklif va g'oyalaringizni yuboring",
       c_partner_t: "Hamkorlik", c_partner_d: "Yetkazib beruvchilar, ijara, hamkorlik",
-      c_problem_t: "Takliflar va shikoyatlar", c_problem_d: "Taklif yoki shikoyatingizni yozing", sugg: "Takliflaringiz", complaint: "Shikoyatlaringiz", purpose: "Hamkorlik maqsadi", rateTitle: "Sifatimizni baholang", ourBranches: "Bizning filiallarimiz", mSugg: "Taklif", mComp: "Shikoyat",
+      c_problem_t: "Takliflar va shikoyatlar", c_problem_d: "Taklif yoki shikoyatingizni yozing", sugg: "Takliflaringiz", complaint: "Shikoyatlaringiz", purpose: "Hamkorlik maqsadi", rateTitle: "Sifatimizni baholang", c_job_t: "Ishga taklif", c_job_d: "Bizning jamoaga qo'shiling", t_job: "Ishga taklif", age: "Yoshingiz", position: "Qaysi lavozimga", positionPh: "Masalan: oshpaz, ofitsiant, kassir", jobPhoto: "Rasmingiz", jobPhotoBtn: "📷 Rasmga tushish yoki rasm tanlash", mAge: "Yosh", mPos: "Lavozim", ourBranches: "Bizning filiallarimiz", mSugg: "Taklif", mComp: "Shikoyat",
       homeT: "Fikr va takliflaringiz biz uchun muhim!", homeD: "Xizmat, taomlar va umumiy taassurot bo'yicha fikringizni qoldiring.", v1: "Sifatli taomlar", v2: "E'tiborli xizmat", v3: "Ishonchli hamkorlik", v4: "Doimiy takomillashuv", v5: "Taomlar sifati", v6: "Xizmat sifati", v7: "Muhit va qulaylik", v8: "Taklif va yangiliklar",
       back: "Orqaga", toHome: "Bosh sahifaga",
       rateQ: "Bahoyingiz",
@@ -1358,7 +1381,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
       c_review_t: "Оставить отзыв", c_review_d: "Оценка еды, сервиса и атмосферы",
       c_idea_t: "Предложить идею", c_idea_d: "Идеи и пожелания для руководства",
       c_partner_t: "Сотрудничество", c_partner_d: "Поставщики, аренда, партнёрства",
-      c_problem_t: "Предложения и жалобы", c_problem_d: "Напишите предложение или жалобу", sugg: "Ваши предложения", complaint: "Ваши жалобы", purpose: "Цель сотрудничества", rateTitle: "Оцените наше качество", ourBranches: "Наши филиалы", mSugg: "Предложение", mComp: "Жалоба",
+      c_problem_t: "Предложения и жалобы", c_problem_d: "Напишите предложение или жалобу", sugg: "Ваши предложения", complaint: "Ваши жалобы", purpose: "Цель сотрудничества", rateTitle: "Оцените наше качество", c_job_t: "Вакансии", c_job_d: "Присоединяйтесь к нашей команде", t_job: "Вакансии", age: "Ваш возраст", position: "На какую должность", positionPh: "Например: повар, официант, кассир", jobPhoto: "Ваше фото", jobPhotoBtn: "📷 Сфотографироваться или выбрать фото", mAge: "Возраст", mPos: "Должность", ourBranches: "Наши филиалы", mSugg: "Предложение", mComp: "Жалоба",
       homeT: "Ваши отзывы и предложения важны для нас!", homeD: "Поделитесь мнением о сервисе, блюдах и общем впечатлении.", v1: "Качественные блюда", v2: "Внимательный сервис", v3: "Надёжное партнёрство", v4: "Постоянное развитие", v5: "Качество блюд", v6: "Качество сервиса", v7: "Атмосфера и уют", v8: "Предложения и новости",
       back: "Назад", toHome: "На главную",
       rateQ: "Ваша оценка",
@@ -1385,7 +1408,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
       c_review_t: "Leave a review", c_review_d: "Rate the food, service and atmosphere",
       c_idea_t: "Suggest an idea", c_idea_d: "Ideas and wishes for management",
       c_partner_t: "Partnership", c_partner_d: "Suppliers, rent, partnerships",
-      c_problem_t: "Suggestions and complaints", c_problem_d: "Write your suggestion or complaint", sugg: "Your suggestions", complaint: "Your complaints", purpose: "Purpose of partnership", rateTitle: "Rate our quality", ourBranches: "Our branches", mSugg: "Suggestion", mComp: "Complaint",
+      c_problem_t: "Suggestions and complaints", c_problem_d: "Write your suggestion or complaint", sugg: "Your suggestions", complaint: "Your complaints", purpose: "Purpose of partnership", rateTitle: "Rate our quality", c_job_t: "Job application", c_job_d: "Join our team", t_job: "Jobs", age: "Your age", position: "Which position", positionPh: "E.g.: cook, waiter, cashier", jobPhoto: "Your photo", jobPhotoBtn: "📷 Take a photo or choose one", mAge: "Age", mPos: "Position", ourBranches: "Our branches", mSugg: "Suggestion", mComp: "Complaint",
       homeT: "Your feedback and ideas matter to us!", homeD: "Share your thoughts on our service, food and overall experience.", v1: "Quality food", v2: "Attentive service", v3: "Reliable partnership", v4: "Constant improvement", v5: "Food quality", v6: "Service quality", v7: "Atmosphere & comfort", v8: "Ideas & news",
       back: "Back", toHome: "Back to home",
       rateQ: "Your rating",
@@ -1500,6 +1523,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
     $("name").placeholder = t.namePh;
     $("msg").placeholder = t.msgPh;
     $("table").placeholder = t.tablePh;
+    $("position").placeholder = t.positionPh;
     $("langBtn").innerHTML = '<svg class="i" style="width:20px;height:20px"><use href="#ic-globe"/></svg>';
     $("langBtn").setAttribute("aria-label", "Language");
     setCat(cat);
@@ -1518,8 +1542,10 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
     renderBranches();
     $("companyWrap").hidden = c !== "partner";
     $("complaintWrap").hidden = c !== "problem";
+    ["ageWrap", "positionWrap", "jobPhWrap"].forEach(id => $(id).hidden = c !== "job");
     $("tableWrap").hidden = c !== "review";
     ["nameWrap", "msgWrap", "phoneWrap"].forEach(id => $(id).hidden = c === "review");
+    if (c === "job") $("msgWrap").hidden = true;
     clearErrs();
     $("note").textContent = "";
   }
@@ -1586,7 +1612,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
       $("rvContact").insertBefore($("phoneWrap"), $("chekNote"));
     } else {
       const send = $("fields").querySelector(".send");
-      [$("nameWrap"), $("phoneWrap"), $("tableWrap"), $("companyWrap"), $("msgWrap"), $("complaintWrap")].forEach(el => $("fields").insertBefore(el, send));
+      [$("nameWrap"), $("ageWrap"), $("positionWrap"), $("phoneWrap"), $("jobPhWrap"), $("tableWrap"), $("companyWrap"), $("msgWrap"), $("complaintWrap")].forEach(el => $("fields").insertBefore(el, send));
     }
     setLbl($("msgWrap"), isReview ? "rvMsg" : cat === "problem" ? "sugg" : cat === "partner" ? "purpose" : "msg");
     setLbl($("nameWrap"), isReview ? "rvName" : "name");
@@ -1621,6 +1647,15 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
     $("chek").value = "";
   });
   $("chekDel").addEventListener("click", () => { rv.photo = ""; $("chekPrev").hidden = true; $("chekBtn").hidden = false; });
+  // Ishga taklif: nomzodning rasmi
+  let jobPhoto = "";
+  function jobPhReset() { jobPhoto = ""; $("jobPhPrev").hidden = true; $("jobPhBtn").hidden = false; }
+  $("jobPh").addEventListener("change", async () => {
+    const f = $("jobPh").files[0]; if (!f) return;
+    try { jobPhoto = await shrinkPhoto(f); $("jobPhImg").src = jobPhoto; $("jobPhPrev").hidden = false; $("jobPhBtn").hidden = true; } catch (_) { jobPhoto = ""; }
+    $("jobPh").value = "";
+  });
+  $("jobPhDel").addEventListener("click", jobPhReset);
   function resetRv() {
     Object.keys(rv).forEach(k => rv[k] = "");
     document.querySelectorAll(".emos button, #nps button, .chips[data-q] button").forEach(b => b.classList.remove("on"));
@@ -1652,6 +1687,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
     if (cat === "problem" && complaint) msg = (msg ? T.uz.mSugg + ": " + msg + "\n\n" : "") + T.uz.mComp + ": " + complaint;
     else if (cat === "problem" && msg) msg = T.uz.mSugg + ": " + msg;
     const table = $("table").value.trim();
+    const age = $("age").value.trim(), position = $("position").value.trim();
 
     // Hech qaysi maydon majburiy emas: xohlasa yozadi, xohlamasa yo'q
     clearErrs();
@@ -1677,6 +1713,9 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
     if (phone) text += m.phone + ": " + phone + "\n";
     if (cat === "review" && table) text += m.table + ": " + table + "\n";
     if (cat === "partner" && company) text += m.company + ": " + company + "\n";
+    if (cat === "job" && age) text += T.uz.mAge + ": " + age + "\n";
+    if (cat === "job" && position) text += T.uz.mPos + ": " + position + "\n";
+    if (cat === "job" && jobPhoto) text += "Rasmi bor\n";
     if (msg) text += "\n" + msg;
 
     const entry = {
@@ -1689,7 +1728,8 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
       speed: cat === "review" ? scores.speed : "", polite: cat === "review" ? scores.polite : "", clean: cat === "review" ? scores.clean : "",
       nps: cat === "review" ? rv.nps : "", when: cat === "review" ? rvLabel("when") : "",
       manager: cat === "review" ? rvLabel("manager") : "", first: cat === "review" ? rvLabel("first") : "",
-      photo: cat === "review" ? rv.photo : "",
+      photo: cat === "review" ? rv.photo : cat === "job" ? jobPhoto : "",
+      age: cat === "job" ? age : "", position: cat === "job" ? position : "",
       name, phone, company: cat === "partner" ? company : "", msg
     };
     // Darhol "rahmat" ekrani; yuborish orqa fonda (xato bo'lsa keyin qayta yuboriladi)
@@ -1700,6 +1740,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
     Object.keys(scores).forEach(k => scores[k] = 0);
     document.querySelectorAll(".stars button").forEach(s => s.classList.remove("on"));
     resetRv();
+    jobPhReset();
     show("done");
   });
 
@@ -1764,16 +1805,16 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
       const r = await fetch(API_URL + "?action=list&pin=" + encodeURIComponent(pin));
       let j; try { j = await r.json(); } catch (_) { throw new Error("auth"); } // JSON emas: Google ruxsat sahifasini qaytardi
       if (!j.ok) throw new Error(j.error || "load");
-      return j.entries;
+      return Object.assign({ job: [] }, j.entries);
     }
     if (pin !== LOCAL_PIN) throw new Error("pin");
-    const res = { review: [], idea: [], partner: [], problem: [] };
+    const res = { review: [], idea: [], partner: [], problem: [], job: [] };
     localEntries().slice().reverse().forEach(x => res[x.cat] && res[x.cat].push(x));
     return res;
   }
 
   // ===== Admin panel =====
-  const CAT_NAMES = { review: "Fikr qoldirish", idea: "G'oya taklif qilish", partner: "Hamkorlik", problem: "Rahbariyatga murojaat" };
+  const CAT_NAMES = { review: "Fikr qoldirish", idea: "G'oya taklif qilish", partner: "Hamkorlik", problem: "Taklif va shikoyatlar", job: "Ishga taklif" };
   const TZ = "Asia/Tashkent";
   let adminPin = "", adminData = null;
   // Joriy ko'rinish: qaysi sana, bo'lim va filial (yangilaganda shu joyda qoladi)
@@ -1984,6 +2025,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
           row: x => [dd(x.time), tt(x.time), x.branch, x.table, x.nps === "" || x.nps == null ? "" : +x.nps, +x.food || "", +x.speed || "", +x.polite || "", +x.service || "", +x.clean || "", +x.atmos || "", x.when, x.manager, x.first, x.name, x.phone, x.photo === "db" ? "📷 bor (admin panelda)" : x.photo && !/^XATO/.test(String(x.photo)) ? { text: "📷 Ko'rish", hyperlink: String(x.photo) } : (x.photo ? "saqlanmadi" : ""), x.msg], rate: [6, 7, 8, 9, 10, 11], nps: 5, center: [4, 5, 13, 14] },
         idea: { name: "G'oyalar", tab: "FFF97316", cols: [["Sana", 12], ["Vaqt", 8], ["Ism", 18], ["Telefon", 17], ["G'oya", 60]], row: x => [dd(x.time), tt(x.time), x.name, x.phone, x.msg] },
         partner: { name: "Hamkorlik", tab: "FFE8503A", cols: [["Sana", 12], ["Vaqt", 8], ["Kompaniya", 22], ["Ism", 18], ["Telefon", 17], ["Taklif", 50]], row: x => [dd(x.time), tt(x.time), x.company, x.name, x.phone, x.msg] },
+        job: { name: "Ishga taklif", tab: "FF39FF14", cols: [["Sana", 12], ["Vaqt", 8], ["Ism", 18], ["Yoshi", 8], ["Lavozim", 22], ["Telefon", 17], ["Rasm", 18]], row: x => [dd(x.time), tt(x.time), x.name, x.age, x.position, x.phone, x.photo === "db" ? "bor (admin panelda)" : ""] },
         problem: { name: "Murojaatlar", tab: "FFD9304F", cols: [["Sana", 12], ["Vaqt", 8], ["Ism", 18], ["Telefon", 17], ["Murojaat", 60]], row: x => [dd(x.time), tt(x.time), x.name, x.phone, x.msg] }
       };
       Object.keys(SHEETS).forEach(c => {
@@ -1992,7 +2034,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
         ws.columns = S.cols.map(([, w]) => ({ width: w }));
         titleRows(ws, CAT_NAMES[c].toUpperCase(), n);
         header(ws, 4, S.cols.map(([h]) => h));
-        const list = sorted(adminData[c]);
+        const list = sorted(adminData[c] || []);
         if (!list.length) { ws.mergeCells(5, 1, 5, n); const e = ws.getCell(5, 1); e.value = "Bu davrda feedback yo'q"; e.alignment = { horizontal: "center" }; e.font = { italic: true, color: { argb: "FF8A7A70" } }; return; }
         list.forEach((x, i) => {
           const r = ws.getRow(5 + i); r.values = S.row(x).map(v => v == null ? "" : v);
@@ -2058,7 +2100,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
     document.querySelectorAll(".arefresh").forEach(b => b.classList.add("spin"));
     // Tez kirish: oxirgi saqlangan ma'lumot darhol ko'rinadi, yangisi fonda yuklanadi
     if (!adminData) {
-      try { const c = JSON.parse(localStorage.getItem("kamolon_cache") || "null"); if (c && c.pin === adminPin && c.data) { adminData = c.data; render(); } } catch (_) {}
+      try { const c = JSON.parse(localStorage.getItem("kamolon_cache") || "null"); if (c && c.pin === adminPin && c.data) { adminData = Object.assign({ job: [] }, c.data); render(); } } catch (_) {}
     }
     try {
       if (!adminData) skeleton();
@@ -2140,6 +2182,11 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
     const thumb = x.photo === "db" ? `<button type="button" class="chekth dbph" data-pcat="${esc(x.cat || view.cat)}" data-pid="${esc(x.id)}"><span>📷 Chek yuklanmoqda…</span></button>` : pid ? `<a class="chekth" href="${esc(x.photo)}" target="_blank" rel="noopener"><img src="https://drive.google.com/thumbnail?id=${esc(pid)}&sz=w600" alt="Chek surati" loading="lazy"></a>` : "";
     return (chips ? `<div class="echips rvchips">${chips}</div>` : "") + (rates ? `<div class="rates">${rates}</div>` : "") + thumb;
   }
+  function jobBlock(x) {
+    const chips = [x.age ? `<span class="chip">Yoshi: <b>${esc(x.age)}</b></span>` : "", x.position ? `<span class="chip">Lavozim: <b>${esc(x.position)}</b></span>` : ""].join("");
+    const thumb = x.photo === "db" ? `<button type="button" class="chekth dbph" data-pcat="job" data-pid="${esc(x.id)}"><span>Rasm yuklanmoqda…</span></button>` : "";
+    return (chips ? `<div class="echips rvchips">${chips}</div>` : "") + thumb;
+  }
   function renderList() {
     const c = view.cat, br = view.br;
     let list = ofDay(adminData[c]);
@@ -2171,7 +2218,7 @@ body.kb:not(.am) .bsel select { color: var(--kb); }
             ${x.table ? `<span class="chip">Stol ${esc(x.table)}</span>` : ""}
             ${x.branch && c !== "review" ? `<span class="chip">${esc(x.branch)}</span>` : ""}
           </div>
-          ${c === "review" ? reviewBlock(x) : ""}
+          ${c === "review" ? reviewBlock(x) : ""}${c === "job" ? jobBlock(x) : ""}
           ${x.msg ? `<div class="msg">${esc(x.msg)}</div>` : ""}
           ${x.name || x.phone || x.company ? `<div class="who"><span class="ava">${esc(String(x.name || "?").trim().charAt(0).toUpperCase())}</span><div><b>${esc(x.name || "Mehmon")}</b>${x.company ? `<small>${esc(x.company)}</small>` : ""}</div>${x.phone ? `<a class="call" href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">📞 ${esc(x.phone)}</a>` : ""}</div>` : ""}
         </div>`).join("") : `<p class="lead">${isRange() ? "Bu kunlarda" : "Bu kunda"} feedback yo'q.</p>`;
