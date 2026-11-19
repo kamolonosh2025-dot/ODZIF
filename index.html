@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119074343";
+  const APP_VERSION = "20261119084202";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -22,10 +22,11 @@
 </script>
 <title>Kamolon Osh markazi — Feedback</title>
 <meta name="description" content="Kamolon Osh fikr-mulohaza markazi. Fikr va takliflaringizni qoldiring.">
-<link rel="preload" as="image" href="img/hero-til-v4.webp" fetchpriority="high">
+<link rel="preload" as="image" href="img/brand/osh-plate-720.webp" fetchpriority="high">
+<link rel="preload" as="image" href="img/brand/flower-lblue.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Fira+Sans+Extra+Condensed:wght@600;700;800&family=Manrope:wght@500;600;700;800&family=Tilt+Neon&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #ffffff;
@@ -1149,7 +1150,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     <div class="ktop">
       <div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div>
       <div class="kname">Kamolon Osh</div>
-      <div class="kstage"><img class="kflower" src="img/brand/flower-lblue.svg" alt=""><img class="kplate2" src="img/brand/osh-plate-cut.webp" alt="Kamolon Osh" width="900" height="900"><div class="ksteam" aria-hidden="true"><span class="kst" style="left:46.7%;top:23.3%"><i style="animation-delay:-0.0s"></i><i style="animation-delay:-1.6s"></i></span><span class="kst" style="left:74%;top:39%"><i style="animation-delay:-0.7s"></i><i style="animation-delay:-2.3s"></i></span><span class="kst" style="left:67.5%;top:69%"><i style="animation-delay:-1.4s"></i><i style="animation-delay:-3.0s"></i></span><span class="kst" style="left:36.7%;top:71.7%"><i style="animation-delay:-2.1s"></i><i style="animation-delay:-3.7s"></i></span><span class="kst" style="left:23.3%;top:44%"><i style="animation-delay:-2.8s"></i><i style="animation-delay:-4.4s"></i></span></div></div>
+      <div class="kstage"><img class="kflower" src="img/brand/flower-lblue.svg" alt=""><img class="kplate2" src="img/brand/osh-plate-720.webp" alt="Kamolon Osh" width="720" height="720" fetchpriority="high" decoding="async"><div class="ksteam" aria-hidden="true"><span class="kst" style="left:46.7%;top:23.3%"><i style="animation-delay:-0.0s"></i><i style="animation-delay:-1.6s"></i></span><span class="kst" style="left:74%;top:39%"><i style="animation-delay:-0.7s"></i><i style="animation-delay:-2.3s"></i></span><span class="kst" style="left:67.5%;top:69%"><i style="animation-delay:-1.4s"></i><i style="animation-delay:-3.0s"></i></span><span class="kst" style="left:36.7%;top:71.7%"><i style="animation-delay:-2.1s"></i><i style="animation-delay:-3.7s"></i></span><span class="kst" style="left:23.3%;top:44%"><i style="animation-delay:-2.8s"></i><i style="animation-delay:-4.4s"></i></span></div></div>
     </div>
     <div class="kcontacts">
         <a class="kp" id="mBot" target="_blank" rel="noopener"><span id="mBotT"></span></a>
@@ -1165,8 +1166,8 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 
   <!-- 1. Til tanlash -->
   <section id="s-lang">
-    <div class="hhero lhero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712" fetchpriority="high"></div>
-    <img class="klogo-l" src="img/brand/logo-blue.svg" alt="Kamolon Osh">
+    <div class="hhero lhero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712" loading="lazy"></div>
+    <img class="klogo-l" src="img/brand/logo-blue.svg" alt="Kamolon Osh" loading="lazy">
     <div class="lname">Kamolon Osh<button type="button" class="adot2" id="adminDot2" aria-label="Admin"></button></div>
     <h1 class="lang-title lone">Tilni tanlang <i>•</i> <span>Выберите язык</span> <i>•</i> <span>Choose language</span></h1>
     <span class="lline"></span>
@@ -1179,8 +1180,8 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 
   <!-- 2. Mavzu tanlash -->
   <section id="s-home" hidden>
-    <div class="hhero"><img src="img/hero-uy-v4.webp" alt="Kamolon Osh markazi" width="1080" height="687"><button class="hback" data-go="lang" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button></div>
-    <div class="hintro"><img class="hlogo" src="img/logo-jigar-v3.webp" alt="Kamolon Osh" width="300" height="286"><h1 data-i18n="homeT"></h1><span class="hline"></span><p data-i18n="homeD"></p></div>
+    <div class="hhero"><img src="img/hero-uy-v4.webp" alt="Kamolon Osh markazi" width="1080" height="687" loading="lazy"><button class="hback" data-go="lang" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button></div>
+    <div class="hintro"><img class="hlogo" src="img/logo-jigar-v3.webp" alt="Kamolon Osh" width="300" height="286" loading="lazy"><h1 data-i18n="homeT"></h1><span class="hline"></span><p data-i18n="homeD"></p></div>
     <div class="grid hcards">
       <button class="tile" data-cat="review"><div class="ico"><svg class="i"><use href="#ic-star"/></svg></div><div class="t" data-i18n="c_review_t"></div><div class="d" data-i18n="c_review_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
       <button class="tile" data-cat="idea"><div class="ico"><svg class="i"><use href="#ic-bulb"/></svg></div><div class="t" data-i18n="c_idea_t"></div><div class="d" data-i18n="c_idea_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
@@ -1193,9 +1194,9 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   <!-- 3. Forma -->
   <section id="s-form" hidden>
     <button class="back" data-go="main"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="back"></span></button>
-    <div class="hhero fhero"><img src="img/hero-forma-v4.webp" alt="Kamolon Osh markazi" width="1080" height="710"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
-    <div class="fctop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button></div>
-    <div class="khead"><button type="button" class="kback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><img class="khlogo" src="img/brand/osh-5.webp" alt="Kamolon Osh"><div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div></div>
+    <div class="hhero fhero"><img src="img/hero-forma-v4.webp" alt="Kamolon Osh markazi" width="1080" height="710" loading="lazy"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
+    <div class="fctop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166" loading="lazy"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button></div>
+    <div class="khead"><button type="button" class="kback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><img class="khlogo" src="img/brand/osh-5-sm.webp" alt="Kamolon Osh" loading="lazy"><div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div></div>
     <h1 class="ktitle" id="kTitle"></h1>
     <div class="form-head" id="formHead" data-cat="review"><div class="tile-ico ico fico" style="width:52px;height:52px;border-radius:16px;background:var(--cbg);color:var(--c);display:grid;place-items:center"><svg class="i" id="formIcon"><use href="#ic-star"/></svg></div><div class="fht"><h1 id="formTitle"></h1><p class="lead" id="formDesc" style="color:var(--muted)"></p></div><svg class="hmosque fmosque" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
 
@@ -1276,13 +1277,13 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
       </div>
     </form>
     <div class="hvals fvals"><svg class="hvwave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C80 2 160 30 240 18S360 0 400 14V40Z" fill="#531a16"/><path d="M0 22C80 2 160 30 240 18S360 0 400 14" fill="none" stroke="#f1b548" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="hvrow"><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 1-3 4-3 7h3v11"/></svg><span data-i18n="v5"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 8.5V7M10.5 7h3"/></svg><span data-i18n="v6"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="7" r="2.6"/><circle cx="5.5" cy="9" r="2.1"/><circle cx="18.5" cy="9" r="2.1"/><path d="M7 19c0-3 2.2-5.5 5-5.5s5 2.5 5 5.5M1.5 18c0-2.4 1.7-4.4 4-4.4M22.5 18c0-2.4-1.7-4.4-4-4.4"/></svg><span data-i18n="v7"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l8-8"/></svg><span data-i18n="v8"></span></div></div></div>
-    <img class="fcpast" src="img/forma-past-v3.webp" alt="" width="851" height="167">
+    <img class="fcpast" src="img/forma-past-v3.webp" alt="" width="851" height="167" loading="lazy">
   </section>
 
   <!-- 4. Rahmat -->
   <section id="s-done" hidden>
     <div class="done">
-      <img class="kdlogo" src="img/brand/logo-blue.svg" alt="Kamolon Osh">
+      <img class="kdlogo" src="img/brand/logo-blue.svg" alt="Kamolon Osh" loading="lazy">
       <div class="circle"><svg class="i"><use href="#ic-check"/></svg></div>
       <h1 data-i18n="thanks"></h1>
       <p data-i18n-html="doneText"></p>
@@ -1292,7 +1293,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 
   <!-- 5. Admin: PIN -->
   <section id="s-pin" hidden>
-    <div class="hhero ahero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712"><span class="abadge">ADMIN PANEL</span><button class="hback" data-go="lang" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button></div>
+    <div class="hhero ahero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712" loading="lazy"><span class="abadge">ADMIN PANEL</span><button class="hback" data-go="lang" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button></div>
     <h1 class="atitle">Admin panel</h1>
     <p class="lead">PIN kodni kiriting</p>
     <form id="pinForm" novalidate>
@@ -1304,7 +1305,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 
   <!-- 6. Admin: bo'limlar -->
   <section id="s-admin" hidden>
-    <div class="hhero ahero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712"><span class="abadge">ADMIN PANEL</span></div>
+    <div class="hhero ahero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712" loading="lazy"><span class="abadge">ADMIN PANEL</span></div>
     <div class="admin-top">
       <button class="back" id="adminExit"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
       <button class="back arefresh" id="adminRefresh" style="margin-left:auto"><b class="rico">↻</b> <span>Yangilash</span></button>
@@ -1355,7 +1356,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 
   <!-- 7. Admin: ro'yxat -->
   <section id="s-alist" hidden>
-    <div class="actop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166"></div>
+    <div class="actop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166" loading="lazy"></div>
     <div class="admin-top">
       <button class="back" id="alistBack"><svg class="i"><use href="#ic-back"/></svg><span>Orqaga</span></button>
       <button class="back arefresh" id="alistRefresh" style="margin-left:auto"><b class="rico">↻</b> <span>Yangilash</span></button>
@@ -1390,10 +1391,10 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   </section>
 
   </div>
-  <img class="apast" src="img/forma-past-v3.webp" alt="" width="851" height="167">
+  <img class="apast" src="img/forma-past-v3.webp" alt="" width="851" height="167" loading="lazy">
   <div class="lbottom">
-    <div class="lbase"><svg class="lsky lsky-l" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg><img class="lbig" src="img/logo-jigar-v3.webp" alt="Kamolon Osh" width="300" height="286"><svg class="lsky lsky-r" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
-    <img class="lpast" src="img/til-past-v3.webp" alt="" width="851" height="257">
+    <div class="lbase"><svg class="lsky lsky-l" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg><img class="lbig" src="img/logo-jigar-v3.webp" alt="Kamolon Osh" width="300" height="286" loading="lazy"><svg class="lsky lsky-r" viewBox="0 0 120 90" aria-hidden="true"><g fill="none" stroke="#d9b98a" stroke-width="1.2"><path d="M30 88V20M27 20h6M28 20l2-14 2 14M27 40h6M27 60h6"/><path d="M50 88V58h60v30M56 58c0-14 10-22 24-22s24 8 24 22"/><path d="M80 36v-6"/><path d="M60 88V72a4 4 0 0 1 8 0v16M76 88V70a4 4 0 0 1 8 0v18M92 88V72a4 4 0 0 1 8 0v16"/><path d="M4 88V70h20v18M8 88v-10a3 3 0 0 1 6 0v10"/><path d="M0 88h120"/></g></svg></div>
+    <img class="lpast" src="img/til-past-v3.webp" alt="" width="851" height="257" loading="lazy">
     <div class="lband"><svg class="lwave" viewBox="0 0 400 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V14C90 32 170 4 250 14S360 26 400 10V0Z" fill="#fff"/><path d="M0 14C90 32 170 4 250 14S360 26 400 10" fill="none" stroke="#c9a14a" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="lfl"><span></span><svg class="lflower" viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="#d9b66a" stroke-width="1.6"><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(0 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(45 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(90 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(135 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(225 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(270 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(315 20 20)"/><circle cx="20" cy="20" r="4" fill="#d9b66a"/></g></svg><span></span></div></div>
   </div>
   <div class="kfoot"><div class="kfoot-t" data-i18n="ourBranches"></div><div class="kbr" id="kBranches"></div></div>
@@ -2320,7 +2321,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   function loadPhotos() {
     document.querySelectorAll(".dbph:not(.done)").forEach(async el => {
       el.classList.add("done");
-      try { const d = await getPhoto(el.dataset.pcat, el.dataset.pid); el.innerHTML = `<img src="${d}" alt="Chek surati">`; }
+      try { const d = await getPhoto(el.dataset.pcat, el.dataset.pid); el.innerHTML = `<img src="${d}" alt="Chek surati" loading="lazy">`; }
       catch (_) { el.innerHTML = "<span>📷 Chekni yuklab bo'lmadi</span>"; el.classList.remove("done"); }
     });
   }
@@ -2399,8 +2400,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   window.addEventListener("hashchange", goAdminLink);
   // Keyingi ekranlar rasmlarini oldindan yuklab qo'yish (tez ochilishi uchun)
   window.addEventListener("load", () => setTimeout(() => {
-    ["hero-uy-v4.webp", "hero-forma-v4.webp", "forma-tepa-v3.webp", "forma-past-v3.webp",
-     "filial-labzak-3.webp", "filial-drujba-3.webp", "filial-gulzor-3.webp", "filial-ziyolilar-4.webp", "filial-parkent-3.webp"]
+    []
       .forEach(f => { const i = new Image(); i.decoding = "async"; i.src = "img/" + f; });
   }, 300));
 </script>
