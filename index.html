@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119073551";
+  const APP_VERSION = "20261119073727";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1051,17 +1051,6 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
 .kfall i.lf { filter: drop-shadow(0 2px 3px rgba(120,50,0,.25)); }
 .kfall i.sf { filter: drop-shadow(0 0 3px rgba(160,200,255,.95)) drop-shadow(0 0 1px rgba(40,90,200,.6)); }
 .kfall i.sb { border-radius: 50%; background: radial-gradient(circle at 40% 35%, #fff, #fff 45%, rgba(255,255,255,.6) 70%, rgba(255,255,255,0) 72%); box-shadow: 0 0 8px rgba(190,220,255,.95), 0 0 0 1px rgba(120,160,230,.25); }
-/* ---- 3D lagan: qiya turib, o'z o'qi atrofida aylanadi ---- */
-#s-main .kstage { perspective: 900px; }
-#s-main .kplate2 { animation: k3d 24s linear infinite; transform-origin: 50% 50%; filter: drop-shadow(0 26px 18px rgba(0,0,0,.45)); }
-#s-main .kflower { animation: k3df 60s linear infinite; transform-origin: 50% 50%; }
-@keyframes k3d { from { transform: translateX(-50%) rotateX(50deg) rotateZ(0deg); } to { transform: translateX(-50%) rotateX(50deg) rotateZ(360deg); } }
-@keyframes k3df { from { transform: translateX(-50%) rotateX(50deg) rotateZ(360deg); } to { transform: translateX(-50%) rotateX(50deg) rotateZ(0deg); } }
-#s-main .ksteam { animation: none; transform: translateX(-50%); aspect-ratio: auto; height: 200px; top: 80px; }
-#s-main .kst { animation: none; }
-@media (prefers-reduced-motion: reduce) { #s-main .kplate2 { animation: none; transform: translateX(-50%) rotateX(50deg); } }
-#s-main .kplate2 { top: -18px; } #s-main .kflower { top: -40px; } #s-main .ksteam { top: 40px; }
-#s-main .ktop { margin-bottom: 120px; }
 /* ===== ADMIN PANEL: brendbuk ranglari ===== */
 body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
 body.am .shell { border: 0 !important; }
