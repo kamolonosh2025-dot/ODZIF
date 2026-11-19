@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119072322";
+  const APP_VERSION = "20261119072553";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1043,6 +1043,9 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
 .kneon { font-family: "Tilt Neon", var(--khd); font-weight: 400; text-transform: none; font-size: 1.75rem; letter-spacing: .02em; color: #F2FFE8; text-shadow: 0 0 1px #fff, 0 0 4px #fff, 0 0 9px #39FF14, 0 0 18px #39FF14, 0 0 30px #39FF14, 0 0 46px rgba(57,255,20,.7); }
 .kbtns a.kbtn { text-decoration: none; box-sizing: border-box; }
 .kbtns .kbtn-b .kic { color: var(--kb); }
+/* Bot va telefon: sarg'ish */
+.kp { background: linear-gradient(rgba(255,255,255,.24), rgba(255,255,255,.06) 48%, rgba(255,255,255,0) 50%), linear-gradient(#FFF0A8, #F7D154 55%, #E0A92A) !important; color: var(--kb); filter: drop-shadow(0 3px 6px rgba(200,140,20,.4)); }
+.kp::before { background-image: url(img/brand/capg-l-yellow.svg); } .kp::after { background-image: url(img/brand/capg-r-yellow.svg); }
 /* ===== ADMIN PANEL: brendbuk ranglari ===== */
 body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
 body.am .shell { border: 0 !important; }
