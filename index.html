@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119044640";
+  const APP_VERSION = "20261119044757";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1039,46 +1039,6 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle { background: var(
 body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::before { background-image: url(img/brand/capg-l-blue.svg); }
 body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { background-image: url(img/brand/capg-r-blue.svg); }
 
-/* ===== v2: tiniqroq, yaltiroq yozuvlar ===== */
-body.kb:not(.am) { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; }
-:root { --go: linear-gradient(#FFC07A, #FF7A00 52%, #F05A00); --gb: linear-gradient(#2F7BFF, #0A45D0 52%, #02247A); --gl: linear-gradient(#A6F3FF, #1FD0FF 52%, #00A6E0); }
-.kbtn-o .kt, body.kb:not(.am) .send span { text-shadow: 0 0 1px #fff, 0 0 6px rgba(255,255,255,.85), 0 0 14px rgba(255,214,150,.9), 0 1px 2px rgba(120,40,0,.45); }
-.kbtn-b .kt { text-shadow: 0 0 1px #fff, 0 0 6px rgba(255,255,255,.85), 0 0 14px rgba(120,190,255,.95), 0 1px 2px rgba(0,20,80,.5); }
-.kp { text-shadow: 0 0 6px rgba(255,255,255,.9), 0 0 12px rgba(255,255,255,.6); }
-#s-main .kname { filter: drop-shadow(0 0 8px rgba(255,255,255,.55)) drop-shadow(0 2px 6px rgba(0,0,0,.35)); }
-#s-main .krate h2 { filter: drop-shadow(0 0 6px rgba(60,140,255,.55)); }
-body.kb:not(.am) .kfoot-t { text-shadow: 0 0 8px rgba(255,255,255,.8), 0 0 18px rgba(140,200,255,.7); }
-body.kb:not(.am):not(.mm) #s-form .ktitle { text-shadow: 0 0 2px #fff, 0 0 8px rgba(255,255,255,.8), 0 0 16px rgba(255,220,160,.8); }
-#s-main .kplate2 { filter: saturate(1.35) contrast(1.12) brightness(1.04) drop-shadow(0 22px 26px rgba(0,0,0,.45)); }
-body.kb:not(.am) .khlogo { filter: saturate(1.35) contrast(1.1); }
-body.kb:not(.am) label, body.kb:not(.am) .label { color: #0638B8; }
-body.kb:not(.am) input, body.kb:not(.am) textarea { border-color: #b9c6e4; }
-
-/* ===== Ishga taklif: neon vivеska shabloni (boshqalardan farqli) ===== */
-.kbtn-n { height: 68px; margin: 8px 0 0; border-radius: 18px; background: radial-gradient(120% 140% at 50% 0%, #10306e 0%, #050f2b 60%, #02081a 100%) !important; border: 2.5px solid #39FF14; padding: 0 14px;
-  box-shadow: 0 0 6px #39FF14, 0 0 18px rgba(57,255,20,.75), 0 0 40px rgba(57,255,20,.35), inset 0 0 14px rgba(57,255,20,.45); filter: none !important; animation: kneonbox 3.2s ease-in-out infinite !important; }
-.kbtn-n::before, .kbtn-n::after { display: none; }
-.kbtn-n .kt { text-align: center; }
-.kneon { font-size: 1.55rem; letter-spacing: .08em; color: #EAFFDB; text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 10px #39FF14, 0 0 20px #39FF14, 0 0 36px #39FF14, 0 0 60px rgba(57,255,20,.8); }
-@keyframes kneonbox { 50% { box-shadow: 0 0 8px #39FF14, 0 0 26px rgba(57,255,20,.9), 0 0 56px rgba(57,255,20,.45), inset 0 0 18px rgba(57,255,20,.55); } }
-@media (prefers-reduced-motion: reduce) { .kbtn-n { animation: none !important; } }
-/* Ishga taklif formasi: qorong'i fon, neon chiziqlar */
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form { background: radial-gradient(130% 60% at 50% 0%, #0f2c66, #050f2b 55%, #02081a) !important; border-radius: 0 0 28px 28px; padding-bottom: 26px; }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle { background: #02081a !important; border: 2.5px solid #39FF14; border-radius: 16px; margin: -20px 30px 10px; color: #EAFFDB; font-size: 1.8rem; letter-spacing: .08em; filter: none;
-  box-shadow: 0 0 6px #39FF14, 0 0 20px rgba(57,255,20,.7), inset 0 0 12px rgba(57,255,20,.45); text-shadow: 0 0 2px #fff, 0 0 6px #fff, 0 0 12px #39FF14, 0 0 24px #39FF14, 0 0 44px #39FF14; }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::before, body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { display: none; }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form label { color: #C8FFB0; text-shadow: 0 0 6px rgba(57,255,20,.9); }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .lico { color: #39FF14; filter: drop-shadow(0 0 4px #39FF14); }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form input { background: rgba(4,16,48,.85); color: #fff; border: 1.5px solid rgba(57,255,20,.7); box-shadow: 0 0 8px rgba(57,255,20,.25), inset 0 0 8px rgba(57,255,20,.12); }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form input::placeholder { color: #7f93b8; }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form input:focus { border-color: #39FF14; box-shadow: 0 0 0 3px rgba(57,255,20,.3), 0 0 16px rgba(57,255,20,.5); }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .chek { background: rgba(57,255,20,.06); border: 2px dashed #39FF14; color: #EAFFDB; text-shadow: 0 0 8px #39FF14; }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .send { background: linear-gradient(#5CFF3A, #22D400 55%, #12A000) !important; color: #02240a; filter: drop-shadow(0 0 10px rgba(57,255,20,.7)); }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .send span { text-shadow: 0 0 6px rgba(255,255,255,.9); }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .send::before, body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .send::after { filter: hue-rotate(250deg) saturate(1.6) brightness(1.2); }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .send::before, body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .send::after { display: none; }
-body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .send { border-radius: 16px; border: 2px solid #B6FF9E; }
-.kbtn-n { width: calc(100% + 40px); margin: 8px -20px 0; }
 </style>
 </head>
 <body class="lm">
