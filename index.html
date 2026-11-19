@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119090811";
+  const APP_VERSION = "20261119091013";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1242,6 +1242,29 @@ body.kb .body > section, body.kb #fields { animation: none !important; }
 @keyframes kshn { 0% { transform: translateX(-120%); } 35%, 100% { transform: translateX(260%); } }
 .kbtn .kic, .kbtn .kt, .kbtn .kchev { position: relative; }
 @media (prefers-reduced-motion: reduce) { .kbtn .kshn { display: none; } }
+/* ===== Rahmat oynasi animatsiyasi ===== */
+body.kb:not(.am) .done .circle, body.kb:not(.am) .kdlogo { display: none !important; }
+.dstage { position: relative; width: 230px; height: 230px; margin: 0 auto 8px; }
+.dflower { position: absolute; inset: -14%; width: 128%; height: 128%; opacity: 0; animation: dfl .6s .25s ease-out forwards, kspinc 40s .85s linear infinite reverse; will-change: transform; }
+.dplate { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 18px 28px rgba(0,0,0,.35); animation: din .9s cubic-bezier(.2,.9,.3,1.25) both, kspinc 30s .9s linear infinite; will-change: transform; }
+.dchk { position: absolute; right: 2px; bottom: 8px; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(#FFB462, #FF7C10 55%, #E25A00); color: #fff; border: 4px solid #fff; box-shadow: 0 8px 18px rgba(255,110,0,.5); transform: scale(0); animation: dpop .5s .8s cubic-bezier(.2,1.6,.4,1) forwards; }
+.dchk svg { width: 30px; height: 30px; stroke-width: 3; }
+.dburst { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+.dburst i { position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; background: var(--c); border-radius: 0 80% 0 80%; opacity: 0; animation: dbst 1s .75s cubic-bezier(.1,.8,.3,1) forwards; will-change: transform, opacity; }
+.dburst i:nth-child(3n) { border-radius: 50%; width: 9px; height: 9px; }
+@keyframes din { 0% { transform: scale(.1) rotate(-540deg); opacity: 0; } 60% { opacity: 1; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+@keyframes kspinc { to { transform: rotate(360deg); } }
+@keyframes dfl { from { opacity: 0; transform: scale(.6); } to { opacity: .9; transform: scale(1); } }
+@keyframes dpop { to { transform: scale(1); } }
+@keyframes dbst { 0% { opacity: 1; transform: rotate(var(--a)) translateX(10px) scale(.4); } 70% { opacity: 1; } 100% { opacity: 0; transform: rotate(var(--a)) translateX(var(--d)) rotate(200deg) scale(1); } }
+body.kb:not(.am) .done h1 { font-size: 3rem !important; margin: 14px 0 8px; }
+.done h1 span { display: inline-block; opacity: 0; transform: translateY(30px) scale(.3); animation: dlet .55s cubic-bezier(.2,1.6,.4,1) forwards, dwave 2.6s 2s ease-in-out infinite; background: linear-gradient(#2a74f0, #0538A0 60%, #022a7a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@keyframes dlet { to { opacity: 1; transform: none; } }
+@keyframes dwave { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(-8px); } }
+.done h1 span:nth-child(2) { animation-delay: .92s, 2.1s; } .done h1 span:nth-child(3) { animation-delay: .99s, 2.2s; } .done h1 span:nth-child(4) { animation-delay: 1.06s, 2.3s; } .done h1 span:nth-child(5) { animation-delay: 1.13s, 2.4s; } .done h1 span:nth-child(6) { animation-delay: 1.2s, 2.5s; } .done h1 span:nth-child(7) { animation-delay: 1.27s, 2.6s; } .done h1 span:nth-child(8) { animation-delay: 1.34s, 2.7s; }
+.done p { opacity: 0; animation: dlet .5s 1.4s ease-out forwards; transform: translateY(10px); }
+@media (prefers-reduced-motion: reduce) { .dplate, .dflower, .dchk, .dburst i, .done h1 span, .done p { animation: none !important; opacity: 1; transform: none; } .dburst { display: none; } }
+body.kb:not(.am) .done h1 { margin-top: 44px !important; }
 /* ===== ADMIN PANEL: brendbuk ranglari ===== */
 body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
 body.am .shell { border: 0 !important; }
@@ -1469,8 +1492,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   <!-- 4. Rahmat -->
   <section id="s-done" hidden>
     <div class="done">
-      <img class="kdlogo" src="img/brand/logo-blue.svg" alt="Kamolon Osh" loading="lazy">
-      <div class="circle"><svg class="i"><use href="#ic-check"/></svg></div>
+      <div class="dstage" aria-hidden="true"><img class="dflower" src="img/brand/flower-lblue.svg" alt="" loading="eager"><img class="dplate" src="img/brand/osh-plate-720.webp" alt="" loading="eager"><span class="dchk"><svg class="i"><use href="#ic-check"/></svg></span><div class="dburst"><i style="--a:7deg;--d:120px;--c:#FF7C10"></i><i style="--a:37deg;--d:148px;--c:#EFBF48"></i><i style="--a:67deg;--d:176px;--c:#19C0E9"></i><i style="--a:97deg;--d:120px;--c:#E25A00"></i><i style="--a:127deg;--d:148px;--c:#F7C531"></i><i style="--a:157deg;--d:176px;--c:#023181"></i><i style="--a:187deg;--d:120px;--c:#FF7C10"></i><i style="--a:217deg;--d:148px;--c:#EFBF48"></i><i style="--a:247deg;--d:176px;--c:#19C0E9"></i><i style="--a:277deg;--d:120px;--c:#E25A00"></i><i style="--a:307deg;--d:148px;--c:#F7C531"></i><i style="--a:337deg;--d:176px;--c:#023181"></i></div></div>
       <h1 data-i18n="thanks">Rahmat!</h1>
       <p data-i18n-html="doneText"></p>
       <button class="back" data-go="main" style="margin-top:18px"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="toHome">Bosh sahifaga</span></button>
@@ -1995,6 +2017,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     resetRv();
     jobPhReset();
     show("done");
+    kDoneFx();
   });
 
   // ===== Saqlash (Google Sheets yoki sinov rejimida shu qurilma) =====
@@ -2451,6 +2474,12 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     const ph = c === "job" && x.photo === "db" ? `<button type="button" class="chekth dbph jobph" data-pcat="job" data-pid="${esc(x.id)}"><span>Rasm yuklanmoqda…</span></button>` : "";
     const call = x.phone ? `<a class="kcall" href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">📞 Qo'ng'iroq qilish</a>` : "";
     return `<dl class="kv">${R.join("")}</dl>` + ph + call;
+  }
+  // Rahmat yozuvi harfma-harf sakrab chiqadi
+  function kDoneFx() {
+    const h = document.querySelector("#s-done h1"); if (!h) return;
+    const s = T[lang].thanks;
+    h.innerHTML = [...s].map((ch, i) => `<span style="animation-delay:${(0.85 + i * 0.07).toFixed(2)}s">${ch === " " ? "&nbsp;" : ch}</span>`).join("");
   }
   function jobBlock(x) {
     const chips = [x.age ? `<span class="chip">Yoshi: <b>${esc(x.age)}</b></span>` : "", x.position ? `<span class="chip">Lavozim: <b>${esc(x.position)}</b></span>` : ""].join("");
