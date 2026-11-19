@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119044953";
+  const APP_VERSION = "20261119050044";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1041,6 +1041,55 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
 
 /* Ishga taklif yozuvi: neon trubka shrifti */
 .kneon { font-family: "Tilt Neon", var(--khd); font-weight: 400; text-transform: none; font-size: 1.75rem; letter-spacing: .02em; color: #F2FFE8; text-shadow: 0 0 1px #fff, 0 0 4px #fff, 0 0 9px #39FF14, 0 0 18px #39FF14, 0 0 30px #39FF14, 0 0 46px rgba(57,255,20,.7); }
+/* ===== ADMIN PANEL: brendbuk ranglari ===== */
+body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
+body.am .shell { border: 0 !important; }
+body.am .ahero, body.am .actop { line-height: 1; background: var(--kb) url(img/brand/pattern-blue-soft.svg) repeat 0 0 / 104px auto; padding: 26px 16px 34px; text-align: center; border-radius: 0 0 32px 32px; position: relative; }
+body.am .ahero img, body.am .actop img, body.am .apast { display: none !important; }
+body.am .ahero::before, body.am .actop::before { content: "KAMOLON OSH"; display: block; font: 800 2.2rem/1 var(--khd); color: #fff; letter-spacing: .03em; text-shadow: 0 2px 8px rgba(0,0,0,.35); }
+body.am .actop::before { font-size: 1.5rem; }
+body.am .actop { padding: 16px 16px 20px; }
+body.am .abadge { position: static !important; transform: none !important; display: inline-block; margin-top: 12px; background: var(--go) !important; color: #fff !important; border: 0 !important; font: 800 .85rem/1 var(--khd) !important; letter-spacing: .14em !important; padding: 8px 16px !important; box-shadow: 0 6px 14px rgba(255,110,0,.45); }
+body.am .hback { top: 16px !important; }
+body.am .atitle, body.am #alistHead h1 { font-family: var(--khd) !important; color: var(--kb) !important; text-transform: uppercase; font-weight: 800; letter-spacing: .01em; }
+body.am .atitle::after { background: var(--ko) !important; }
+body.am p.lead { color: #4a5a80; }
+body.am #pin { border-color: #b9c6e4; }
+body.am #pin:focus { border-color: var(--kb); box-shadow: 0 0 0 4px rgba(25,192,233,.25); }
+body.am .send { background: var(--go) !important; border: 0 !important; box-shadow: 0 10px 20px -10px rgba(255,110,0,.8) !important; color: #fff !important; font-family: var(--khd); font-size: 1.15rem; text-transform: uppercase; }
+body.am .back { border-color: #c9d6f0; color: var(--kb); font-weight: 700; }
+body.am .admin-top .arefresh { color: #fff; border-color: transparent; background: var(--kb); }
+body.am .datebar, body.am .dcustom { border-color: #dbe4f5; box-shadow: 0 10px 22px -18px rgba(2,49,129,.5); }
+body.am .dpick { background: #eef4ff; border-color: #9fb6e6; color: var(--kb); }
+body.am .dtoday, body.am .dcgo { background: var(--kb); color: #fff; }
+body.am .datebar.range .drange { border-color: var(--kb); color: var(--kb); }
+body.am .dpb { border-color: #c9d6f0; color: var(--kb); }
+body.am .dpb.on { background: var(--kb); border-color: var(--kb); color: #fff; }
+body.am .dcf input { border-color: #9fb6e6; background: #eef4ff; }
+body.am [data-cat="review"] { --c: #023181; --cbg: #e6eeff; }
+body.am [data-cat="problem"] { --c: #FF7C10; --cbg: #fff0e2; }
+body.am [data-cat="partner"] { --c: #0aa6d6; --cbg: #e2f8fe; }
+body.am [data-cat="idea"] { --c: #d9a21c; --cbg: #fdf5dd; }
+body.am [data-cat="job"] { --c: #1fae0a; --cbg: #e6fbe0; }
+body.am .tile { border: 1px solid #dbe4f5; border-left: 6px solid var(--c); box-shadow: 0 10px 22px -18px rgba(2,49,129,.55); }
+body.am .tile .t { color: var(--kb); font-family: var(--khd); font-size: 1.3rem; text-transform: uppercase; }
+body.am .tile .count { color: var(--c); font-size: 1.3rem; }
+body.am .entry { border: 1px solid #dbe4f5; border-left: 5px solid var(--c, #023181); box-shadow: 0 10px 22px -18px rgba(2,49,129,.55); }
+body.am .entry .when, body.am .chip.when { background: #e6eeff; color: var(--kb); }
+body.am .chip { background: #f1f5fc; color: #233a6b; }
+body.am .who .ava { background: var(--kb) !important; color: #fff !important; }
+body.am .call { background: var(--go) !important; color: #fff !important; }
+/* Aniq maydonlar */
+.kv { margin: 10px 0 0; display: grid; gap: 6px; }
+.kv > div { display: grid; grid-template-columns: 112px 1fr; gap: 10px; align-items: start; padding: 9px 12px; border-radius: 12px; background: #f3f7ff; }
+.kv dt { color: #5b6b8f; font-size: .85rem; font-weight: 700; }
+.kv dd { margin: 0; color: #0d1b3d; font-weight: 700; font-size: 1rem; white-space: pre-wrap; word-break: break-word; }
+.kv .big dd { font-weight: 600; line-height: 1.45; }
+.kv .warn { background: #fff0e2; } .kv .warn dt { color: #c25a00; }
+.kv .good { background: #e8f9fd; } .kv .good dt { color: #0884ad; }
+.kv dd a { color: var(--kb); text-decoration: none; }
+.kcall { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; height: 46px; border-radius: 14px; background: var(--go); color: #fff; font: 800 1.05rem var(--khd); letter-spacing: .03em; text-decoration: none; box-shadow: 0 8px 16px -10px rgba(255,110,0,.9); }
+.jobph { margin-top: 10px; }
 </style>
 </head>
 <body class="lm">
@@ -1345,7 +1394,7 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
   const PHONE = "+998 55-500-16-61";
   const BOT = "Kamolonosh_bot";
 
-  const ICONS = { review: "ic-star", idea: "ic-bulb", partner: "ic-hand", problem: "ic-brief", job: "ic-brief" };
+  const ICONS = { review: "ic-star", idea: "ic-bulb", partner: "ic-hand", problem: "ic-chat", job: "ic-brief" };
 
   const T = {
     uz: {
@@ -1817,7 +1866,7 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
   }
 
   // ===== Admin panel =====
-  const CAT_NAMES = { review: "Fikr qoldirish", idea: "G'oya taklif qilish", partner: "Hamkorlik", problem: "Taklif va shikoyatlar", job: "Ishga taklif" };
+  const CAT_NAMES = { review: "Fikrlar (baholash)", problem: "Taklif va shikoyatlar", partner: "Hamkorlik", job: "Ishga taklif", idea: "G'oyalar" };
   const TZ = "Asia/Tashkent";
   let adminPin = "", adminData = null;
   // Joriy ko'rinish: qaysi sana, bo'lim va filial (yangilaganda shu joyda qoladi)
@@ -2185,6 +2234,23 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
     const thumb = x.photo === "db" ? `<button type="button" class="chekth dbph" data-pcat="${esc(x.cat || view.cat)}" data-pid="${esc(x.id)}"><span>📷 Chek yuklanmoqda…</span></button>` : pid ? `<a class="chekth" href="${esc(x.photo)}" target="_blank" rel="noopener"><img src="https://drive.google.com/thumbnail?id=${esc(pid)}&sz=w600" alt="Chek surati" loading="lazy"></a>` : "";
     return (chips ? `<div class="echips rvchips">${chips}</div>` : "") + (rates ? `<div class="rates">${rates}</div>` : "") + thumb;
   }
+  function infoBlock(x, c) {
+    const R = [], row = (k, v, cls) => { if (v !== "" && v != null) R.push(`<div class="${cls || ""}"><dt>${k}</dt><dd>${v}</dd></div>`); };
+    row("Ism", esc(x.name || ""));
+    if (c === "job") { row("Yoshi", esc(x.age == null ? "" : x.age)); row("Lavozim", esc(x.position || "")); }
+    if (c === "partner") row("Kompaniya", esc(x.company || ""));
+    row("Telefon", x.phone ? `<a href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">${esc(x.phone)}</a>` : "");
+    if (x.branch) row("Filial", esc(x.branch));
+    const m = String(x.msg || "");
+    if (c === "problem") {
+      const t = m.match(/(?:^|\n)Taklif:\s*([\s\S]*?)(?=\n\nShikoyat:|$)/), s = m.match(/(?:^|\n)Shikoyat:\s*([\s\S]*)$/);
+      if (t || s) { row("Taklif", esc(t ? t[1].trim() : ""), "big good"); row("Shikoyat", esc(s ? s[1].trim() : ""), "big warn"); }
+      else row("Xabar", esc(m), "big");
+    } else row(c === "partner" ? "Maqsadi" : c === "idea" ? "G'oya" : "Xabar", esc(m), "big");
+    const ph = c === "job" && x.photo === "db" ? `<button type="button" class="chekth dbph jobph" data-pcat="job" data-pid="${esc(x.id)}"><span>Rasm yuklanmoqda…</span></button>` : "";
+    const call = x.phone ? `<a class="kcall" href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">📞 Qo'ng'iroq qilish</a>` : "";
+    return `<dl class="kv">${R.join("")}</dl>` + ph + call;
+  }
   function jobBlock(x) {
     const chips = [x.age ? `<span class="chip">Yoshi: <b>${esc(x.age)}</b></span>` : "", x.position ? `<span class="chip">Lavozim: <b>${esc(x.position)}</b></span>` : ""].join("");
     const thumb = x.photo === "db" ? `<button type="button" class="chekth dbph" data-pcat="job" data-pid="${esc(x.id)}"><span>Rasm yuklanmoqda…</span></button>` : "";
@@ -2213,7 +2279,7 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
     } else {
       if (c === "review") { list = list.filter(x => x.branch === br); $("alistTitle").textContent = br + " filiali"; }
       $("items").innerHTML = list.length ? list.map(x => `
-        <div class="entry" data-id="${esc(x.id)}">
+        <div class="entry" data-id="${esc(x.id)}" data-cat="${c}">
           <div class="emenu"><button class="edots" type="button" aria-label="Menyu">⋮</button>
             <div class="epop"><button class="edel" type="button">🗑 O'chirish</button></div></div>
           <div class="echips">
@@ -2221,9 +2287,9 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
             ${x.table ? `<span class="chip">Stol ${esc(x.table)}</span>` : ""}
             ${x.branch && c !== "review" ? `<span class="chip">${esc(x.branch)}</span>` : ""}
           </div>
-          ${c === "review" ? reviewBlock(x) : ""}${c === "job" ? jobBlock(x) : ""}
-          ${x.msg ? `<div class="msg">${esc(x.msg)}</div>` : ""}
-          ${x.name || x.phone || x.company ? `<div class="who"><span class="ava">${esc(String(x.name || "?").trim().charAt(0).toUpperCase())}</span><div><b>${esc(x.name || "Mehmon")}</b>${x.company ? `<small>${esc(x.company)}</small>` : ""}</div>${x.phone ? `<a class="call" href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">📞 ${esc(x.phone)}</a>` : ""}</div>` : ""}
+          ${c === "review" ? reviewBlock(x) : infoBlock(x, c)}
+          ${c !== "review" ? "" : x.msg ? `<div class="msg">${esc(x.msg)}</div>` : ""}
+          ${c === "review" && (x.name || x.phone || x.company) ? `<div class="who"><span class="ava">${esc(String(x.name || "?").trim().charAt(0).toUpperCase())}</span><div><b>${esc(x.name || "Mehmon")}</b>${x.company ? `<small>${esc(x.company)}</small>` : ""}</div>${x.phone ? `<a class="call" href="tel:${esc(String(x.phone).replace(/[^+\d]/g, ""))}">📞 ${esc(x.phone)}</a>` : ""}</div>` : ""}
         </div>`).join("") : `<p class="lead">${isRange() ? "Bu kunlarda" : "Bu kunda"} feedback yo'q.</p>`;
     }
     if ($("s-alist").hidden) show("alist");
@@ -2305,7 +2371,7 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
   applyLang("uz");
   $("mPhoneT").textContent = PHONE; $("mPhone").href = "tel:" + PHONE.replace(/[^+\d]/g, "");
   $("mBotT").textContent = "@" + BOT; $("mBot").href = "https://t.me/" + BOT;
-  show("main");
+  if (location.hash !== "#admin") show("main");
   // Sahifa yangilansa, admin o'sha joyida ochiladi
   // To'g'ridan-to'g'ri admin havolasi: .../ODZIF/#admin yoki .../ODZIF/admin.html
   const goAdminLink = () => { if (location.hash === "#admin") $("adminDot").click(); };
