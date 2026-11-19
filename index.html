@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119073727";
+  const APP_VERSION = "20261119074343";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1051,6 +1051,10 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
 .kfall i.lf { filter: drop-shadow(0 2px 3px rgba(120,50,0,.25)); }
 .kfall i.sf { filter: drop-shadow(0 0 3px rgba(160,200,255,.95)) drop-shadow(0 0 1px rgba(40,90,200,.6)); }
 .kfall i.sb { border-radius: 50%; background: radial-gradient(circle at 40% 35%, #fff, #fff 45%, rgba(255,255,255,.6) 70%, rgba(255,255,255,0) 72%); box-shadow: 0 0 8px rgba(190,220,255,.95), 0 0 0 1px rgba(120,160,230,.25); }
+/* Tugmalardagi belgilar: sarg'ish */
+.kbtns .kbtn .kic { background: radial-gradient(circle at 50% 35%, #fff, #FFF6D6); }
+.kbtns .kbtn .kic, .kbtns .kbtn-b .kic { color: #E8A317; }
+.kbtns .kbtn .kic svg { stroke-width: 2.3; filter: drop-shadow(0 1px 0 rgba(150,90,0,.25)); }
 /* ===== ADMIN PANEL: brendbuk ranglari ===== */
 body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
 body.am .shell { border: 0 !important; }
