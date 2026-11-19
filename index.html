@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119091013";
+  const APP_VERSION = "20261119091548";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1265,6 +1265,17 @@ body.kb:not(.am) .done h1 { font-size: 3rem !important; margin: 14px 0 8px; }
 .done p { opacity: 0; animation: dlet .5s 1.4s ease-out forwards; transform: translateY(10px); }
 @media (prefers-reduced-motion: reduce) { .dplate, .dflower, .dchk, .dburst i, .done h1 span, .done p { animation: none !important; opacity: 1; transform: none; } .dburst { display: none; } }
 body.kb:not(.am) .done h1 { margin-top: 44px !important; }
+/* 1000 bo'lakdan yig'iladi */
+.dcv { position: absolute; left: -100%; top: -100%; width: 300%; height: 300%; pointer-events: none; z-index: 2; }
+.dstage .dplate { opacity: 0; animation: none; }
+.dstage .dflower, .dstage .dchk, .dstage .dburst i { animation-play-state: paused; }
+.dstage.ok .dplate { opacity: 1; animation: dsettle .5s ease-out, kspinc 30s .5s linear infinite; }
+.dstage.ok .dflower { animation: dfl .5s ease-out forwards, kspinc 40s .5s linear infinite reverse; }
+.dstage.ok .dchk { animation: dpop .5s .1s cubic-bezier(.2,1.6,.4,1) forwards; }
+.dstage.ok .dburst i { animation: dbst 1s 0s cubic-bezier(.1,.8,.3,1) forwards; }
+@keyframes dsettle { 0% { transform: scale(1.06); } 100% { transform: scale(1); } }
+.done p { animation-delay: 2.3s !important; }
+#s-done { overflow-x: clip; } html, body.kb { overflow-x: clip; }
 /* ===== ADMIN PANEL: brendbuk ranglari ===== */
 body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
 body.am .shell { border: 0 !important; }
@@ -2477,9 +2488,44 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   }
   // Rahmat yozuvi harfma-harf sakrab chiqadi
   function kDoneFx() {
-    const h = document.querySelector("#s-done h1"); if (!h) return;
-    const s = T[lang].thanks;
-    h.innerHTML = [...s].map((ch, i) => `<span style="animation-delay:${(0.85 + i * 0.07).toFixed(2)}s">${ch === " " ? "&nbsp;" : ch}</span>`).join("");
+    const h = document.querySelector("#s-done h1"), st = document.querySelector("#s-done .dstage");
+    if (!h || !st) return;
+    const s = T[lang].thanks, BASE = 1.75;
+    st.classList.remove("ok");
+    h.innerHTML = [...s].map((ch, i) => `<span style="animation-delay:${(BASE + i * 0.07).toFixed(2)}s,${(BASE + 1.2 + i * 0.1).toFixed(2)}s">${ch === " " ? "&nbsp;" : ch}</span>`).join("");
+    const img = st.querySelector(".dplate");
+    let cv = st.querySelector(".dcv");
+    if (!cv) { cv = document.createElement("canvas"); cv.className = "dcv"; st.appendChild(cv); }
+    const finish = () => { cv.style.display = "none"; st.classList.add("ok"); };
+    const run = () => {
+      const S = st.clientWidth, dpr = Math.min(window.devicePixelRatio || 1, 2), W = S * 3;
+      cv.width = W * dpr; cv.height = W * dpr; cv.style.display = "block";
+      const g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const N = 36, cell = S / N, src = img.naturalWidth / N, P = [];
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        const cx = (x + .5) - N / 2, cy = (y + .5) - N / 2;
+        if (cx * cx + cy * cy > (N / 2 + .5) * (N / 2 + .5)) continue; // faqat lagan doirasi
+        const a = Math.random() * Math.PI * 2, r = S * (0.9 + Math.random() * 0.8);
+        P.push({ x, y, sx: Math.cos(a) * r, sy: Math.sin(a) * r, rot: (Math.random() - .5) * 12, d: Math.random() * 0.45 });
+      }
+      const T0 = performance.now(), DUR = 1.05, off = S; // lagan markazi canvas o'rtasida
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      const frame = now => {
+        const t = (now - T0) / 1000; let done = true;
+        g.clearRect(0, 0, W, W);
+        for (const p of P) {
+          let k = (t - p.d) / DUR; if (k < 1) done = false; k = k < 0 ? 0 : k > 1 ? 1 : ease(k);
+          const tx = off + p.x * cell, ty = off + p.y * cell, x = tx + p.sx * (1 - k), y = ty + p.sy * (1 - k);
+          g.globalAlpha = 0.25 + 0.75 * k;
+          if (k < 1) { g.save(); g.translate(x + cell / 2, y + cell / 2); g.rotate(p.rot * (1 - k)); g.drawImage(img, p.x * src, p.y * src, src, src, -cell / 2, -cell / 2, cell + .6, cell + .6); g.restore(); }
+          else g.drawImage(img, p.x * src, p.y * src, src, src, x, y, cell + .6, cell + .6);
+        }
+        if (!done && !$("s-done").hidden) requestAnimationFrame(frame); else finish();
+      };
+      requestAnimationFrame(frame);
+    };
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return finish();
+    if (img.complete && img.naturalWidth) run(); else { img.onload = run; img.onerror = finish; }
   }
   function jobBlock(x) {
     const chips = [x.age ? `<span class="chip">Yoshi: <b>${esc(x.age)}</b></span>` : "", x.position ? `<span class="chip">Lavozim: <b>${esc(x.position)}</b></span>` : ""].join("");
