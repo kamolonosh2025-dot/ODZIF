@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119084202";
+  const APP_VERSION = "20261119090450";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -24,9 +24,178 @@
 <meta name="description" content="Kamolon Osh fikr-mulohaza markazi. Fikr va takliflaringizni qoldiring.">
 <link rel="preload" as="image" href="img/brand/osh-plate-720.webp" fetchpriority="high">
 <link rel="preload" as="image" href="img/brand/flower-lblue.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff2" href="fonts/fira-800-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/manrope-var-latin.woff2" crossorigin>
+<style>
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: fallback;
+  src: url(fonts/fira-600-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: fallback;
+  src: url(fonts/fira-600-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: fallback;
+  src: url(fonts/fira-600-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(fonts/fira-700-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(fonts/fira-700-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(fonts/fira-700-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 800;
+  font-display: fallback;
+  src: url(fonts/fira-800-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 800;
+  font-display: fallback;
+  src: url(fonts/fira-800-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Fira Sans Extra Condensed';
+  font-style: normal;
+  font-weight: 800;
+  font-display: fallback;
+  src: url(fonts/fira-800-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: fallback;
+  src: url(fonts/manrope-var-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: fallback;
+  src: url(fonts/manrope-var-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: fallback;
+  src: url(fonts/manrope-var-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: fallback;
+  src: url(fonts/manrope-var-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: fallback;
+  src: url(fonts/manrope-var-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: fallback;
+  src: url(fonts/manrope-var-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(fonts/manrope-var-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(fonts/manrope-var-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url(fonts/manrope-var-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: fallback;
+  src: url(fonts/manrope-var-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: fallback;
+  src: url(fonts/manrope-var-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: fallback;
+  src: url(fonts/manrope-var-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
 <style>
 :root {
   --bg: #ffffff;
@@ -1107,7 +1276,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 .jobph { margin-top: 10px; }
 </style>
 </head>
-<body class="lm">
+<body class="kb mm fm">
 
 <!-- Line icons -->
 <svg width="0" height="0" style="position:absolute">
@@ -1146,26 +1315,26 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   <div class="body">
 
   <!-- 0. Bosh sahifa (QR koddan ochiladi) -->
-  <section id="s-main" hidden>
+  <section id="s-main">
     <div class="ktop">
       <div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div>
       <div class="kname">Kamolon Osh</div>
       <div class="kstage"><img class="kflower" src="img/brand/flower-lblue.svg" alt=""><img class="kplate2" src="img/brand/osh-plate-720.webp" alt="Kamolon Osh" width="720" height="720" fetchpriority="high" decoding="async"><div class="ksteam" aria-hidden="true"><span class="kst" style="left:46.7%;top:23.3%"><i style="animation-delay:-0.0s"></i><i style="animation-delay:-1.6s"></i></span><span class="kst" style="left:74%;top:39%"><i style="animation-delay:-0.7s"></i><i style="animation-delay:-2.3s"></i></span><span class="kst" style="left:67.5%;top:69%"><i style="animation-delay:-1.4s"></i><i style="animation-delay:-3.0s"></i></span><span class="kst" style="left:36.7%;top:71.7%"><i style="animation-delay:-2.1s"></i><i style="animation-delay:-3.7s"></i></span><span class="kst" style="left:23.3%;top:44%"><i style="animation-delay:-2.8s"></i><i style="animation-delay:-4.4s"></i></span></div></div>
     </div>
     <div class="kcontacts">
-        <a class="kp" id="mBot" target="_blank" rel="noopener"><span id="mBotT"></span></a>
-        <a class="kp" id="mPhone"><span id="mPhoneT"></span></a>
+        <a class="kp" id="mBot" href="https://t.me/Kamolonosh_bot" target="_blank" rel="noopener"><span id="mBotT">@Kamolonosh_bot</span></a>
+        <a class="kp" id="mPhone" href="tel:+998555001661"><span id="mPhoneT">+998 55-500-16-61</span></a>
     </div>
     <div class="kbtns">
-      <button type="button" class="kbtn kbtn-b" data-cat="problem"><span class="kic"><svg class="i"><use href="#ic-chat"/></svg></span><span class="kt" data-i18n="c_problem_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
-      <button type="button" class="kbtn kbtn-b" data-cat="partner"><span class="kic"><svg class="i"><use href="#ic-hand"/></svg></span><span class="kt" data-i18n="c_partner_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
-      <a class="kbtn kbtn-b" href="https://t.me/KamolonOsh_Jbot" target="_blank" rel="noopener"><span class="kic"><svg class="i"><use href="#ic-brief"/></svg></span><span class="kt" data-i18n="c_job_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></a>
+      <button type="button" class="kbtn kbtn-b" data-cat="problem"><span class="kic"><svg class="i"><use href="#ic-chat"/></svg></span><span class="kt" data-i18n="c_problem_t">Takliflar va shikoyatlar</span><svg class="i kchev"><use href="#ic-back"/></svg></button>
+      <button type="button" class="kbtn kbtn-b" data-cat="partner"><span class="kic"><svg class="i"><use href="#ic-hand"/></svg></span><span class="kt" data-i18n="c_partner_t">Hamkorlik</span><svg class="i kchev"><use href="#ic-back"/></svg></button>
+      <a class="kbtn kbtn-b" href="https://t.me/KamolonOsh_Jbot" target="_blank" rel="noopener"><span class="kic"><svg class="i"><use href="#ic-brief"/></svg></span><span class="kt" data-i18n="c_job_t">Ishga taklif</span><svg class="i kchev"><use href="#ic-back"/></svg></a>
     </div>
-    <div class="krate"><h2 data-i18n="rateTitle"></h2><svg class="i karrow" viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>
+    <div class="krate"><h2 data-i18n="rateTitle">Sifatimizni baholang</h2><svg class="i karrow" viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>
   </section>
 
   <!-- 1. Til tanlash -->
-  <section id="s-lang">
+  <section id="s-lang" hidden>
     <div class="hhero lhero"><img src="img/hero-til-v4.webp" alt="Kamolon Osh markazi" width="1080" height="712" loading="lazy"></div>
     <img class="klogo-l" src="img/brand/logo-blue.svg" alt="Kamolon Osh" loading="lazy">
     <div class="lname">Kamolon Osh<button type="button" class="adot2" id="adminDot2" aria-label="Admin"></button></div>
@@ -1181,20 +1350,20 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   <!-- 2. Mavzu tanlash -->
   <section id="s-home" hidden>
     <div class="hhero"><img src="img/hero-uy-v4.webp" alt="Kamolon Osh markazi" width="1080" height="687" loading="lazy"><button class="hback" data-go="lang" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button></div>
-    <div class="hintro"><img class="hlogo" src="img/logo-jigar-v3.webp" alt="Kamolon Osh" width="300" height="286" loading="lazy"><h1 data-i18n="homeT"></h1><span class="hline"></span><p data-i18n="homeD"></p></div>
+    <div class="hintro"><img class="hlogo" src="img/logo-jigar-v3.webp" alt="Kamolon Osh" width="300" height="286" loading="lazy"><h1 data-i18n="homeT">Fikr va takliflaringiz biz uchun muhim!</h1><span class="hline"></span><p data-i18n="homeD">Xizmat, taomlar va umumiy taassurot bo'yicha fikringizni qoldiring.</p></div>
     <div class="grid hcards">
-      <button class="tile" data-cat="review"><div class="ico"><svg class="i"><use href="#ic-star"/></svg></div><div class="t" data-i18n="c_review_t"></div><div class="d" data-i18n="c_review_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
-      <button class="tile" data-cat="idea"><div class="ico"><svg class="i"><use href="#ic-bulb"/></svg></div><div class="t" data-i18n="c_idea_t"></div><div class="d" data-i18n="c_idea_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
-      <button class="tile" data-cat="partner"><div class="ico"><svg class="i"><use href="#ic-hand"/></svg></div><div class="t" data-i18n="c_partner_t"></div><div class="d" data-i18n="c_partner_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
-      <button class="tile" data-cat="problem"><div class="ico"><svg class="i"><use href="#ic-brief"/></svg></div><div class="t" data-i18n="c_problem_t"></div><div class="d" data-i18n="c_problem_d"></div><svg class="i hchev"><use href="#ic-back"/></svg></button>
+      <button class="tile" data-cat="review"><div class="ico"><svg class="i"><use href="#ic-star"/></svg></div><div class="t" data-i18n="c_review_t">Fikr qoldirish</div><div class="d" data-i18n="c_review_d">Taom, xizmat va muhitga baho bering</div><svg class="i hchev"><use href="#ic-back"/></svg></button>
+      <button class="tile" data-cat="idea"><div class="ico"><svg class="i"><use href="#ic-bulb"/></svg></div><div class="t" data-i18n="c_idea_t">G'oya taklif qilish</div><div class="d" data-i18n="c_idea_d">Yangi taklif va g'oyalaringizni yuboring</div><svg class="i hchev"><use href="#ic-back"/></svg></button>
+      <button class="tile" data-cat="partner"><div class="ico"><svg class="i"><use href="#ic-hand"/></svg></div><div class="t" data-i18n="c_partner_t">Hamkorlik</div><div class="d" data-i18n="c_partner_d">Yetkazib beruvchilar, ijara, hamkorlik</div><svg class="i hchev"><use href="#ic-back"/></svg></button>
+      <button class="tile" data-cat="problem"><div class="ico"><svg class="i"><use href="#ic-brief"/></svg></div><div class="t" data-i18n="c_problem_t">Takliflar va shikoyatlar</div><div class="d" data-i18n="c_problem_d">Taklif yoki shikoyatingizni yozing</div><svg class="i hchev"><use href="#ic-back"/></svg></button>
     </div>
-    <div class="hvals"><svg class="hvwave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C80 2 160 30 240 18S360 0 400 14V40Z" fill="#531a16"/><path d="M0 22C80 2 160 30 240 18S360 0 400 14" fill="none" stroke="#f1b548" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="hvrow"><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 1-3 4-3 7h3v11"/></svg><span data-i18n="v1"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c3 0 5 2.2 5 5"/></svg><span data-i18n="v2"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M12 2.5l2.3 1.7 2.9-.1.8 2.8 2.4 1.6-.9 2.7.9 2.7-2.4 1.6-.8 2.8-2.9-.1L12 21.5l-2.3-1.7-2.9.1-.8-2.8-2.4-1.6.9-2.7-.9-2.7 2.4-1.6.8-2.8 2.9.1z"/><path d="M8.5 12l2.3 2.3 4.7-4.6"/></svg><span data-i18n="v3"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l8-8"/></svg><span data-i18n="v4"></span></div></div></div>
+    <div class="hvals"><svg class="hvwave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C80 2 160 30 240 18S360 0 400 14V40Z" fill="#531a16"/><path d="M0 22C80 2 160 30 240 18S360 0 400 14" fill="none" stroke="#f1b548" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="hvrow"><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 1-3 4-3 7h3v11"/></svg><span data-i18n="v1">Sifatli taomlar</span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c3 0 5 2.2 5 5"/></svg><span data-i18n="v2">E'tiborli xizmat</span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M12 2.5l2.3 1.7 2.9-.1.8 2.8 2.4 1.6-.9 2.7.9 2.7-2.4 1.6-.8 2.8-2.9-.1L12 21.5l-2.3-1.7-2.9.1-.8-2.8-2.4-1.6.9-2.7-.9-2.7 2.4-1.6.8-2.8 2.9.1z"/><path d="M8.5 12l2.3 2.3 4.7-4.6"/></svg><span data-i18n="v3">Ishonchli hamkorlik</span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l8-8"/></svg><span data-i18n="v4">Doimiy takomillashuv</span></div></div></div>
   </section>
 
   <!-- 3. Forma -->
-  <section id="s-form" hidden>
-    <button class="back" data-go="main"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="back"></span></button>
-    <div class="hhero fhero"><img src="img/hero-forma-v4.webp" alt="Kamolon Osh markazi" width="1080" height="710" loading="lazy"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag"></div></div>
+  <section id="s-form">
+    <button class="back" data-go="main"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="back">Orqaga</span></button>
+    <div class="hhero fhero"><img src="img/hero-forma-v4.webp" alt="Kamolon Osh markazi" width="1080" height="710" loading="lazy"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button><div class="fsub" data-i18n="tag">Fikr-mulohaza markazi</div></div>
     <div class="fctop"><img src="img/forma-tepa-v3.webp" alt="Kamolon Osh markazi" width="851" height="166" loading="lazy"><button class="hback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><button class="hback hglobe" data-go="lang" aria-label="Til"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></button></div>
     <div class="khead"><button type="button" class="kback" data-go="main" aria-label="Orqaga"><svg class="i"><use href="#ic-back"/></svg></button><img class="khlogo" src="img/brand/osh-5-sm.webp" alt="Kamolon Osh" loading="lazy"><div class="klang" role="group" aria-label="Til"><button type="button" data-setlang="uz">UZ</button><button type="button" data-setlang="ru">RU</button><button type="button" data-setlang="en">EN</button></div></div>
     <h1 class="ktitle" id="kTitle"></h1>
@@ -1202,7 +1371,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 
     <form id="form" novalidate>
       <div id="branchWrap">
-        <span class="label bq"><svg class="i"><use href="#ic-pin"/></svg><span data-i18n="branchQ"></span></span>
+        <span class="label bq"><svg class="i"><use href="#ic-pin"/></svg><span data-i18n="branchQ">Qaysi filialimizda bo'ldingiz?</span></span>
         <div class="branches" id="branches"></div>
       </div>
       <div class="picked" id="branchPicked" hidden>
@@ -1213,24 +1382,24 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 
       <div id="fields">
       <div class="rvx">
-        <div class="wcard"><b class="wt" data-i18n="wTitle"></b><p data-i18n="w1"></p><p data-i18n="w2"></p><p data-i18n="w3"></p><div class="wsig"><b data-i18n="wSig"></b><span data-i18n="wSig2"></span></div></div>
-        <div class="rvc" id="brCard"><div class="rvt" data-i18n="qBranch"></div><div class="bsel"><select id="branchSel"></select></div></div>
-        <div class="rvc"><div class="rvt" data-i18n="qNps"></div><div class="nps" id="nps"></div><div class="npsl"><span data-i18n="npsNo"></span><span data-i18n="npsYes"></span></div></div>
-        <div class="rvc"><div class="rvt" data-i18n="qWhen"></div><div class="chips" data-q="when"><button type="button" data-v="week" data-i18n="wWeek"></button><button type="button" data-v="month" data-i18n="wMonth"></button><button type="button" data-v="later" data-i18n="wLater"></button><button type="button" data-v="unknown" data-i18n="wDunno"></button></div></div>
-        <div class="rvc"><div class="rvt" data-i18n="qRate"></div><div class="emo-row" data-key="food"><span data-i18n="e_food"></span><div class="emos"></div></div><div class="emo-row" data-key="speed"><span data-i18n="e_speed"></span><div class="emos"></div></div><div class="emo-row" data-key="polite"><span data-i18n="e_polite"></span><div class="emos"></div></div><div class="emo-row" data-key="service"><span data-i18n="e_service"></span><div class="emos"></div></div><div class="emo-row" data-key="clean"><span data-i18n="e_clean"></span><div class="emos"></div></div><p class="rvhint" data-i18n="rateHint"></p></div>
-        <div class="rvc" id="rvMgr" hidden><div class="rvt" data-i18n="qMgr"></div><div class="chips" data-q="manager"><button type="button" data-v="yes" data-i18n="yes"></button><button type="button" data-v="no" data-i18n="no"></button></div></div>
-        <div class="rvc"><div class="rvt" data-i18n="qFirst"></div><div class="chips" data-q="first"><button type="button" data-v="yes" data-i18n="yes"></button><button type="button" data-v="no" data-i18n="no"></button></div></div>
-        <div class="rvc" id="rvComment"><div class="rvt" data-i18n="qCmt"></div></div>
-        <div class="rvc" id="rvContact"><div class="rvt" data-i18n="qChek"></div><p class="rvsub" data-i18n="chekSub"></p>
-          <label class="chek" id="chekBtn"><input type="file" accept="image/*" id="chek" hidden><span data-i18n="chekBtn"></span></label>
+        <div class="wcard"><b class="wt" data-i18n="wTitle">Hurmatli mehmon!</b><p data-i18n="w1">Har bir fikringizni biz o'zimiz shaxsan o'qiymiz.</p><p data-i18n="w2">Agar nimadir ko'nglingizdagidek bo'lmagan bo'lsa, uzr so'raymiz. Bizga yozing, albatta tuzatamiz.</p><p data-i18n="w3">Sizga yoqqan bo'lsa, bu haqda ham yozing, jamoamiz juda xursand bo'ladi.</p><div class="wsig"><b data-i18n="wSig">Kamolon Osh markazi</b><span data-i18n="wSig2">jamoasi</span></div></div>
+        <div class="rvc" id="brCard"><div class="rvt" data-i18n="qBranch">Qaysi filialdasiz?</div><div class="bsel"><select id="branchSel"></select></div></div>
+        <div class="rvc"><div class="rvt" data-i18n="qNps">Bizni do'stlaringizga tavsiya qilasizmi?</div><div class="nps" id="nps"></div><div class="npsl"><span data-i18n="npsNo">Yo'q</span><span data-i18n="npsYes">Albatta</span></div></div>
+        <div class="rvc"><div class="rvt" data-i18n="qWhen">Sizni yana qachon kutaylik?</div><div class="chips" data-q="when"><button type="button" data-v="week" data-i18n="wWeek">Shu hafta</button><button type="button" data-v="month" data-i18n="wMonth">Shu oy</button><button type="button" data-v="later" data-i18n="wLater">Keyinroq</button><button type="button" data-v="unknown" data-i18n="wDunno">Bilmayman</button></div></div>
+        <div class="rvc"><div class="rvt" data-i18n="qRate">Baholang</div><div class="emo-row" data-key="food"><span data-i18n="e_food">Ta'm</span><div class="emos"></div></div><div class="emo-row" data-key="speed"><span data-i18n="e_speed">Buyurtma tezligi</span><div class="emos"></div></div><div class="emo-row" data-key="polite"><span data-i18n="e_polite">Xushmuomalalik</span><div class="emos"></div></div><div class="emo-row" data-key="service"><span data-i18n="e_service">Xizmat</span><div class="emos"></div></div><div class="emo-row" data-key="clean"><span data-i18n="e_clean">Tozalik</span><div class="emos"></div></div><p class="rvhint" data-i18n="rateHint">Ta'm: taom, ichimlik va shirinlik. 1 juda yomon, 5 a'lo.</p></div>
+        <div class="rvc" id="rvMgr" hidden><div class="rvt" data-i18n="qMgr">Menejer stolingizga keldimi?</div><div class="chips" data-q="manager"><button type="button" data-v="yes" data-i18n="yes">Ha</button><button type="button" data-v="no" data-i18n="no">Yo'q</button></div></div>
+        <div class="rvc"><div class="rvt" data-i18n="qFirst">Birinchi marta keldingizmi?</div><div class="chips" data-q="first"><button type="button" data-v="yes" data-i18n="yes">Ha</button><button type="button" data-v="no" data-i18n="no">Yo'q</button></div></div>
+        <div class="rvc" id="rvComment"><div class="rvt" data-i18n="qCmt">Stol raqamingiz</div></div>
+        <div class="rvc" id="rvContact"><div class="rvt" data-i18n="qChek">Chek surati</div><p class="rvsub" data-i18n="chekSub">Fikringiz haqiqiy ekanini tasdiqlash uchun chekni suratga oling (ixtiyoriy).</p>
+          <label class="chek" id="chekBtn"><input type="file" accept="image/*" id="chek" hidden><span data-i18n="chekBtn">📷 Chekni suratga olish</span></label>
           <div class="chekprev" id="chekPrev" hidden><img id="chekImg" alt=""><button type="button" id="chekDel" aria-label="O'chirish">✕</button></div>
-          <p class="rvsub rvnote" id="chekNote" data-i18n="chekNote"></p></div>
+          <p class="rvsub rvnote" id="chekNote" data-i18n="chekNote">Muammo bo'lsa, menejer siz bilan bog'lanadi.</p></div>
       </div>
       <div id="ratings">
-        <div class="rqh"><span class="rq-ico"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z" fill="#f2b33d"/></svg></span><span class="label" data-i18n="rateQ"></span></div>
-        <div class="rate-row" data-key="food"><i class="ricon"><svg class="i" viewBox="0 0 24 24"><path d="M4 4l9 9M7 3l-3 3 5 5 3-3M14 14l6 6M20 4l-8 8M17 3c2 0 4 2 4 4l-3 3-4-4z"/></svg></i><span data-i18n="r_food"></span><div class="stars"></div></div>
-        <div class="rate-row" data-key="service"><i class="ricon"><svg class="i" viewBox="0 0 24 24"><path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 8.5V7M10.5 7h3"/></svg></i><span data-i18n="r_service"></span><div class="stars"></div></div>
-        <div class="rate-row" data-key="atmos"><i class="ricon"><svg class="i" viewBox="0 0 24 24"><path d="M3 21v-9M3 15h6v6M21 21v-9M21 15h-6v6M7 12h10M12 12v9M12 4v3M10.5 7h3a1.5 1.5 0 0 1 1.5 1.5V12H9V8.5A1.5 1.5 0 0 1 10.5 7z"/></svg></i><span data-i18n="r_atmos"></span><div class="stars"></div></div>
+        <div class="rqh"><span class="rq-ico"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z" fill="#f2b33d"/></svg></span><span class="label" data-i18n="rateQ">Bahoyingiz</span></div>
+        <div class="rate-row" data-key="food"><i class="ricon"><svg class="i" viewBox="0 0 24 24"><path d="M4 4l9 9M7 3l-3 3 5 5 3-3M14 14l6 6M20 4l-8 8M17 3c2 0 4 2 4 4l-3 3-4-4z"/></svg></i><span data-i18n="r_food">Taom</span><div class="stars"></div></div>
+        <div class="rate-row" data-key="service"><i class="ricon"><svg class="i" viewBox="0 0 24 24"><path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 8.5V7M10.5 7h3"/></svg></i><span data-i18n="r_service">Xizmat</span><div class="stars"></div></div>
+        <div class="rate-row" data-key="atmos"><i class="ricon"><svg class="i" viewBox="0 0 24 24"><path d="M3 21v-9M3 15h6v6M21 21v-9M21 15h-6v6M7 12h10M12 12v9M12 4v3M10.5 7h3a1.5 1.5 0 0 1 1.5 1.5V12H9V8.5A1.5 1.5 0 0 1 10.5 7z"/></svg></i><span data-i18n="r_atmos">Muhit</span><div class="stars"></div></div>
       </div>
 
       <div id="nameWrap"><label for="name"><i class="lico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></i><span data-i18n="name"></span></label>
@@ -1242,41 +1411,41 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
       </div>
 
       <div id="tableWrap">
-        <label for="table"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M2 21V10M2 15h5v6M22 21V10M22 15h-5v6M6 11h12M12 11v10"/></svg></i><span data-i18n="table"></span></label>
+        <label for="table"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M2 21V10M2 15h5v6M22 21V10M22 15h-5v6M6 11h12M12 11v10"/></svg></i><span data-i18n="table">Stol raqami</span></label>
         <input id="table" inputmode="numeric" autocomplete="off">
       </div>
 
       <div id="companyWrap">
-        <label for="company"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M3 21h18M5 21V5h9v16M14 9h5v12M8 9h3M8 13h3M8 17h3"/></svg></i><span data-i18n="company"></span></label>
+        <label for="company"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M3 21h18M5 21V5h9v16M14 9h5v12M8 9h3M8 13h3M8 17h3"/></svg></i><span data-i18n="company">Kompaniya nomi</span></label>
         <input id="company" autocomplete="organization">
       </div>
 
-      <div id="ageWrap"><label for="age"><i class="lico"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i><span data-i18n="age"></span></label>
+      <div id="ageWrap"><label for="age"><i class="lico"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i><span data-i18n="age">Yoshingiz</span></label>
       <input id="age" type="number" inputmode="numeric" min="14" max="80" autocomplete="off"></div>
 
-      <div id="positionWrap"><label for="position"><i class="lico"><svg class="i"><use href="#ic-brief"/></svg></i><span data-i18n="position"></span></label>
+      <div id="positionWrap"><label for="position"><i class="lico"><svg class="i"><use href="#ic-brief"/></svg></i><span data-i18n="position">Qaysi lavozimga</span></label>
       <input id="position" autocomplete="off"></div>
 
-      <div id="jobPhWrap"><label><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg></i><span data-i18n="jobPhoto"></span></label>
-        <label class="chek" id="jobPhBtn"><input type="file" accept="image/*" id="jobPh" hidden><span data-i18n="jobPhotoBtn"></span></label>
+      <div id="jobPhWrap"><label><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg></i><span data-i18n="jobPhoto">Rasmingiz</span></label>
+        <label class="chek" id="jobPhBtn"><input type="file" accept="image/*" id="jobPh" hidden><span data-i18n="jobPhotoBtn">📷 Rasmga tushish yoki rasm tanlash</span></label>
         <div class="chekprev" id="jobPhPrev" hidden><img id="jobPhImg" alt=""><button type="button" id="jobPhDel" aria-label="O'chirish">✕</button></div>
       </div>
 
       <div id="msgWrap"><label for="msg"><i class="lico"><svg class="i" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z"/><path d="M8 10h8M8 13h5"/></svg></i><span data-i18n="msg"></span></label>
       <textarea id="msg"></textarea></div>
 
-      <div id="complaintWrap"><label for="complaint"><i class="lico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg></i><span data-i18n="complaint"></span></label>
+      <div id="complaintWrap"><label for="complaint"><i class="lico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg></i><span data-i18n="complaint">Shikoyatlaringiz</span></label>
       <textarea id="complaint"></textarea></div>
 
       <button class="send" type="submit">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13 1.4 11.5c-1-.3-1-1 .2-1.5L20.5 2.8c.9-.3 1.6.2 1.4 1.5z"/></svg>
-        <span data-i18n="send"></span>
+        <span data-i18n="send">Xabarni jo'natish</span>
       </button>
       <div class="note" id="note"></div>
-      <p class="consent" data-i18n="consent"></p>
+      <p class="consent" data-i18n="consent">«Xabarni jo'natish» tugmasini bosib, siz ismingiz, telefon raqamingiz va chek suratingiz Kamolon Osh markazi tomonidan fikringizga javob berish va xizmat sifatini yaxshilash uchun ishlatilishiga rozilik bildirasiz.</p>
       </div>
     </form>
-    <div class="hvals fvals"><svg class="hvwave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C80 2 160 30 240 18S360 0 400 14V40Z" fill="#531a16"/><path d="M0 22C80 2 160 30 240 18S360 0 400 14" fill="none" stroke="#f1b548" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="hvrow"><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 1-3 4-3 7h3v11"/></svg><span data-i18n="v5"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 8.5V7M10.5 7h3"/></svg><span data-i18n="v6"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="7" r="2.6"/><circle cx="5.5" cy="9" r="2.1"/><circle cx="18.5" cy="9" r="2.1"/><path d="M7 19c0-3 2.2-5.5 5-5.5s5 2.5 5 5.5M1.5 18c0-2.4 1.7-4.4 4-4.4M22.5 18c0-2.4-1.7-4.4-4-4.4"/></svg><span data-i18n="v7"></span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l8-8"/></svg><span data-i18n="v8"></span></div></div></div>
+    <div class="hvals fvals"><svg class="hvwave" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C80 2 160 30 240 18S360 0 400 14V40Z" fill="#531a16"/><path d="M0 22C80 2 160 30 240 18S360 0 400 14" fill="none" stroke="#f1b548" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="hvrow"><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 1-3 4-3 7h3v11"/></svg><span data-i18n="v5">Taomlar sifati</span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 8.5V7M10.5 7h3"/></svg><span data-i18n="v6">Xizmat sifati</span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="7" r="2.6"/><circle cx="5.5" cy="9" r="2.1"/><circle cx="18.5" cy="9" r="2.1"/><path d="M7 19c0-3 2.2-5.5 5-5.5s5 2.5 5 5.5M1.5 18c0-2.4 1.7-4.4 4-4.4M22.5 18c0-2.4-1.7-4.4-4-4.4"/></svg><span data-i18n="v7">Muhit va qulaylik</span></div><div class="hv"><svg class="i" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l8-8"/></svg><span data-i18n="v8">Taklif va yangiliklar</span></div></div></div>
     <img class="fcpast" src="img/forma-past-v3.webp" alt="" width="851" height="167" loading="lazy">
   </section>
 
@@ -1285,9 +1454,9 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     <div class="done">
       <img class="kdlogo" src="img/brand/logo-blue.svg" alt="Kamolon Osh" loading="lazy">
       <div class="circle"><svg class="i"><use href="#ic-check"/></svg></div>
-      <h1 data-i18n="thanks"></h1>
+      <h1 data-i18n="thanks">Rahmat!</h1>
       <p data-i18n-html="doneText"></p>
-      <button class="back" data-go="main" style="margin-top:18px"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="toHome"></span></button>
+      <button class="back" data-go="main" style="margin-top:18px"><svg class="i"><use href="#ic-back"/></svg><span data-i18n="toHome">Bosh sahifaga</span></button>
     </div>
   </section>
 
@@ -1397,7 +1566,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     <img class="lpast" src="img/til-past-v3.webp" alt="" width="851" height="257" loading="lazy">
     <div class="lband"><svg class="lwave" viewBox="0 0 400 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V14C90 32 170 4 250 14S360 26 400 10V0Z" fill="#fff"/><path d="M0 14C90 32 170 4 250 14S360 26 400 10" fill="none" stroke="#c9a14a" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="lfl"><span></span><svg class="lflower" viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="#d9b66a" stroke-width="1.6"><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(0 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(45 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(90 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(135 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(225 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(270 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(315 20 20)"/><circle cx="20" cy="20" r="4" fill="#d9b66a"/></g></svg><span></span></div></div>
   </div>
-  <div class="kfoot"><div class="kfoot-t" data-i18n="ourBranches"></div><div class="kbr" id="kBranches"></div></div>
+  <div class="kfoot"><div class="kfoot-t" data-i18n="ourBranches">Bizning filiallarimiz</div><div class="kbr" id="kBranches"><span>Labzak filiali</span><span>Drujba filiali</span><span>Gulzor filiali</span><span>Ziyolilar filiali</span><span>Parkent filiali</span></div></div>
 </main>
 
 <script>
@@ -2404,5 +2573,6 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
       .forEach(f => { const i = new Image(); i.decoding = "async"; i.src = "img/" + f; });
   }, 300));
 </script>
+<script>if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
 </body>
 </html>
