@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119090450";
+  const APP_VERSION = "20261119090811";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1225,6 +1225,23 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
 .kbtns .kbtn .kic { background: radial-gradient(circle at 50% 35%, #fff, #FFF6D6); }
 .kbtns .kbtn .kic, .kbtns .kbtn-b .kic { color: #E8A317; }
 .kbtns .kbtn .kic svg { stroke-width: 2.3; filter: drop-shadow(0 1px 0 rgba(150,90,0,.25)); }
+/* ===== TEZLIK: animatsiyalar faqat GPU'da, ekranlar darhol almashadi ===== */
+body.kb .body > section, body.kb #fields { animation: none !important; }
+.kfall i { will-change: transform; contain: layout paint; }
+.kfall i.lf, .kfall i.sf { filter: none !important; }
+.kfall i.sf svg { stroke-width: 2; }
+#s-main .kplate2, #s-main .kflower, #s-main .ksteam, #s-main .kst { will-change: transform; }
+#s-main .kplate2 { filter: none !important; box-shadow: 0 22px 30px rgba(0,0,0,.4), 0 6px 10px rgba(0,0,0,.22); }
+#s-main .kflower { filter: none !important; }
+#s-main .kst i { filter: none !important; will-change: transform, opacity; background: radial-gradient(ellipse at 50% 60%, rgba(255,255,255,.75), rgba(255,255,255,.3) 38%, rgba(255,255,255,0) 68%); }
+/* Tugmadagi yaltirash: fonni qayta chizmasdan, faqat siljiydi */
+.kbtn { animation: none !important; background-position: -30% 0, 0 0, 0 0 !important; }
+.kbtn .kshn { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.kbtn .kshn::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 45%; background: linear-gradient(105deg, transparent, rgba(255,255,255,.38) 50%, transparent); transform: translateX(-120%); animation: kshn 4s ease-in-out infinite; will-change: transform; }
+.kbtns .kbtn:nth-child(2) .kshn::before { animation-delay: 1.2s; } .kbtns .kbtn:nth-child(3) .kshn::before { animation-delay: 2.4s; }
+@keyframes kshn { 0% { transform: translateX(-120%); } 35%, 100% { transform: translateX(260%); } }
+.kbtn .kic, .kbtn .kt, .kbtn .kchev { position: relative; }
+@media (prefers-reduced-motion: reduce) { .kbtn .kshn { display: none; } }
 /* ===== ADMIN PANEL: brendbuk ranglari ===== */
 body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
 body.am .shell { border: 0 !important; }
@@ -1326,9 +1343,9 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
         <a class="kp" id="mPhone" href="tel:+998555001661"><span id="mPhoneT">+998 55-500-16-61</span></a>
     </div>
     <div class="kbtns">
-      <button type="button" class="kbtn kbtn-b" data-cat="problem"><span class="kic"><svg class="i"><use href="#ic-chat"/></svg></span><span class="kt" data-i18n="c_problem_t">Takliflar va shikoyatlar</span><svg class="i kchev"><use href="#ic-back"/></svg></button>
-      <button type="button" class="kbtn kbtn-b" data-cat="partner"><span class="kic"><svg class="i"><use href="#ic-hand"/></svg></span><span class="kt" data-i18n="c_partner_t">Hamkorlik</span><svg class="i kchev"><use href="#ic-back"/></svg></button>
-      <a class="kbtn kbtn-b" href="https://t.me/KamolonOsh_Jbot" target="_blank" rel="noopener"><span class="kic"><svg class="i"><use href="#ic-brief"/></svg></span><span class="kt" data-i18n="c_job_t">Ishga taklif</span><svg class="i kchev"><use href="#ic-back"/></svg></a>
+      <button type="button" class="kbtn kbtn-b" data-cat="problem"><i class="kshn" aria-hidden="true"></i><span class="kic"><svg class="i"><use href="#ic-chat"/></svg></span><span class="kt" data-i18n="c_problem_t">Takliflar va shikoyatlar</span><svg class="i kchev"><use href="#ic-back"/></svg></button>
+      <button type="button" class="kbtn kbtn-b" data-cat="partner"><i class="kshn" aria-hidden="true"></i><span class="kic"><svg class="i"><use href="#ic-hand"/></svg></span><span class="kt" data-i18n="c_partner_t">Hamkorlik</span><svg class="i kchev"><use href="#ic-back"/></svg></button>
+      <a class="kbtn kbtn-b" href="https://t.me/KamolonOsh_Jbot" target="_blank" rel="noopener"><i class="kshn" aria-hidden="true"></i><span class="kic"><svg class="i"><use href="#ic-brief"/></svg></span><span class="kt" data-i18n="c_job_t">Ishga taklif</span><svg class="i kchev"><use href="#ic-back"/></svg></a>
     </div>
     <div class="krate"><h2 data-i18n="rateTitle">Sifatimizni baholang</h2><svg class="i karrow" viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>
   </section>
