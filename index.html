@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119050044";
+  const APP_VERSION = "20261119072322";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1041,6 +1041,8 @@ body.kb[data-cat-now="job"]:not(.am):not(.mm) #s-form .ktitle::after { backgroun
 
 /* Ishga taklif yozuvi: neon trubka shrifti */
 .kneon { font-family: "Tilt Neon", var(--khd); font-weight: 400; text-transform: none; font-size: 1.75rem; letter-spacing: .02em; color: #F2FFE8; text-shadow: 0 0 1px #fff, 0 0 4px #fff, 0 0 9px #39FF14, 0 0 18px #39FF14, 0 0 30px #39FF14, 0 0 46px rgba(57,255,20,.7); }
+.kbtns a.kbtn { text-decoration: none; box-sizing: border-box; }
+.kbtns .kbtn-b .kic { color: var(--kb); }
 /* ===== ADMIN PANEL: brendbuk ranglari ===== */
 body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
 body.am .shell { border: 0 !important; }
@@ -1142,9 +1144,9 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
         <a class="kp" id="mPhone"><span id="mPhoneT"></span></a>
     </div>
     <div class="kbtns">
-      <button type="button" class="kbtn kbtn-o" data-cat="problem"><span class="kic"><svg class="i"><use href="#ic-chat"/></svg></span><span class="kt" data-i18n="c_problem_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
+      <button type="button" class="kbtn kbtn-b" data-cat="problem"><span class="kic"><svg class="i"><use href="#ic-chat"/></svg></span><span class="kt" data-i18n="c_problem_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
       <button type="button" class="kbtn kbtn-b" data-cat="partner"><span class="kic"><svg class="i"><use href="#ic-hand"/></svg></span><span class="kt" data-i18n="c_partner_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
-      <button type="button" class="kbtn kbtn-n" data-cat="job"><span class="kic"><svg class="i"><use href="#ic-brief"/></svg></span><span class="kt kneon" data-i18n="c_job_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></button>
+      <a class="kbtn kbtn-b" href="https://t.me/KamolonOsh_Jbot" target="_blank" rel="noopener"><span class="kic"><svg class="i"><use href="#ic-brief"/></svg></span><span class="kt" data-i18n="c_job_t"></span><svg class="i kchev"><use href="#ic-back"/></svg></a>
     </div>
     <div class="krate"><h2 data-i18n="rateTitle"></h2><svg class="i karrow" viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>
   </section>
