@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120064717";
+  const APP_VERSION = "20261120064950";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1339,6 +1339,9 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 #ksplash.out { opacity: 0; transform: scale(1.06); pointer-events: none; }
 #ksplash .ksp-t, #ksplash canvas { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 #ksplash .ksp-t { display: flex; white-space: nowrap; font: 800 clamp(2.6rem, 12.5vw, 4rem)/1 "Fira Sans Extra Condensed", "Arial Narrow", sans-serif; letter-spacing: .03em; perspective: 600px; transition: opacity .35s ease, transform .35s ease; }
+#ksplash .ksp-t.rev { animation: ksprev .6s cubic-bezier(.5,0,.3,1) forwards; }
+@keyframes ksprev { 0% { transform: translate(-50%, -50%) rotate(0); } 100% { transform: translate(-50%, -50%) rotate(-360deg) scale(.92); } }
+#ksplash .ksp-t.gone { visibility: hidden; }
 #ksplash .ksp-t.bye { opacity: 0; transform: translate(-50%, -50%) scale(1.6); filter: blur(2px); }
 #ksplash .ksp-t b { display: inline-block; font-weight: 800; background: linear-gradient(100deg, #000 40%, #6b6b6b 50%, #000 60%) 120% 0 / 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; opacity: 0; animation: kspl .95s cubic-bezier(.25,.8,.3,1) forwards, kspg 1.2s 1.1s ease-in-out forwards; will-change: transform; }
 #ksplash .ksp-t i { display: inline-block; width: .28em; }
@@ -1370,8 +1373,8 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const cx = x + .5 - N / 2, cy = y + .5 - N / 2;
       if (cx * cx + cy * cy > (N / 2 + .3) * (N / 2 + .3)) continue;
-      const side = Math.random() * 4 | 0; // ekranning 4 tarafidan uchib keladi
-      const ex = side === 0 ? -60 : side === 1 ? W + 60 : Math.random() * W, ey = side === 2 ? -60 : side === 3 ? H + 60 : Math.random() * H;
+      // yozuvning har bir nuqtasidan bo'lak chiqib, lagan bo'lib yig'iladi
+      const ex = TR.left + Math.random() * TR.width, ey = TR.top + TR.height * (.15 + Math.random() * .7);
       P.push({ x, y, sx: ex - r0.left - (x * cell), sy: ey - r0.top - (y * cell), rot: (Math.random() - .5) * 10, d: Math.random() * .3 });
     }
     const T0 = performance.now(), DUR = .9, ease = t => 1 - Math.pow(1 - t, 3);
@@ -1382,13 +1385,14 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
         let k = (t - p.d) / DUR; if (k < 1) done = false; k = k < 0 ? 0 : k > 1 ? 1 : ease(k);
         const q = 1 - k, x = p.x * cell + p.sx * q, y = p.y * cell + p.sy * q;
         g.save(); g.translate(x + cell / 2, y + cell / 2); if (q) g.rotate(p.rot * q);
-        g.drawImage(img, p.x * src, p.y * src, src, src, -cell / 2, -cell / 2, cell + .7, cell + .7); g.restore();
+        const z = (cell + .7) * (.3 + .7 * k); g.drawImage(img, p.x * src, p.y * src, src, src, -z / 2, -z / 2, z, z); g.restore();
       }
       if (!done) requestAnimationFrame(frame); else { cv.classList.add("spin"); setTimeout(end, 1250); }
     };
     requestAnimationFrame(frame);
   };
-  const start = () => setTimeout(() => { sp.querySelector(".ksp-t").classList.add("bye"); setTimeout(go, 300); }, 1750);
+  let TR; const tx = sp.querySelector(".ksp-t");
+  const start = () => setTimeout(() => { tx.classList.add("rev"); setTimeout(() => { TR = tx.getBoundingClientRect(); tx.classList.add("gone"); go(); }, 600); }, 1750);
   if (img.complete && img.naturalWidth) start(); else { img.onload = start; img.onerror = () => setTimeout(end, 900); }
 })();
 </script>
