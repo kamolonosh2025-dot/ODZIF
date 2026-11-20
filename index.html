@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120065303";
+  const APP_VERSION = "20261120065517";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1358,8 +1358,11 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 #ksplash .ksp-y { position: absolute; left: 50%; top: calc(50% + clamp(2.6rem, 12.5vw, 4rem) * .75); width: 110px; height: 14px; margin-left: -55px; background: url(img/brand/flower-yellow.svg) center / 14px no-repeat, linear-gradient(#EFBF48, #EFBF48) left center / 40px 3px no-repeat, linear-gradient(#EFBF48, #EFBF48) right center / 40px 3px no-repeat; opacity: 0; animation: kspy .5s 1.2s ease-out forwards; transition: opacity .3s; }
 #ksplash .ksp-y.gone { opacity: 0 !important; animation: none; }
 @keyframes kspy { from { opacity: 0; transform: scaleX(.2); } to { opacity: 1; transform: none; } }
+#ksplash .ksp-o { position: absolute; left: 50%; top: 50%; width: min(84vw, 380px); aspect-ratio: 1; transform: translate(-50%, -50%); background: url(img/brand/osh-plate-720.webp) center / contain no-repeat; border-radius: 50%; opacity: .22; animation: kspo 20s linear infinite; transition: opacity .35s ease; }
+#ksplash .ksp-o.gone { opacity: 0; }
+@keyframes kspo { to { transform: translate(-50%, -50%) rotate(360deg); } }
 </style>
-<div class="ksp-f"></div><div class="ksp-y"></div><div class="ksp-t"><b style="animation-delay:0.00s,1.10s">K</b><b style="animation-delay:0.06s,1.10s">A</b><b style="animation-delay:0.12s,1.10s">M</b><b style="animation-delay:0.18s,1.10s">O</b><b style="animation-delay:0.24s,1.10s">L</b><b style="animation-delay:0.30s,1.10s">O</b><b style="animation-delay:0.36s,1.10s">N</b><i></i><b style="animation-delay:0.48s,1.10s">O</b><b style="animation-delay:0.54s,1.10s">S</b><b style="animation-delay:0.60s,1.10s">H</b></div>
+<div class="ksp-f"></div><div class="ksp-o"></div><div class="ksp-y"></div><div class="ksp-t"><b style="animation-delay:0.00s,1.10s">K</b><b style="animation-delay:0.06s,1.10s">A</b><b style="animation-delay:0.12s,1.10s">M</b><b style="animation-delay:0.18s,1.10s">O</b><b style="animation-delay:0.24s,1.10s">L</b><b style="animation-delay:0.30s,1.10s">O</b><b style="animation-delay:0.36s,1.10s">N</b><i></i><b style="animation-delay:0.48s,1.10s">O</b><b style="animation-delay:0.54s,1.10s">S</b><b style="animation-delay:0.60s,1.10s">H</b></div>
 <canvas id="kspc"></canvas>
 </div>
 <script>
@@ -1400,7 +1403,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     requestAnimationFrame(frame);
   };
   let TR; const tx = sp.querySelector(".ksp-t");
-  const start = () => setTimeout(() => { tx.classList.add("rev"); sp.querySelector(".ksp-y").classList.add("gone"); setTimeout(() => { TR = tx.getBoundingClientRect(); tx.classList.add("gone"); sp.querySelector(".ksp-f").classList.add("on"); go(); }, 600); }, 1750);
+  const start = () => setTimeout(() => { tx.classList.add("rev"); sp.querySelector(".ksp-y").classList.add("gone"); setTimeout(() => { TR = tx.getBoundingClientRect(); tx.classList.add("gone"); sp.querySelector(".ksp-f").classList.add("on"); sp.querySelector(".ksp-o").classList.add("gone"); go(); }, 600); }, 1750);
   if (img.complete && img.naturalWidth) start(); else { img.onload = start; img.onerror = () => setTimeout(end, 900); }
 })();
 </script>
