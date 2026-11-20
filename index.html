@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261119091939";
+  const APP_VERSION = "20261120064337";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1333,6 +1333,61 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 </style>
 </head>
 <body class="kb mm fm">
+<div id="ksplash" aria-hidden="true">
+<style>
+#ksplash { position: fixed; inset: 0; z-index: 9999; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4vh; transition: opacity .45s ease, transform .45s ease; }
+#ksplash.out { opacity: 0; transform: scale(1.06); pointer-events: none; }
+#ksplash .ksp-t { font: 800 clamp(2.4rem, 11vw, 3.6rem)/1 "Fira Sans Extra Condensed", "Arial Narrow", sans-serif; color: #000; letter-spacing: .04em; animation: kspt 1s cubic-bezier(.2,.8,.25,1) both; will-change: transform; }
+#ksplash canvas { width: min(82vw, 360px); height: min(82vw, 360px); }
+#ksplash canvas.spin { animation: ksps 1.25s cubic-bezier(.35,.05,.2,1) forwards; will-change: transform; }
+@keyframes ksps { to { transform: rotate(720deg); } }
+@keyframes kspt { 0% { transform: rotate(-720deg) scale(.15); opacity: 0; } 25% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+</style>
+<div class="ksp-t">KAMOLON OSH</div>
+<canvas id="kspc"></canvas>
+</div>
+<script>
+(function () {
+  const sp = document.getElementById("ksplash");
+  if (location.hash === "#admin" || sessionStorage.getItem("ksp")) { sp.remove(); return; }
+  let gone = false;
+  const end = () => { if (gone) return; gone = true; try { sessionStorage.setItem("ksp", "1"); } catch (_) {} sp.classList.add("out"); setTimeout(() => sp.remove(), 480); };
+  sp.addEventListener("click", end);
+  setTimeout(end, 6000); // har qanday holatda ham sayt ochiladi
+  const cv = document.getElementById("kspc"), img = new Image();
+  img.src = "img/brand/osh-plate-720.webp";
+  const go = () => {
+    const S = cv.clientWidth, dpr = Math.min(window.devicePixelRatio || 1, 2), W = innerWidth, H = innerHeight;
+    cv.width = S * dpr; cv.height = S * dpr;
+    const g = cv.getContext("2d"), r0 = cv.getBoundingClientRect();
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const N = 25, cell = S / N, src = img.naturalWidth / N, P = [];
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      const cx = x + .5 - N / 2, cy = y + .5 - N / 2;
+      if (cx * cx + cy * cy > (N / 2 + .3) * (N / 2 + .3)) continue;
+      const side = Math.random() * 4 | 0; // ekranning 4 tarafidan uchib keladi
+      const ex = side === 0 ? -60 : side === 1 ? W + 60 : Math.random() * W, ey = side === 2 ? -60 : side === 3 ? H + 60 : Math.random() * H;
+      P.push({ x, y, sx: ex - r0.left - (x * cell), sy: ey - r0.top - (y * cell), rot: (Math.random() - .5) * 10, d: Math.random() * .3 });
+    }
+    const T0 = performance.now(), DUR = .9, ease = t => 1 - Math.pow(1 - t, 3);
+    const frame = now => {
+      const t = (now - T0) / 1000; let done = true;
+      g.clearRect(0, 0, S, S);
+      for (const p of P) {
+        let k = (t - p.d) / DUR; if (k < 1) done = false; k = k < 0 ? 0 : k > 1 ? 1 : ease(k);
+        const q = 1 - k, x = p.x * cell + p.sx * q, y = p.y * cell + p.sy * q;
+        g.save(); g.translate(x + cell / 2, y + cell / 2); if (q) g.rotate(p.rot * q);
+        g.drawImage(img, p.x * src, p.y * src, src, src, -cell / 2, -cell / 2, cell + .7, cell + .7); g.restore();
+      }
+      if (!done) requestAnimationFrame(frame); else { cv.classList.add("spin"); setTimeout(end, 1250); }
+    };
+    requestAnimationFrame(frame);
+  };
+  const start = () => setTimeout(go, 650);
+  if (img.complete && img.naturalWidth) start(); else { img.onload = start; img.onerror = () => setTimeout(end, 900); }
+})();
+</script>
+
 
 <!-- Line icons -->
 <svg width="0" height="0" style="position:absolute">
