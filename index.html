@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120104826";
+  const APP_VERSION = "20261120105154";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1765,7 +1765,7 @@ html.ksp-on .kfall { visibility: hidden; }
     <img class="lpast" src="img/til-past-v3.webp" alt="" width="851" height="257" loading="lazy">
     <div class="lband"><svg class="lwave" viewBox="0 0 400 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V14C90 32 170 4 250 14S360 26 400 10V0Z" fill="#fff"/><path d="M0 14C90 32 170 4 250 14S360 26 400 10" fill="none" stroke="#c9a14a" stroke-width="2.4" vector-effect="non-scaling-stroke"/></svg><div class="lfl"><span></span><svg class="lflower" viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="#d9b66a" stroke-width="1.6"><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(0 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(45 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(90 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(135 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(225 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(270 20 20)"/><ellipse cx="20" cy="10" rx="4.6" ry="8" transform="rotate(315 20 20)"/><circle cx="20" cy="20" r="4" fill="#d9b66a"/></g></svg><span></span></div></div>
   </div>
-  <div class="kfoot"><div class="kfoot-t" data-i18n="ourBranches">Bizning filiallarimiz</div><div class="kbr" id="kBranches"><span>Labzak filiali</span><span>Drujba filiali</span><span>Gulzor filiali</span><span>Ziyolilar filiali</span><span>Parkent filiali</span></div></div>
+  <div class="kfoot"><div class="kfoot-t" data-i18n="ourBranches">Bizning filiallarimiz</div><div class="kbr" id="kBranches"><a href="https://yandex.uz/maps/?rtext=~41.330699,69.270412&amp;rtt=auto" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#ic-pin"></use></svg>Labzak filiali</a><a href="https://yandex.uz/maps/?rtext=~41.307868,69.237617&amp;rtt=auto" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#ic-pin"></use></svg>Drujba filiali</a><a href="https://yandex.uz/maps/?rtext=~41.321294,69.193339&amp;rtt=auto" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#ic-pin"></use></svg>Gulzor filiali</a><a href="https://yandex.uz/maps/?rtext=~41.336181,69.321359&amp;rtt=auto" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#ic-pin"></use></svg>Ziyolilar filiali</a><a href="https://yandex.uz/maps/?rtext=~41.311698,69.332124&amp;rtt=auto" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#ic-pin"></use></svg>Parkent filiali</a></div></div>
 </main>
 
 <script>
@@ -1871,11 +1871,11 @@ html.ksp-on .kfall { visibility: hidden; }
 
   // === SOZLAMA: filiallar ro'yxati (nomlarini shu yerda o'zgartiring) ===
   const BRANCHES = [
-    { uz: "Labzak filiali",    ru: "Филиал Лабзак",    en: "Labzak branch" },
-    { uz: "Drujba filiali",    ru: "Филиал Дружба",    en: "Drujba branch" },
-    { uz: "Gulzor filiali",    ru: "Филиал Гулзор",    en: "Gulzor branch" },
-    { uz: "Ziyolilar filiali", ru: "Филиал Зиёлилар",  en: "Ziyolilar branch" },
-    { uz: "Parkent filiali",   ru: "Филиал Паркент",   en: "Parkent branch" }
+    { geo: "41.330699,69.270412", uz: "Labzak filiali",    ru: "Филиал Лабзак",    en: "Labzak branch" },
+    { geo: "41.307868,69.237617", uz: "Drujba filiali",    ru: "Филиал Дружба",    en: "Drujba branch" },
+    { geo: "41.321294,69.193339", uz: "Gulzor filiali",    ru: "Филиал Гулзор",    en: "Gulzor branch" },
+    { geo: "41.336181,69.321359", uz: "Ziyolilar filiali", ru: "Филиал Зиёлилар",  en: "Ziyolilar branch" },
+    { geo: "41.311698,69.332124", uz: "Parkent filiali",   ru: "Филиал Паркент",   en: "Parkent branch" }
   ];
   let branch = -1;
   function markErr(el, txt) {
@@ -1951,7 +1951,7 @@ html.ksp-on .kfall { visibility: hidden; }
     const t = T[l];
     document.documentElement.lang = l;
     document.querySelectorAll("[data-setlang]").forEach(b => b.classList.toggle("on", b.dataset.setlang === l));
-    if ($("kBranches")) $("kBranches").innerHTML = BRANCHES.map(b => "<span>" + b[l] + "</span>").join("");
+    if ($("kBranches")) $("kBranches").innerHTML = BRANCHES.map(b => "<a href=\"https://yandex.uz/maps/?rtext=~" + b.geo + "&rtt=auto\" target=\"_blank\" rel=\"noopener\"><svg class=\"i\" aria-hidden=\"true\"><use href=\"#ic-pin\"/></svg>" + b[l] + "</a>").join("");
     document.querySelectorAll(".lrow").forEach(b => b.classList.toggle("sel", b.dataset.lang === l));
     document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t[el.dataset.i18n]);
     document.querySelectorAll("[data-i18n-html]").forEach(el => el.innerHTML = t[el.dataset.i18nHtml]);
@@ -2828,5 +2828,6 @@ function all(){document.querySelectorAll(SEL).forEach(fit);}
 var ro=window.ResizeObserver?new ResizeObserver(function(es){es.forEach(function(e){fit(e.target)})}):null;
 document.querySelectorAll(SEL).forEach(function(el){ro&&ro.observe(el);new MutationObserver(function(){fit(el)}).observe(el,{childList:true,characterData:true,subtree:true});});
 all();window.addEventListener("resize",all);document.fonts&&document.fonts.ready.then(all);})();</script>
+<style>.kbr a{display:inline-flex;align-items:center;gap:6px;padding:7px 14px 7px 10px;border-radius:999px;background:linear-gradient(#fff,#eaf1fb);box-shadow:0 3px 8px -3px rgba(0,0,0,.4);color:var(--kb);font:700 .95rem/1 var(--ktx);text-decoration:none;-webkit-tap-highlight-color:transparent}.kbr a:active{transform:scale(.96)}.kbr a .i{width:15px;height:15px;color:#E8A317;flex:none}</style>
 </body>
 </html>
