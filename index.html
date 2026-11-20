@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120064337";
+  const APP_VERSION = "20261120064717";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1335,15 +1335,20 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 <body class="kb mm fm">
 <div id="ksplash" aria-hidden="true">
 <style>
-#ksplash { position: fixed; inset: 0; z-index: 9999; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4vh; transition: opacity .45s ease, transform .45s ease; }
+#ksplash { position: fixed; inset: 0; z-index: 9999; background: #fff; transition: opacity .45s ease, transform .45s ease; overflow: hidden; }
 #ksplash.out { opacity: 0; transform: scale(1.06); pointer-events: none; }
-#ksplash .ksp-t { font: 800 clamp(2.4rem, 11vw, 3.6rem)/1 "Fira Sans Extra Condensed", "Arial Narrow", sans-serif; color: #000; letter-spacing: .04em; animation: kspt 1s cubic-bezier(.2,.8,.25,1) both; will-change: transform; }
-#ksplash canvas { width: min(82vw, 360px); height: min(82vw, 360px); }
-#ksplash canvas.spin { animation: ksps 1.25s cubic-bezier(.35,.05,.2,1) forwards; will-change: transform; }
-@keyframes ksps { to { transform: rotate(720deg); } }
-@keyframes kspt { 0% { transform: rotate(-720deg) scale(.15); opacity: 0; } 25% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+#ksplash .ksp-t, #ksplash canvas { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+#ksplash .ksp-t { display: flex; white-space: nowrap; font: 800 clamp(2.6rem, 12.5vw, 4rem)/1 "Fira Sans Extra Condensed", "Arial Narrow", sans-serif; letter-spacing: .03em; perspective: 600px; transition: opacity .35s ease, transform .35s ease; }
+#ksplash .ksp-t.bye { opacity: 0; transform: translate(-50%, -50%) scale(1.6); filter: blur(2px); }
+#ksplash .ksp-t b { display: inline-block; font-weight: 800; background: linear-gradient(100deg, #000 40%, #6b6b6b 50%, #000 60%) 120% 0 / 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; opacity: 0; animation: kspl .95s cubic-bezier(.25,.8,.3,1) forwards, kspg 1.2s 1.1s ease-in-out forwards; will-change: transform; }
+#ksplash .ksp-t i { display: inline-block; width: .28em; }
+@keyframes kspl { 0% { opacity: 0; transform: translateY(-120px) rotateY(0) scale(.4); } 35% { opacity: 1; transform: translateY(0) rotateY(360deg) scale(1.15); } 55% { transform: translateY(-34px) rotateY(540deg) scale(1); } 75% { transform: translateY(0) rotateY(720deg) scaleY(.85) scaleX(1.1); } 88% { transform: translateY(-8px) rotateY(720deg); } 100% { opacity: 1; transform: none; } }
+@keyframes kspg { to { background-position: -20% 0; } }
+#ksplash canvas { left: 0; top: 0; width: 100vw; height: 100vh; transform: none; }
+#ksplash canvas.spin { animation: ksps 1.3s cubic-bezier(.3,.05,.2,1) forwards; will-change: transform; }
+@keyframes ksps { from { transform: rotate(0); } to { transform: rotate(1080deg); } }
 </style>
-<div class="ksp-t">KAMOLON OSH</div>
+<div class="ksp-t"><b style="animation-delay:0.00s,1.10s">K</b><b style="animation-delay:0.06s,1.10s">A</b><b style="animation-delay:0.12s,1.10s">M</b><b style="animation-delay:0.18s,1.10s">O</b><b style="animation-delay:0.24s,1.10s">L</b><b style="animation-delay:0.30s,1.10s">O</b><b style="animation-delay:0.36s,1.10s">N</b><i></i><b style="animation-delay:0.48s,1.10s">O</b><b style="animation-delay:0.54s,1.10s">S</b><b style="animation-delay:0.60s,1.10s">H</b></div>
 <canvas id="kspc"></canvas>
 </div>
 <script>
@@ -1353,15 +1358,15 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
   let gone = false;
   const end = () => { if (gone) return; gone = true; try { sessionStorage.setItem("ksp", "1"); } catch (_) {} sp.classList.add("out"); setTimeout(() => sp.remove(), 480); };
   sp.addEventListener("click", end);
-  setTimeout(end, 6000); // har qanday holatda ham sayt ochiladi
+  setTimeout(end, 7500); // har qanday holatda ham sayt ochiladi
   const cv = document.getElementById("kspc"), img = new Image();
   img.src = "img/brand/osh-plate-720.webp";
   const go = () => {
-    const S = cv.clientWidth, dpr = Math.min(window.devicePixelRatio || 1, 2), W = innerWidth, H = innerHeight;
-    cv.width = S * dpr; cv.height = S * dpr;
-    const g = cv.getContext("2d"), r0 = cv.getBoundingClientRect();
-    g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const N = 25, cell = S / N, src = img.naturalWidth / N, P = [];
+    const W = innerWidth, H = innerHeight, S = Math.min(W * .84, 380), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = W * dpr; cv.height = H * dpr;
+    const g = cv.getContext("2d"), r0 = { left: (W - S) / 2, top: (H - S) / 2 };
+    g.setTransform(dpr, 0, 0, dpr, r0.left * dpr, r0.top * dpr);
+    const N = 36, cell = S / N, src = img.naturalWidth / N, P = [];
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const cx = x + .5 - N / 2, cy = y + .5 - N / 2;
       if (cx * cx + cy * cy > (N / 2 + .3) * (N / 2 + .3)) continue;
@@ -1372,7 +1377,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     const T0 = performance.now(), DUR = .9, ease = t => 1 - Math.pow(1 - t, 3);
     const frame = now => {
       const t = (now - T0) / 1000; let done = true;
-      g.clearRect(0, 0, S, S);
+      g.clearRect(-r0.left, -r0.top, W, H);
       for (const p of P) {
         let k = (t - p.d) / DUR; if (k < 1) done = false; k = k < 0 ? 0 : k > 1 ? 1 : ease(k);
         const q = 1 - k, x = p.x * cell + p.sx * q, y = p.y * cell + p.sy * q;
@@ -1383,7 +1388,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     };
     requestAnimationFrame(frame);
   };
-  const start = () => setTimeout(go, 650);
+  const start = () => setTimeout(() => { sp.querySelector(".ksp-t").classList.add("bye"); setTimeout(go, 300); }, 1750);
   if (img.complete && img.naturalWidth) start(); else { img.onload = start; img.onerror = () => setTimeout(end, 900); }
 })();
 </script>
