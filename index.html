@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120103623";
+  const APP_VERSION = "20261120104257";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1338,7 +1338,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 <body class="kb mm fm">
 <div id="ksplash" aria-hidden="true">
 <style>
-#ksplash { position: fixed; inset: 0; z-index: 9999; background: radial-gradient(circle at 50% 50%, #fff 0, #fff 45%, rgba(255,255,255,.85) 75%), url(img/brand/pattern-soft.svg) repeat 0 0 / 92px auto, #fff; transition: opacity .45s ease, transform .45s ease; overflow: hidden; }
+#ksplash { position: fixed; inset: 0; z-index: 9999; background: radial-gradient(circle at 50% 50%, #fff 0, #fff 45%, rgba(255,255,255,.85) 75%), url(img/brand/pattern-soft.svg) repeat 0 0 / 92px auto, #fff; transition: opacity .3s ease, transform .3s ease; overflow: hidden; }
 #ksplash.out { opacity: 0; transform: scale(1.06); pointer-events: none; }
 #ksplash .ksp-t, #ksplash canvas { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 #ksplash .ksp-t { display: flex; white-space: nowrap; font: 800 clamp(2.6rem, 12.5vw, 4rem)/1 "Fira Sans Extra Condensed", "Arial Narrow", sans-serif; letter-spacing: .03em; perspective: 600px; transition: opacity .35s ease, transform .35s ease; }
@@ -1365,7 +1365,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 #ksplash .ksp-o.gone { opacity: 0; }
 @keyframes kspo { to { transform: translate(-50%, -50%) rotate(360deg); } }
 #ksplash .kspw { position: absolute; left: 50%; top: 50%; width: var(--S); height: var(--S); margin: calc(var(--S) / -2) 0 0 calc(var(--S) / -2); }
-#ksplash .kspw.spin { animation: ksps 1.3s cubic-bezier(.3,.05,.2,1) forwards; }
+#ksplash .kspw.spin { animation: ksps .8s cubic-bezier(.3,.05,.2,1) forwards; }
 #ksplash .kspw i { position: absolute; left: 0; top: 0; background-image: url(img/brand/osh-plate-720.webp); background-repeat: no-repeat; backface-visibility: hidden; will-change: transform; }
 #ksplash .kspw img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 #ksplash .kspw.full img { opacity: 1; } #ksplash .kspw.full i { visibility: hidden; }
@@ -1382,13 +1382,13 @@ html.ksp-on .kfall { visibility: hidden; }
   if (location.hash === "#admin" || Date.now() - last < 20000) { sp.remove(); return; }
   document.documentElement.classList.add("ksp-on");
   let gone = false;
-  const end = () => { if (gone) return; gone = true; try { localStorage.setItem("kspT", Date.now()); } catch (_) {} sp.classList.add("out"); document.documentElement.classList.remove("ksp-on"); setTimeout(() => sp.remove(), 480); };
+  const end = () => { if (gone) return; gone = true; try { localStorage.setItem("kspT", Date.now()); } catch (_) {} sp.classList.add("out"); document.documentElement.classList.remove("ksp-on"); setTimeout(() => sp.remove(), 320); };
   sp.addEventListener("click", end);
   setTimeout(end, 7000); // har qanday holatda ham sayt ochiladi
   const wr = document.getElementById("kspw"), cv = document.getElementById("kspg"), img = new Image();
   img.src = "img/brand/osh-plate-720.webp";
-  const finish = () => { wr.classList.add("full", "spin"); cv.style.display = "none"; setTimeout(end, 1250); };
-  const DUR = 950, MAXD = 300;
+  const finish = () => { wr.classList.add("full", "spin"); cv.style.display = "none"; setTimeout(end, 720); };
+  const DUR = 450, MAXD = 120;
   // 1500 bo'lak: WebGL — hammasi bitta chizishda GPU'da hisoblanadi, telefonda qotmaydi
   const goGL = (W, H, S) => {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -1459,8 +1459,8 @@ html.ksp-on .kfall { visibility: hidden; }
     wr.style.visibility = "hidden"; wr.appendChild(f);
     requestAnimationFrame(() => requestAnimationFrame(() => {
       if (!wr.animate) { finish(); return; }
-      for (const [el, kf, d] of anims) el.animate(kf, { duration: 900, delay: d, easing: "cubic-bezier(.2,.75,.25,1)", fill: "backwards" });
-      wr.style.visibility = ""; setTimeout(finish, 1200);
+      for (const [el, kf, d] of anims) el.animate(kf, { duration: 450, delay: d * .4, easing: "cubic-bezier(.2,.75,.25,1)", fill: "backwards" });
+      wr.style.visibility = ""; setTimeout(finish, 600);
     }));
   };
   let started = false;
@@ -1472,7 +1472,7 @@ html.ksp-on .kfall { visibility: hidden; }
     let ok = false; try { ok = goGL(W, H, S); } catch (_) { ok = false; }
     if (!ok) goDom(W, H, S);
   };
-  const ready = () => setTimeout(go, 50);
+  const ready = () => requestAnimationFrame(go);
   if (img.complete && img.naturalWidth) ready();
   else { img.onload = ready; img.onerror = () => setTimeout(end, 600); }
 })();
