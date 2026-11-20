@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120070831";
+  const APP_VERSION = "20261120070938";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -2762,5 +2762,7 @@ html.ksp-on .kfall { visibility: hidden; }
   }, 300));
 </script>
 <script>if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
+<style>#s-main .kstage{cursor:pointer;-webkit-tap-highlight-color:transparent}#s-main .ksteam{pointer-events:none}#s-main .kstage:active .kplate2{opacity:.85}</style>
+<script>(function(){var s=document.querySelector("#s-main .kstage");if(!s)return;s.setAttribute("role","link");s.setAttribute("aria-label","Kamolon Osh ilovasi");s.addEventListener("click",function(){var u=navigator.userAgent,ios=/iPhone|iPad|iPod/.test(u)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);location.href=ios?"https://apps.apple.com/uz/app/kamolon-osh/id6745427808":/Android/i.test(u)?"https://play.google.com/store/apps/details?id=uz.delever.kamolon":"https://kamolonosh.uz";});})();</script>
 </body>
 </html>
