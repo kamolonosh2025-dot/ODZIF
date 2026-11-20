@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120070209";
+  const APP_VERSION = "20261120070630";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1364,6 +1364,8 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 #ksplash .ksp-o { position: absolute; left: 50%; top: 50%; width: min(84vw, 380px); aspect-ratio: 1; transform: translate(-50%, -50%); background: url(img/brand/osh-plate-720.webp) center / contain no-repeat; border-radius: 50%; opacity: .22; animation: kspo 20s linear infinite; transition: opacity .35s ease; }
 #ksplash .ksp-o.gone { opacity: 0; }
 @keyframes kspo { to { transform: translate(-50%, -50%) rotate(360deg); } }
+html.ksp-on main *, html.ksp-on .kfall i { animation-play-state: paused !important; }
+html.ksp-on .kfall { visibility: hidden; }
 </style>
 <div class="ksp-f"></div><div class="ksp-y"></div><div class="ksp-t"><b style="animation-delay:0.00s,1.10s">K</b><b style="animation-delay:0.06s,1.10s">A</b><b style="animation-delay:0.12s,1.10s">M</b><b style="animation-delay:0.18s,1.10s">O</b><b style="animation-delay:0.24s,1.10s">L</b><b style="animation-delay:0.30s,1.10s">O</b><b style="animation-delay:0.36s,1.10s">N</b><i></i><b style="animation-delay:0.48s,1.10s">O</b><b style="animation-delay:0.54s,1.10s">S</b><b style="animation-delay:0.60s,1.10s">H</b></div>
 <canvas id="kspc"></canvas>
@@ -1372,42 +1374,56 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 (function () {
   const sp = document.getElementById("ksplash");
   if (location.hash === "#admin" || sessionStorage.getItem("ksp")) { sp.remove(); return; }
+  document.documentElement.classList.add("ksp-on");
   let gone = false;
-  const end = () => { if (gone) return; gone = true; try { sessionStorage.setItem("ksp", "1"); } catch (_) {} sp.classList.add("out"); setTimeout(() => sp.remove(), 480); };
+  const end = () => { if (gone) return; gone = true; try { sessionStorage.setItem("ksp", "1"); } catch (_) {} sp.classList.add("out"); document.documentElement.classList.remove("ksp-on"); setTimeout(() => sp.remove(), 480); };
   sp.addEventListener("click", end);
   setTimeout(end, 7500); // har qanday holatda ham sayt ochiladi
   const cv = document.getElementById("kspc"), img = new Image();
   img.src = "img/brand/osh-plate-720.webp";
+  let PC = null, PS = 0, DPR = 1;
+  const prep = () => { // lagan rasmi oldindan kerakli o'lchamda tayyorlanadi (tez chizish uchun)
+    const W = sp.clientWidth; DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    const S = Math.min(W * .84, 380); PS = Math.round(S * DPR);
+    PC = document.createElement("canvas"); PC.width = PS; PC.height = PS;
+    PC.getContext("2d").drawImage(img, 0, 0, PS, PS);
+  };
   const go = () => {
-    const W = sp.clientWidth, H = sp.clientHeight, S = Math.min(W * .84, 380), dpr = Math.min(window.devicePixelRatio || 1, 2);
-    cv.width = W * dpr; cv.height = H * dpr;
-    const g = cv.getContext("2d"), r0 = { left: (W - S) / 2, top: (H - S) / 2 };
-    g.setTransform(dpr, 0, 0, dpr, r0.left * dpr, r0.top * dpr);
-    const N = 36, cell = S / N, src = img.naturalWidth / N, P = [];
+    if (!PC) prep();
+    const W = sp.clientWidth, H = sp.clientHeight, dpr = DPR, SD = PS;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    const g = cv.getContext("2d"), ox = (cv.width - SD) / 2, oy = (cv.height - SD) / 2;
+    const N = 36, cell = SD / N, P = [];
+    const tl = TR.left * dpr, tt = TR.top * dpr, tw = TR.width * dpr, th = TR.height * dpr;
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const cx = x + .5 - N / 2, cy = y + .5 - N / 2;
       if (cx * cx + cy * cy > (N / 2 + .3) * (N / 2 + .3)) continue;
       // yozuvning har bir nuqtasidan bo'lak chiqib, lagan bo'lib yig'iladi
-      const ex = TR.left + Math.random() * TR.width, ey = TR.top + TR.height * (.15 + Math.random() * .7);
-      P.push({ x, y, sx: ex - r0.left - (x * cell), sy: ey - r0.top - (y * cell), rot: (Math.random() - .5) * 10, d: Math.random() * .3 });
+      const ex = tl + Math.random() * tw, ey = tt + th * (.15 + Math.random() * .7);
+      P.push({ x, y, tx: ox + x * cell + cell / 2, ty: oy + y * cell + cell / 2, sx: ex - (ox + x * cell), sy: ey - (oy + y * cell), rot: (Math.random() - .5) * 10, d: Math.random() * .3 });
     }
-    const T0 = performance.now(), DUR = .9, ease = t => 1 - Math.pow(1 - t, 3);
+    // faqat o'zgaradigan joy tozalanadi
+    const x0 = Math.max(0, Math.min(tl, ox) - 40), y0 = Math.max(0, Math.min(tt, oy) - 40);
+    const x1 = Math.min(cv.width, Math.max(tl + tw, ox + SD) + 40), y1 = Math.min(cv.height, Math.max(tt + th, oy + SD) + 40);
+    const T0 = performance.now(), DUR = .9;
     const frame = now => {
       const t = (now - T0) / 1000; let done = true;
-      g.clearRect(-r0.left, -r0.top, W, H);
-      for (const p of P) {
-        let k = (t - p.d) / DUR; if (k < 1) done = false; k = k < 0 ? 0 : k > 1 ? 1 : ease(k);
-        const q = 1 - k, x = p.x * cell + p.sx * q, y = p.y * cell + p.sy * q;
-        g.save(); g.translate(x + cell / 2, y + cell / 2); if (q) g.rotate(p.rot * q);
-        const z = (cell + .7) * (.3 + .7 * k); g.drawImage(img, p.x * src, p.y * src, src, src, -z / 2, -z / 2, z, z); g.restore();
+      g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(x0, y0, x1 - x0, y1 - y0);
+      for (let i = 0; i < P.length; i++) {
+        const p = P[i];
+        let k = (t - p.d) / DUR; if (k < 1) done = false; k = k <= 0 ? 0 : k >= 1 ? 1 : 1 - (1 - k) * (1 - k) * (1 - k);
+        const q = 1 - k, a = p.rot * q, c = Math.cos(a), s = Math.sin(a), z = (cell + 1.5) * Math.min(1, .3 + .9 * k);
+        g.setTransform(c, s, -s, c, p.tx + p.sx * q, p.ty + p.sy * q);
+        g.drawImage(PC, p.x * cell, p.y * cell, cell, cell, -z / 2, -z / 2, z, z);
       }
-      if (!done) requestAnimationFrame(frame); else { cv.classList.add("spin"); setTimeout(end, 1250); }
+      if (!done) requestAnimationFrame(frame);
+      else { g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(x0, y0, x1 - x0, y1 - y0); g.drawImage(PC, ox, oy); cv.classList.add("spin"); setTimeout(end, 1250); }
     };
     requestAnimationFrame(frame);
   };
   let TR; const tx = sp.querySelector(".ksp-t");
   const start = () => setTimeout(() => { tx.classList.add("rev"); sp.querySelector(".ksp-y").classList.add("gone"); setTimeout(() => { TR = tx.getBoundingClientRect(); tx.classList.add("gone"); sp.querySelector(".ksp-f").classList.add("on"); go(); }, 600); }, 1750);
-  if (img.complete && img.naturalWidth) start(); else { img.onload = start; img.onerror = () => setTimeout(end, 900); }
+  if (img.complete && img.naturalWidth) { start(); setTimeout(prep, 60); } else { img.onload = () => { start(); setTimeout(prep, 60); }; img.onerror = () => setTimeout(end, 900); }
 })();
 </script>
 
@@ -2570,6 +2586,30 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     return `<dl class="kv">${R.join("")}</dl>` + ph + call;
   }
   // Rahmat yozuvi harfma-harf sakrab chiqadi
+  let kDZ = null;
+  function kDonePrep() {
+    if (kDZ) return kDZ;
+    const st = document.querySelector("#s-done .dstage"), img = st && st.querySelector(".dplate");
+    if (!img || !img.complete || !img.naturalWidth) return null;
+    const S = st.clientWidth || 230, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const D = Math.round(S * dpr), W = Math.round(D * 2.4), O = Math.round((W - D) / 2);
+    const oc = document.createElement("canvas"); oc.width = D; oc.height = D;
+    const og = oc.getContext("2d"); og.drawImage(img, 0, 0, D, D);
+    let px; try { px = og.getImageData(0, 0, D, D).data; } catch (_) { return null; }
+    const R = D / 2, MAX = 100000, step = Math.max(1, Math.sqrt(Math.PI * R * R / MAX));
+    const tx = [], ty = [], sx = [], sy = [], dl = [], col = [];
+    for (let y = 0; y < D; y += step) for (let x = 0; x < D; x += step) {
+      const xi = x | 0, yi = y | 0, dx = xi - R, dy = yi - R;
+      if (dx * dx + dy * dy > R * R) continue;
+      const k = (yi * D + xi) * 4; if (px[k + 3] < 40) continue;
+      const a = Math.random() * 6.2832, r = W * (0.35 + Math.random() * 0.4);
+      tx.push(O + xi); ty.push(O + yi); sx.push(Math.cos(a) * r); sy.push(Math.sin(a) * r); dl.push(Math.random() * 0.5);
+      col.push((255 << 24) | (px[k + 2] << 16) | (px[k + 1] << 8) | px[k]);
+    }
+    return (kDZ = { W, tx: Float32Array.from(tx), ty: Float32Array.from(ty), sx: Float32Array.from(sx), sy: Float32Array.from(sy), dl: Float32Array.from(dl), col: Uint32Array.from(col), step });
+  }
+  // "Rahmat" animatsiyasi uchun zarralar sayt ochilgach, bo'sh paytda tayyorlab qo'yiladi
+  window.addEventListener("load", () => setTimeout(() => (window.requestIdleCallback || (f => setTimeout(f, 1)))(() => { const i = document.querySelector("#s-done .dplate"); if (i && i.complete) kDonePrep(); else if (i) i.addEventListener("load", kDonePrep, { once: true }); }), 6000));
   function kDoneFx() {
     const h = document.querySelector("#s-done h1"), st = document.querySelector("#s-done .dstage");
     if (!h || !st) return;
@@ -2581,23 +2621,10 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
     if (!cv) { cv = document.createElement("canvas"); cv.className = "dcv"; st.appendChild(cv); }
     const finish = () => { cv.style.display = "none"; st.classList.add("ok"); };
     const run = () => {
-      // 100 000 ta zarra: rasmning har bir nuqtasi o'z joyiga uchib keladi
-      const S = st.clientWidth, dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const D = Math.round(S * dpr), W = Math.round(D * 2.4), O = Math.round((W - D) / 2);
+      // 100 000 ta zarra: rasmning har bir nuqtasi o'z joyiga uchib keladi (oldindan tayyorlangan)
+      const Z = kDonePrep(); if (!Z) return finish();
+      const { W, tx, ty, sx, sy, dl, col, step } = Z;
       cv.width = W; cv.height = W; cv.style.display = "block";
-      const oc = document.createElement("canvas"); oc.width = D; oc.height = D;
-      const og = oc.getContext("2d"); og.drawImage(img, 0, 0, D, D);
-      let px; try { px = og.getImageData(0, 0, D, D).data; } catch (_) { return finish(); }
-      const R = D / 2, MAX = 100000, step = Math.max(1, Math.sqrt(Math.PI * R * R / MAX));
-      const tx = [], ty = [], sx = [], sy = [], dl = [], col = [];
-      for (let y = 0; y < D; y += step) for (let x = 0; x < D; x += step) {
-        const xi = x | 0, yi = y | 0, dx = xi - R, dy = yi - R;
-        if (dx * dx + dy * dy > R * R) continue;
-        const k = (yi * D + xi) * 4; if (px[k + 3] < 40) continue;
-        const a = Math.random() * 6.2832, r = W * (0.35 + Math.random() * 0.4);
-        tx.push(O + xi); ty.push(O + yi); sx.push(Math.cos(a) * r); sy.push(Math.sin(a) * r); dl.push(Math.random() * 0.5);
-        col.push((255 << 24) | (px[k + 2] << 16) | (px[k + 1] << 8) | px[k]);
-      }
       const n = tx.length, g = cv.getContext("2d"), id = g.createImageData(W, W), buf = new Uint32Array(id.data.buffer);
       const sz = step > 1.4 ? 2 : 1, DUR = 1.15, T0 = performance.now();
       const frame = now => {
