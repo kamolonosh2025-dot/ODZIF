@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120071629";
+  const APP_VERSION = "20261120085407";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1389,7 +1389,7 @@ html.ksp-on .kfall { visibility: hidden; }
   const go = () => {
     const W = sp.clientWidth, H = sp.clientHeight, S = Math.round(Math.min(W * .84, 380));
     wr.style.setProperty("--S", S + "px");
-    const N = 14, cell = S / N, f = document.createDocumentFragment(), anims = [];
+    const N = 44, cell = S / N, f = document.createDocumentFragment(), anims = [];
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const cx = x + .5 - N / 2, cy = y + .5 - N / 2;
       if (cx * cx + cy * cy > (N / 2 + .4) * (N / 2 + .4)) continue;
@@ -1403,10 +1403,11 @@ html.ksp-on .kfall { visibility: hidden; }
       anims.push([el, [{ transform: "translate3d(" + (px + sx).toFixed(1) + "px," + (py + sy).toFixed(1) + "px,0) rotate(" + r + "deg) scale(.4)" }, { transform: "translate3d(" + px.toFixed(1) + "px," + py.toFixed(1) + "px,0) rotate(0) scale(1)" }], Math.random() * 280]);
     }
     const full = new Image(); full.src = img.src; full.alt = ""; wr.appendChild(full);
-    wr.appendChild(f);
+    wr.style.visibility = "hidden"; wr.appendChild(f);
     requestAnimationFrame(() => requestAnimationFrame(() => {
       let last = null;
       for (const [el, kf, d] of anims) { const a = el.animate(kf, { duration: 900, delay: d, easing: "cubic-bezier(.2,.75,.25,1)", fill: "backwards" }); if (!last || d >= last.d) last = { a, d }; }
+      wr.style.visibility = "";
       last.a.onfinish = () => { wr.classList.add("full"); wr.classList.add("spin"); setTimeout(end, 1250); };
     }));
   };
@@ -2752,6 +2753,18 @@ html.ksp-on .kfall { visibility: hidden; }
 </script>
 <script>if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
 <style>#s-main .kstage{cursor:pointer;-webkit-tap-highlight-color:transparent}#s-main .ksteam{pointer-events:none}#s-main .kstage:active .kplate2{opacity:.85}</style>
-<script>(function(){var s=document.querySelector("#s-main .kstage");if(!s)return;s.setAttribute("role","link");s.setAttribute("aria-label","Kamolon Osh ilovasi");s.addEventListener("click",function(){var u=navigator.userAgent,ios=/iPhone|iPad|iPod/.test(u)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);location.href=ios?"https://apps.apple.com/uz/app/kamolon-osh/id6745427808":/Android/i.test(u)?"https://play.google.com/store/apps/details?id=uz.delever.kamolon":"https://kamolonosh.uz";});})();</script>
+<script>(function(){var s=document.querySelector("#s-main .kstage");if(!s)return;s.setAttribute("role","link");s.setAttribute("aria-label","Kamolon Osh ilovasi");s.addEventListener("click",function(){var u=navigator.userAgent,ios=/iPhone|iPad|iPod/.test(u)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),AS="https://apps.apple.com/uz/app/kamolon-osh/id6745427808",GP="https://play.google.com/store/apps/details?id=uz.delever.kamolon";
+if(/Android/i.test(u)){location.href="intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=uz.delever.kamolon;S.browser_fallback_url="+encodeURIComponent(GP)+";end";return;}
+if(ios){location.href="https://kamolonosh.uz/ru";return;}
+location.href="https://kamolonosh.uz";});})();</script>
+<style>#s-main .kbtns{grid-template-columns:minmax(0,1fr);margin-left:12px;margin-right:12px}.kbtn{min-width:0}.kbtn .kt{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:clip}body.kb #s-form .ktitle{white-space:nowrap}</style>
+<script>(function(){var SEL=".kbtn .kt, #kTitle";
+function fit(el){if(!el.clientWidth)return;if(el._fs==null){el.style.fontSize="";el._fs=parseFloat(getComputedStyle(el).fontSize);}
+el.style.fontSize=el._fs+"px";var cs=getComputedStyle(el),av=el.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),r=document.createRange();r.selectNodeContents(el);var w=r.getBoundingClientRect().width;
+if(w>av+.5){el.style.fontSize=Math.max(9,Math.floor(el._fs*av/w*10)/10)+"px";}}
+function all(){document.querySelectorAll(SEL).forEach(fit);}
+var ro=window.ResizeObserver?new ResizeObserver(function(es){es.forEach(function(e){fit(e.target)})}):null;
+document.querySelectorAll(SEL).forEach(function(el){ro&&ro.observe(el);new MutationObserver(function(){fit(el)}).observe(el,{childList:true,characterData:true,subtree:true});});
+all();window.addEventListener("resize",all);document.fonts&&document.fonts.ready.then(all);})();</script>
 </body>
 </html>
