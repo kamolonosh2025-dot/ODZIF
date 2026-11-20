@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120105154";
+  const APP_VERSION = "20261120110609";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -2541,6 +2541,7 @@ html.ksp-on .kfall { visibility: hidden; }
     try {
       if (!adminData) skeleton();
       adminData = await loadEntries(adminPin);
+      if (window.kDelPend && kDelPend.size) for (const k in adminData) if (Array.isArray(adminData[k])) adminData[k] = adminData[k].filter(x => !kDelPend.has(k + ":" + x.id));
     } catch (err) {
       document.querySelectorAll(".arefresh").forEach(b => b.classList.remove("spin"));
       if (String(err.message) !== "pin" && adminData) { // internet uzilsa, eski ko'rinish qoladi, lekin ogohlantiramiz
@@ -2771,17 +2772,24 @@ html.ksp-on .kfall { visibility: hidden; }
     const card = del.closest(".entry"), id = card.dataset.id, c = view.cat;
     card.querySelector(".emenu").classList.remove("open");
     if (!confirm("Bu murojaatni o'chirasizmi? Uni qaytarib bo'lmaydi.")) return;
-    card.classList.add("gone");
+    const kDel = window.kDelPend || (window.kDelPend = new Set()), key = c + ":" + id;
+    const before = (adminData[c] || []).slice();
+    kDel.add(key);
+    adminData[c] = before.filter(x => String(x.id) !== String(id));
+    render();
+    try { localStorage.setItem("kamolon_cache", JSON.stringify({ pin: adminPin, data: adminData })); } catch (_) {}
     try {
       await deleteEntry(adminPin, c, id);
+      kDel.delete(key);
     } catch (err) {
-      card.classList.remove("gone");
+      kDel.delete(key);
+      if (!before.some(x => String(x.id) === String(id))) return;
+      adminData[c] = before; render();
+      try { localStorage.setItem("kamolon_cache", JSON.stringify({ pin: adminPin, data: adminData })); } catch (_) {}
       const m = String(err.message);
       alert(m === "pin" ? "PIN noto'g'ri (Apps Script'dagi PIN bilan bir xil emas)" : m === "cat" ? "Apps Script kodi hali eski. Yangi kodni qo'yib, Новая версия bilan qayta joylang." : "O'chirib bo'lmadi: " + m);
       return;
     }
-    adminData[c] = (adminData[c] || []).filter(x => String(x.id) !== String(id));
-    render();
   });
   document.addEventListener("click", e => {
     if (!e.target.closest(".emenu")) document.querySelectorAll(".emenu.open").forEach(x => x.classList.remove("open"));
