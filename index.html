@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120085754";
+  const APP_VERSION = "20261120103205";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -2817,7 +2817,7 @@ html.ksp-on .kfall { visibility: hidden; }
 <style>#s-main .kstage{cursor:pointer;-webkit-tap-highlight-color:transparent}#s-main .ksteam{pointer-events:none}#s-main .kstage:active .kplate2{opacity:.85}</style>
 <script>(function(){var s=document.querySelector("#s-main .kstage");if(!s)return;s.setAttribute("role","link");s.setAttribute("aria-label","Kamolon Osh ilovasi");s.addEventListener("click",function(){var u=navigator.userAgent,ios=/iPhone|iPad|iPod/.test(u)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),AS="https://apps.apple.com/uz/app/kamolon-osh/id6745427808",GP="https://play.google.com/store/apps/details?id=uz.delever.kamolon";
 if(/Android/i.test(u)){location.href="intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=uz.delever.kamolon;S.browser_fallback_url="+encodeURIComponent(GP)+";end";return;}
-if(ios){location.href="https://kamolonosh.uz/ru";return;}
+if(ios){location.href="itms-apps://apps.apple.com/uz/app/kamolon-osh/id6745427808";setTimeout(function(){if(!document.hidden)location.href=AS;},1200);return;}
 location.href="https://kamolonosh.uz";});})();</script>
 <style>#s-main .kbtns{grid-template-columns:minmax(0,1fr);margin-left:12px;margin-right:12px}.kbtn{min-width:0}.kbtn .kt{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:clip}body.kb #s-form .ktitle{white-space:nowrap}</style>
 <script>(function(){var SEL=".kbtn .kt, #kTitle";
