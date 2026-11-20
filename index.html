@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120070938";
+  const APP_VERSION = "20261120071629";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1364,10 +1364,15 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 #ksplash .ksp-o { position: absolute; left: 50%; top: 50%; width: min(84vw, 380px); aspect-ratio: 1; transform: translate(-50%, -50%); background: url(img/brand/osh-plate-720.webp) center / contain no-repeat; border-radius: 50%; opacity: .22; animation: kspo 20s linear infinite; transition: opacity .35s ease; }
 #ksplash .ksp-o.gone { opacity: 0; }
 @keyframes kspo { to { transform: translate(-50%, -50%) rotate(360deg); } }
+#ksplash .kspw { position: absolute; left: 50%; top: 50%; width: var(--S); height: var(--S); margin: calc(var(--S) / -2) 0 0 calc(var(--S) / -2); }
+#ksplash .kspw.spin { animation: ksps 1.3s cubic-bezier(.3,.05,.2,1) forwards; }
+#ksplash .kspw i { position: absolute; left: 0; top: 0; background-image: url(img/brand/osh-plate-720.webp); background-repeat: no-repeat; backface-visibility: hidden; will-change: transform; }
+#ksplash .kspw img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+#ksplash .kspw.full img { opacity: 1; } #ksplash .kspw.full i { visibility: hidden; }
 html.ksp-on main *, html.ksp-on .kfall i { animation-play-state: paused !important; }
 html.ksp-on .kfall { visibility: hidden; }
 </style>
-<div class="ksp-f on"></div><canvas id="kspc"></canvas>
+<div class="ksp-f on"></div><div class="kspw" id="kspw"></div>
 </div>
 <script>
 (function () {
@@ -1377,54 +1382,38 @@ html.ksp-on .kfall { visibility: hidden; }
   let gone = false;
   const end = () => { if (gone) return; gone = true; try { sessionStorage.setItem("ksp", "1"); } catch (_) {} sp.classList.add("out"); document.documentElement.classList.remove("ksp-on"); setTimeout(() => sp.remove(), 480); };
   sp.addEventListener("click", end);
-  setTimeout(end, 7500); // har qanday holatda ham sayt ochiladi
-  const cv = document.getElementById("kspc"), img = new Image();
+  setTimeout(end, 7000); // har qanday holatda ham sayt ochiladi
+  const wr = document.getElementById("kspw"), img = new Image();
   img.src = "img/brand/osh-plate-720.webp";
-  let PC = null, PS = 0, DPR = 1;
-  const prep = () => { // lagan rasmi oldindan kerakli o'lchamda tayyorlanadi (tez chizish uchun)
-    const W = sp.clientWidth; DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-    const S = Math.min(W * .84, 380); PS = Math.round(S * DPR);
-    PC = document.createElement("canvas"); PC.width = PS; PC.height = PS;
-    PC.getContext("2d").drawImage(img, 0, 0, PS, PS);
-  };
+  // Bo'laklar GPU'da (CSS transform) harakatlanadi: sahifa yuklanayotgan bo'lsa ham qotmaydi
   const go = () => {
-    if (!PC) prep();
-    const W = sp.clientWidth, H = sp.clientHeight, dpr = DPR, SD = PS;
-    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-    const g = cv.getContext("2d"), ox = (cv.width - SD) / 2, oy = (cv.height - SD) / 2;
-    const N = 36, cell = SD / N, P = [];
+    const W = sp.clientWidth, H = sp.clientHeight, S = Math.round(Math.min(W * .84, 380));
+    wr.style.setProperty("--S", S + "px");
+    const N = 14, cell = S / N, f = document.createDocumentFragment(), anims = [];
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const cx = x + .5 - N / 2, cy = y + .5 - N / 2;
-      if (cx * cx + cy * cy > (N / 2 + .3) * (N / 2 + .3)) continue;
-      // yozuvning har bir nuqtasidan bo'lak chiqib, lagan bo'lib yig'iladi
-      const side = Math.random() * 4 | 0, cw = cv.width, ch = cv.height; // ekranning 4 tarafidan uchib keladi
-      const ex = side === 0 ? -40 : side === 1 ? cw + 40 : Math.random() * cw, ey = side === 2 ? -40 : side === 3 ? ch + 40 : Math.random() * ch;
-      P.push({ x, y, tx: ox + x * cell + cell / 2, ty: oy + y * cell + cell / 2, sx: ex - (ox + x * cell), sy: ey - (oy + y * cell), rot: (Math.random() - .5) * 10, d: Math.random() * .3 });
+      if (cx * cx + cy * cy > (N / 2 + .4) * (N / 2 + .4)) continue;
+      const el = document.createElement("i"), px = x * cell, py = y * cell;
+      el.style.cssText = "width:" + (cell + 1).toFixed(2) + "px;height:" + (cell + 1).toFixed(2) + "px;background-size:" + S + "px " + S + "px;background-position:" + (-px).toFixed(2) + "px " + (-py).toFixed(2) + "px";
+      const side = Math.random() * 4 | 0;
+      const ex = side === 0 ? -W / 2 - 40 : side === 1 ? W / 2 + 40 : (Math.random() - .5) * W, ey = side === 2 ? -H / 2 - 40 : side === 3 ? H / 2 + 40 : (Math.random() - .5) * H;
+      const sx = ex - (px - S / 2), sy = ey - (py - S / 2), r = ((Math.random() - .5) * 720) | 0;
+      el.style.transform = "translate3d(" + px.toFixed(1) + "px," + py.toFixed(1) + "px,0)";
+      f.appendChild(el);
+      anims.push([el, [{ transform: "translate3d(" + (px + sx).toFixed(1) + "px," + (py + sy).toFixed(1) + "px,0) rotate(" + r + "deg) scale(.4)" }, { transform: "translate3d(" + px.toFixed(1) + "px," + py.toFixed(1) + "px,0) rotate(0) scale(1)" }], Math.random() * 280]);
     }
-    // faqat o'zgaradigan joy tozalanadi
-    const x0 = 0, y0 = 0;
-    const x1 = cv.width, y1 = cv.height;
-    const T0 = performance.now(), DUR = .9;
-    const frame = now => {
-      const t = (now - T0) / 1000; let done = true;
-      g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(x0, y0, x1 - x0, y1 - y0);
-      for (let i = 0; i < P.length; i++) {
-        const p = P[i];
-        let k = (t - p.d) / DUR; if (k < 1) done = false; k = k <= 0 ? 0 : k >= 1 ? 1 : 1 - (1 - k) * (1 - k) * (1 - k);
-        const q = 1 - k, a = p.rot * q, c = Math.cos(a), s = Math.sin(a), z = (cell + 1.5) * Math.min(1, .3 + .9 * k);
-        g.setTransform(c, s, -s, c, p.tx + p.sx * q, p.ty + p.sy * q);
-        g.drawImage(PC, p.x * cell, p.y * cell, cell, cell, -z / 2, -z / 2, z, z);
-      }
-      if (!done) requestAnimationFrame(frame);
-      else { g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(x0, y0, x1 - x0, y1 - y0); g.drawImage(PC, ox, oy); cv.classList.add("spin"); setTimeout(end, 1250); }
-    };
-    requestAnimationFrame(frame);
+    const full = new Image(); full.src = img.src; full.alt = ""; wr.appendChild(full);
+    wr.appendChild(f);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      let last = null;
+      for (const [el, kf, d] of anims) { const a = el.animate(kf, { duration: 900, delay: d, easing: "cubic-bezier(.2,.75,.25,1)", fill: "backwards" }); if (!last || d >= last.d) last = { a, d }; }
+      last.a.onfinish = () => { wr.classList.add("full"); wr.classList.add("spin"); setTimeout(end, 1250); };
+    }));
   };
-  const start = () => setTimeout(go, 150);
-  if (img.complete && img.naturalWidth) { prep(); start(); } else { img.onload = () => { prep(); start(); }; img.onerror = () => setTimeout(end, 900); }
+  const ready = () => setTimeout(go, 60);
+  img.decode ? img.decode().then(ready, () => setTimeout(end, 600)) : (img.onload = ready, img.onerror = () => setTimeout(end, 600));
 })();
 </script>
-
 
 <!-- Line icons -->
 <svg width="0" height="0" style="position:absolute">
