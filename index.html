@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120065517";
+  const APP_VERSION = "20261120065812";
   fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1281,6 +1281,9 @@ body.kb:not(.am) .done h1 { margin-top: 44px !important; }
 .dstage.ok .dplate { animation: dwhirl 2.6s cubic-bezier(.12,.75,.2,1) forwards; }
 @keyframes dwhirl { from { transform: rotate(0deg); } to { transform: rotate(2160deg); } }
 .done p { animation-delay: 2.6s !important; }
+/* Gulning haqiqiy markazi (rasm ichida 53.3% balandlikda) lagan markaziga to'g'rilandi */
+#s-main .kflower { transform-origin: 50% 53.3%; top: calc(22px + min(316px, 82vw) / 2 - min(360px, 94vw) * .533); width: min(360px, 94vw); max-width: none; height: auto; }
+.dflower { inset: auto; left: -14%; top: -18.2%; width: 128%; height: 128%; transform-origin: 50% 53.3%; }
 /* ===== ADMIN PANEL: brendbuk ranglari ===== */
 body.am { --brand: #023181; --brand-2: #011b4f; background: radial-gradient(ellipse at 50% 0%, #0b46b3, #011b4f 70%) fixed !important; font-family: var(--ktx); }
 body.am .shell { border: 0 !important; }
@@ -1352,7 +1355,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 @keyframes ksps { from { transform: rotate(0); } to { transform: rotate(1080deg); } }
 #ksplash::before, #ksplash::after { content: ""; position: absolute; left: 0; right: 0; height: 26px; background: url(img/brand/pattern-blue-soft.svg) repeat-x 0 50% / auto 52px, #023181; }
 #ksplash::before { top: 0; border-bottom: 3px solid #EFBF48; } #ksplash::after { bottom: 0; border-top: 3px solid #EFBF48; }
-#ksplash .ksp-f { position: absolute; left: 50%; top: 50%; width: min(104vw, 470px); aspect-ratio: 1; margin: calc(min(104vw, 470px) / -2) 0 0 calc(min(104vw, 470px) / -2); background: url(img/brand/flower-lblue.svg) center / contain no-repeat; opacity: .1; animation: kspf 14s linear infinite; }
+#ksplash .ksp-f { position: absolute; left: 50%; top: 50%; width: min(104vw, 470px); aspect-ratio: 1; margin: calc(min(104vw, 470px) * -.533) 0 0 calc(min(104vw, 470px) / -2); transform-origin: 50% 53.3%; background: url(img/brand/flower-lblue.svg) center / contain no-repeat; opacity: .1; animation: kspf 14s linear infinite; }
 #ksplash .ksp-f.on { opacity: .9; transition: opacity .6s ease; }
 @keyframes kspf { to { transform: rotate(360deg); } }
 #ksplash .ksp-y { position: absolute; left: 50%; top: calc(50% + clamp(2.6rem, 12.5vw, 4rem) * .75); width: 110px; height: 14px; margin-left: -55px; background: url(img/brand/flower-yellow.svg) center / 14px no-repeat, linear-gradient(#EFBF48, #EFBF48) left center / 40px 3px no-repeat, linear-gradient(#EFBF48, #EFBF48) right center / 40px 3px no-repeat; opacity: 0; animation: kspy .5s 1.2s ease-out forwards; transition: opacity .3s; }
