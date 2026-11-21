@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261121115750";
+  const APP_VERSION = "20261121120438";
   window.kVer = fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1369,7 +1369,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 #ksplash .kspw i { position: absolute; left: 0; top: 0; background-image: url(img/brand/osh-plate-720.webp); background-repeat: no-repeat; backface-visibility: hidden; will-change: transform; }
 #ksplash .kspw img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 #ksplash .kspw.full img { opacity: 1; } #ksplash .kspw.full i { visibility: hidden; }
-html.ksp-on body > *:not(#ksplash):not(script):not(style) { visibility: hidden; }
+html.ksp-on:not(.ksp-show) body > *:not(#ksplash):not(script):not(style) { visibility: hidden; }
 html.ksp-on main *, html.ksp-on .kfall i { animation-play-state: paused !important; }
 html.ksp-on .kfall { visibility: hidden; }
 </style>
@@ -1388,15 +1388,15 @@ html.ksp-on .kfall { visibility: hidden; }
   setTimeout(end, 7000); // har qanday holatda ham sayt ochiladi
   const wr = document.getElementById("kspw"), cv = document.getElementById("kspg"), img = new Image();
   img.src = "img/brand/osh-plate-720.webp";
-  const finish = () => { wr.classList.add("full", "spin"); cv.style.display = "none"; setTimeout(end, 1800); };
+  const finish = () => { setTimeout(() => document.documentElement.classList.add("ksp-show"), 700); wr.classList.add("full", "spin"); cv.style.display = "none"; setTimeout(end, 1800); };
   const DUR = 700, MAXD = 200;
   // 1500 bo'lak: WebGL — hammasi bitta chizishda GPU'da hisoblanadi, telefonda qotmaydi
-  const goGL = (W, H, S) => {
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  const goGL = (W, H, S, N) => {
+    const dpr = Math.min(window.devicePixelRatio || 1, N < 44 ? 1 : 1.5);
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     const gl = cv.getContext("webgl", { alpha: true, premultipliedAlpha: true, antialias: false }) || cv.getContext("experimental-webgl");
     if (!gl) return false;
-    const N = 44, cell = S / N, R = N / 2 + .4, v = new Float32Array(N * N * 60); let vi = 0;
+    const cell = S / N, R = N / 2 + .4, v = new Float32Array(N * N * 60); let vi = 0;
     const C = [[-.5,-.5],[.5,-.5],[-.5,.5],[-.5,.5],[.5,-.5],[.5,.5]];
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const cx = x + .5 - N / 2, cy = y + .5 - N / 2;
@@ -1445,9 +1445,9 @@ html.ksp-on .kfall { visibility: hidden; }
     return true;
   };
   // Zaxira: WebGL bo'lmasa, CSS bo'laklari (kamroq)
-  const goDom = (W, H, S) => {
+  const goDom = (W, H, S, NN) => {
     cv.style.display = "none";
-    const N = 20, cell = S / N, f = document.createDocumentFragment(), anims = [];
+    const N = NN, cell = S / N, f = document.createDocumentFragment(), anims = [];
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const cx = x + .5 - N / 2, cy = y + .5 - N / 2;
       if (cx * cx + cy * cy > (N / 2 + .4) * (N / 2 + .4)) continue;
@@ -1472,10 +1472,19 @@ html.ksp-on .kfall { visibility: hidden; }
     const W = sp.clientWidth, H = sp.clientHeight, S = Math.round(Math.min(W * .84, 380));
     wr.style.setProperty("--S", S + "px");
     const full = new Image(); full.src = img.src; full.alt = ""; wr.appendChild(full);
-    let ok = false; try { ok = goGL(W, H, S); } catch (_) { ok = false; }
-    if (!ok) goDom(W, H, S);
+    // Telefon kuchiga qarab: kuchli — 1500 bo'lak, o'rtacha — ~700, kuchsiz — ~300 (har doim silliq)
+    const Ng = LV === 2 ? 44 : LV === 1 ? 30 : 20;
+    let ok = false; try { ok = goGL(W, H, S, Ng); } catch (_) { ok = false; }
+    if (!ok) goDom(W, H, S, LV === 2 ? 20 : 12);
   };
-  const ready = () => { const goNow = () => requestAnimationFrame(go); const loaded = document.readyState === "complete" ? Promise.resolve() : new Promise(r => window.addEventListener("load", r, { once: true })); Promise.race([Promise.all([window.kVer || Promise.resolve(), loaded]), new Promise(r => setTimeout(r, 1200))]).then(goNow, goNow); };
+  let LV = 2;
+  const probe = cb => { // bir necha kadr o'lchab, telefon tezligini aniqlaymiz
+    const ds = []; let l = 0;
+    const f = n => { if (l) ds.push(n - l); l = n; if (ds.length < 8) requestAnimationFrame(f); else { ds.sort((a, b) => a - b); const med = ds[4], hc = navigator.hardwareConcurrency || 8, dm = navigator.deviceMemory || 8;
+      LV = med > 28 || hc <= 2 || dm <= 1 ? 0 : med > 19 || hc <= 4 || dm <= 2 ? 1 : 2; cb(); } };
+    requestAnimationFrame(f);
+  };
+  const ready = () => { const goNow = () => probe(go); const loaded = document.readyState === "complete" ? Promise.resolve() : new Promise(r => window.addEventListener("load", r, { once: true })); Promise.race([Promise.all([window.kVer || Promise.resolve(), loaded]), new Promise(r => setTimeout(r, 1200))]).then(goNow, goNow); };
   let rd = false; const once = () => { if (!rd) { rd = true; ready(); } };
   if (img.decode) img.decode().then(once, () => { if (img.complete && img.naturalWidth) once(); else img.onload = once; });
   else if (img.complete && img.naturalWidth) once(); else img.onload = once;
