@@ -8,8 +8,8 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261120110609";
-  fetch("version.json?t=" + Date.now(), { cache: "no-store" })
+  const APP_VERSION = "20261121115453";
+  window.kVer = fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
       if (j.v === APP_VERSION) return;
@@ -1369,6 +1369,7 @@ body.am .call { background: var(--go) !important; color: #fff !important; }
 #ksplash .kspw i { position: absolute; left: 0; top: 0; background-image: url(img/brand/osh-plate-720.webp); background-repeat: no-repeat; backface-visibility: hidden; will-change: transform; }
 #ksplash .kspw img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 #ksplash .kspw.full img { opacity: 1; } #ksplash .kspw.full i { visibility: hidden; }
+html.ksp-on body > *:not(#ksplash):not(script):not(style) { visibility: hidden; }
 html.ksp-on main *, html.ksp-on .kfall i { animation-play-state: paused !important; }
 html.ksp-on .kfall { visibility: hidden; }
 </style>
@@ -1391,11 +1392,11 @@ html.ksp-on .kfall { visibility: hidden; }
   const DUR = 700, MAXD = 200;
   // 1500 bo'lak: WebGL — hammasi bitta chizishda GPU'da hisoblanadi, telefonda qotmaydi
   const goGL = (W, H, S) => {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     const gl = cv.getContext("webgl", { alpha: true, premultipliedAlpha: true, antialias: false }) || cv.getContext("experimental-webgl");
     if (!gl) return false;
-    const N = 44, cell = S / N, R = N / 2 + .4, v = [];
+    const N = 44, cell = S / N, R = N / 2 + .4, v = new Float32Array(N * N * 60); let vi = 0;
     const C = [[-.5,-.5],[.5,-.5],[-.5,.5],[-.5,.5],[.5,-.5],[.5,.5]];
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
       const cx = x + .5 - N / 2, cy = y + .5 - N / 2;
@@ -1404,7 +1405,7 @@ html.ksp-on .kfall { visibility: hidden; }
       const sx = side === 0 ? -W / 2 - 30 : side === 1 ? W / 2 + 30 : (Math.random() - .5) * W;
       const sy = side === 2 ? -H / 2 - 30 : side === 3 ? H / 2 + 30 : (Math.random() - .5) * H;
       const r = (Math.random() - .5) * 12, d = Math.random() * MAXD;
-      for (const c of C) v.push(sx, sy, tx, ty, c[0], c[1], (x + .5 + c[0]) / N, (y + .5 + c[1]) / N, r, d);
+      for (let q = 0; q < 6; q++) { const c = C[q]; v[vi++] = sx; v[vi++] = sy; v[vi++] = tx; v[vi++] = ty; v[vi++] = c[0]; v[vi++] = c[1]; v[vi++] = (x + .5 + c[0]) / N; v[vi++] = (y + .5 + c[1]) / N; v[vi++] = r; v[vi++] = d; }
     }
     const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
     const pr = gl.createProgram();
@@ -1413,13 +1414,13 @@ html.ksp-on .kfall { visibility: hidden; }
     gl.linkProgram(pr);
     if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return false;
     gl.useProgram(pr);
-    const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(v), gl.STATIC_DRAW);
+    const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, v.subarray(0, vi), gl.STATIC_DRAW);
     const at = (n, sz, off) => { const l = gl.getAttribLocation(pr, n); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, sz, gl.FLOAT, false, 40, off * 4); };
     at("a_s", 2, 0); at("a_t", 2, 2); at("a_c", 2, 4); at("a_uv", 2, 6); at("a_r", 1, 8); at("a_d", 1, 9);
-    const PS = Math.min(1024, Math.round(S * dpr)), pc = document.createElement("canvas"); pc.width = pc.height = PS; pc.getContext("2d").drawImage(img, 0, 0, PS, PS);
+    // rasm oldindan (fon oqimida) ochilgan: to'g'ridan-to'g'ri GPU'ga yuboriladi
     const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
     gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pc);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
@@ -1427,7 +1428,7 @@ html.ksp-on .kfall { visibility: hidden; }
     gl.uniform2f(gl.getUniformLocation(pr, "u_res"), W, H);
     gl.uniform1f(gl.getUniformLocation(pr, "u_cell"), cell);
     gl.uniform1f(gl.getUniformLocation(pr, "u_dur"), DUR);
-    const ut = gl.getUniformLocation(pr, "u_t"), n = v.length / 10;
+    const ut = gl.getUniformLocation(pr, "u_t"), n = vi / 10;
     if (gl.getError() !== gl.NO_ERROR) return false;
     let T0 = 0;
     const frame = now => {
@@ -1472,9 +1473,11 @@ html.ksp-on .kfall { visibility: hidden; }
     let ok = false; try { ok = goGL(W, H, S); } catch (_) { ok = false; }
     if (!ok) goDom(W, H, S);
   };
-  const ready = () => requestAnimationFrame(go);
-  if (img.complete && img.naturalWidth) ready();
-  else { img.onload = ready; img.onerror = () => setTimeout(end, 600); }
+  const ready = () => { const goNow = () => requestAnimationFrame(go); Promise.race([window.kVer || Promise.resolve(), new Promise(r => setTimeout(r, 700))]).then(goNow, goNow); };
+  let rd = false; const once = () => { if (!rd) { rd = true; ready(); } };
+  if (img.decode) img.decode().then(once, () => { if (img.complete && img.naturalWidth) once(); else img.onload = once; });
+  else if (img.complete && img.naturalWidth) once(); else img.onload = once;
+  img.onerror = () => setTimeout(end, 600);
 })();
 </script>
 
@@ -2638,8 +2641,10 @@ html.ksp-on .kfall { visibility: hidden; }
   }
   // Rahmat yozuvi harfma-harf sakrab chiqadi
   let kDZ = null;
-  function kDonePrep() {
-    if (kDZ) return kDZ;
+  // Zarralar bo'lib-bo'lib (har safar ~6 ms) tayyorlanadi: sahifa hech qachon qotmaydi
+  let kDS = null;
+  function kDoneInit() {
+    if (kDS) return kDS;
     const st = document.querySelector("#s-done .dstage"), img = st && st.querySelector(".dplate");
     if (!img || !img.complete || !img.naturalWidth) return null;
     const S = st.clientWidth || 230, dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -2647,20 +2652,41 @@ html.ksp-on .kfall { visibility: hidden; }
     const oc = document.createElement("canvas"); oc.width = D; oc.height = D;
     const og = oc.getContext("2d"); og.drawImage(img, 0, 0, D, D);
     let px; try { px = og.getImageData(0, 0, D, D).data; } catch (_) { return null; }
-    const R = D / 2, MAX = 100000, step = Math.max(1, Math.sqrt(Math.PI * R * R / MAX));
-    const tx = [], ty = [], sx = [], sy = [], dl = [], col = [];
-    for (let y = 0; y < D; y += step) for (let x = 0; x < D; x += step) {
-      const xi = x | 0, yi = y | 0, dx = xi - R, dy = yi - R;
-      if (dx * dx + dy * dy > R * R) continue;
-      const k = (yi * D + xi) * 4; if (px[k + 3] < 40) continue;
-      const a = Math.random() * 6.2832, r = W * (0.35 + Math.random() * 0.4);
-      tx.push(O + xi); ty.push(O + yi); sx.push(Math.cos(a) * r); sy.push(Math.sin(a) * r); dl.push(Math.random() * 0.5);
-      col.push((255 << 24) | (px[k + 2] << 16) | (px[k + 1] << 8) | px[k]);
-    }
-    return (kDZ = { W, tx: Float32Array.from(tx), ty: Float32Array.from(ty), sx: Float32Array.from(sx), sy: Float32Array.from(sy), dl: Float32Array.from(dl), col: Uint32Array.from(col), step });
+    const R = D / 2, MAX = 100000, step = Math.max(1, Math.sqrt(Math.PI * R * R / MAX)), CAP = MAX + 5000;
+    return (kDS = { D, W, O, R, px, step, y: 0, n: 0, tx: new Float32Array(CAP), ty: new Float32Array(CAP), sx: new Float32Array(CAP), sy: new Float32Array(CAP), dl: new Float32Array(CAP), col: new Uint32Array(CAP) });
   }
-  // "Rahmat" animatsiyasi uchun zarralar sayt ochilgach, bo'sh paytda tayyorlab qo'yiladi
-  window.addEventListener("load", () => setTimeout(() => (window.requestIdleCallback || (f => setTimeout(f, 1)))(() => { const i = document.querySelector("#s-done .dplate"); if (i && i.complete) kDonePrep(); else if (i) i.addEventListener("load", kDonePrep, { once: true }); }), 6000));
+  function kDoneStep(ms) {
+    const s = kDS, t0 = performance.now(), { D, W, O, R, px, step } = s;
+    while (s.y < D) {
+      const yi = s.y | 0, dy = yi - R;
+      for (let x = 0; x < D; x += step) {
+        const xi = x | 0, dx = xi - R;
+        if (dx * dx + dy * dy > R * R) continue;
+        const k = (yi * D + xi) * 4; if (px[k + 3] < 40 || s.n >= s.tx.length) continue;
+        const a = Math.random() * 6.2832, r = W * (0.35 + Math.random() * 0.4), n = s.n++;
+        s.tx[n] = O + xi; s.ty[n] = O + yi; s.sx[n] = Math.cos(a) * r; s.sy[n] = Math.sin(a) * r; s.dl[n] = Math.random() * 0.5;
+        s.col[n] = (255 << 24) | (px[k + 2] << 16) | (px[k + 1] << 8) | px[k];
+      }
+      s.y += step;
+      if (ms && performance.now() - t0 > ms) return false;
+    }
+    return true;
+  }
+  function kDonePrep() {
+    if (kDZ) return kDZ;
+    if (!kDoneInit()) return null;
+    kDoneStep(0);
+    const s = kDS, n = s.n; s.px = null;
+    return (kDZ = { W: s.W, tx: s.tx.subarray(0, n), ty: s.ty.subarray(0, n), sx: s.sx.subarray(0, n), sy: s.sy.subarray(0, n), dl: s.dl.subarray(0, n), col: s.col.subarray(0, n), step: s.step });
+  }
+  // "Rahmat" animatsiyasi uchun zarralar sayt ochilgach, bo'sh paytda bo'laklab tayyorlanadi
+  function kDoneBg() {
+    if (kDZ) return;
+    if (!kDS && !kDoneInit()) return;
+    if (kDoneStep(6)) { kDonePrep(); return; }
+    setTimeout(kDoneBg, 40);
+  }
+  window.addEventListener("load", () => setTimeout(() => { const i = document.querySelector("#s-done .dplate"); if (!i) return; if (i.complete && i.naturalWidth) kDoneBg(); else i.addEventListener("load", kDoneBg, { once: true }); }, 6000));
   function kDoneFx() {
     const h = document.querySelector("#s-done h1"), st = document.querySelector("#s-done .dstage");
     if (!h || !st) return;
