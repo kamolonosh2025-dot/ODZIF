@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261121115453";
+  const APP_VERSION = "20261121115750";
   window.kVer = fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1430,11 +1430,13 @@ html.ksp-on .kfall { visibility: hidden; }
     gl.uniform1f(gl.getUniformLocation(pr, "u_dur"), DUR);
     const ut = gl.getUniformLocation(pr, "u_t"), n = vi / 10;
     if (gl.getError() !== gl.NO_ERROR) return false;
-    let T0 = 0;
+    // isitish: shader va rasm GPU'ga oldindan yuklanadi, so'ng 2 kadrdan keyin boshlanadi
+    gl.uniform1f(ut, -9999); gl.drawArrays(gl.TRIANGLES, 0, n);
+    let last = 0, t = 0, warm = 2;
     const frame = now => {
       if (gone) return;
-      if (!T0) T0 = now;
-      const t = now - T0;
+      if (warm > 0) { warm--; last = now; requestAnimationFrame(frame); return; }
+      t += Math.min(now - last, 34); last = now; // telefon bir lahza band bo'lsa ham bo'laklar sakramaydi
       gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform1f(ut, t); gl.drawArrays(gl.TRIANGLES, 0, n);
       if (t < DUR + MAXD) requestAnimationFrame(frame); else finish();
@@ -1473,7 +1475,7 @@ html.ksp-on .kfall { visibility: hidden; }
     let ok = false; try { ok = goGL(W, H, S); } catch (_) { ok = false; }
     if (!ok) goDom(W, H, S);
   };
-  const ready = () => { const goNow = () => requestAnimationFrame(go); Promise.race([window.kVer || Promise.resolve(), new Promise(r => setTimeout(r, 700))]).then(goNow, goNow); };
+  const ready = () => { const goNow = () => requestAnimationFrame(go); const loaded = document.readyState === "complete" ? Promise.resolve() : new Promise(r => window.addEventListener("load", r, { once: true })); Promise.race([Promise.all([window.kVer || Promise.resolve(), loaded]), new Promise(r => setTimeout(r, 1200))]).then(goNow, goNow); };
   let rd = false; const once = () => { if (!rd) { rd = true; ready(); } };
   if (img.decode) img.decode().then(once, () => { if (img.complete && img.naturalWidth) once(); else img.onload = once; });
   else if (img.complete && img.naturalWidth) once(); else img.onload = once;
