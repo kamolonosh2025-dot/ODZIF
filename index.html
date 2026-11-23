@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261121120438";
+  const APP_VERSION = "20261123070755";
   window.kVer = fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1392,7 +1392,7 @@ html.ksp-on .kfall { visibility: hidden; }
   const DUR = 700, MAXD = 200;
   // 1500 bo'lak: WebGL — hammasi bitta chizishda GPU'da hisoblanadi, telefonda qotmaydi
   const goGL = (W, H, S, N) => {
-    const dpr = Math.min(window.devicePixelRatio || 1, N < 44 ? 1 : 1.5);
+    const dpr = Math.min(window.devicePixelRatio || 1, N < 50 ? 1 : 1.5);
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     const gl = cv.getContext("webgl", { alpha: true, premultipliedAlpha: true, antialias: false }) || cv.getContext("experimental-webgl");
     if (!gl) return false;
@@ -1472,8 +1472,8 @@ html.ksp-on .kfall { visibility: hidden; }
     const W = sp.clientWidth, H = sp.clientHeight, S = Math.round(Math.min(W * .84, 380));
     wr.style.setProperty("--S", S + "px");
     const full = new Image(); full.src = img.src; full.alt = ""; wr.appendChild(full);
-    // Telefon kuchiga qarab: kuchli — 1500 bo'lak, o'rtacha — ~700, kuchsiz — ~300 (har doim silliq)
-    const Ng = LV === 2 ? 44 : LV === 1 ? 30 : 20;
+    // Telefon kuchiga qarab: kuchli — 2000 bo'lak, o'rtacha — ~900, kuchsiz — ~380 (har doim silliq)
+    const Ng = LV === 2 ? 50 : LV === 1 ? 34 : 22;
     let ok = false; try { ok = goGL(W, H, S, Ng); } catch (_) { ok = false; }
     if (!ok) goDom(W, H, S, LV === 2 ? 20 : 12);
   };
