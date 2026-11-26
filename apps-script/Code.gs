@@ -142,7 +142,8 @@ function clean(v) {
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
-    if (data.action === "delete") return deleteRow(data);
+    if (data.action === "delete") return withLock(function () { return deleteRow(data); });
+    if (data.action === "deleteMany") return withLock(function () { return deleteMany(data); });
     const x = data.entry || {};
     const sh = sheetFor(x.cat);
     const id = Utilities.getUuid();
@@ -168,6 +169,36 @@ function doPost(e) {
   } catch (err) {
     return out({ ok: false, error: String(err.message || err) });
   }
+}
+
+// O'chirishlar navbat bilan bajariladi (bir vaqtda ikkita o'chirish qatorlarni chalkashtirmasin)
+function withLock(fn) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try { return fn(); } finally { lock.releaseLock(); }
+}
+
+// Admin paneldan bir nechta murojaatni bittada o'chirish (kun / hafta / oy)
+function deleteMany(data) {
+  if (data.pin !== PIN) return out({ ok: false, error: "pin" });
+  const sh = sheetFor(data.cat);
+  const want = {};
+  (data.ids || []).forEach(function (id) { want[String(id)] = true; });
+  const last = sh.getLastRow();
+  if (last < 2) return out({ ok: true, deleted: 0 });
+  const ids = sh.getRange(2, 1, last - 1, 1).getValues();
+  if (sh.getMaxRows() <= last) sh.insertRowsAfter(last, 1); // hamma qatorni o'chirganda ham jadval buzilmasin
+  let n = 0, i = ids.length - 1;
+  // pastdan yuqoriga, ketma-ket qatorlarni bitta amal bilan o'chiramiz (tez)
+  while (i >= 0) {
+    if (!want[String(ids[i][0])]) { i--; continue; }
+    let j = i;
+    while (j - 1 >= 0 && want[String(ids[j - 1][0])]) j--;
+    sh.deleteRows(j + 2, i - j + 1);
+    n += i - j + 1;
+    i = j - 1;
+  }
+  return out({ ok: true, deleted: n });
 }
 
 // Admin paneldan murojaatni o'chirish (id bo'yicha)

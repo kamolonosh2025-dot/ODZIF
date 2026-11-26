@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261123072425";
+  const APP_VERSION = "20261126103724";
   window.kVer = fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -1769,6 +1769,7 @@ html.ksp-on .kfall { visibility: hidden; }
       </div>
       <button type="button" class="dcgo">Ko'rsatish</button>
     </div>
+    <button type="button" class="kbulk" id="bulkDel" hidden></button>
     <div class="items" id="items" style="margin-top:18px"></div>
   </section>
 
@@ -2746,6 +2747,7 @@ html.ksp-on .kfall { visibility: hidden; }
     $("alistTitle").textContent = CAT_NAMES[c];
     // Fikrlar: avval filiallar ro'yxati
     if (c === "review" && !br) {
+      kBulkSet(c, list);
       $("items").innerHTML = BRANCHES.map(b => {
         const key = b.uz.replace(" filiali", "");
         const n = list.filter(x => x.branch === key).length;
@@ -2760,6 +2762,7 @@ html.ksp-on .kfall { visibility: hidden; }
       }));
     } else {
       if (c === "review") { list = list.filter(x => x.branch === br); $("alistTitle").textContent = br + " filiali"; }
+      kBulkSet(c, list);
       $("items").innerHTML = list.length ? list.map(x => `
         <div class="entry" data-id="${esc(x.id)}" data-cat="${c}">
           <div class="emenu"><button class="edots" type="button" aria-label="Menyu">⋮</button>
@@ -2777,6 +2780,45 @@ html.ksp-on .kfall { visibility: hidden; }
     if ($("s-alist").hidden) show("alist");
     loadPhotos();
   }
+  // Ko'p o'chirish
+  let kBulk = null;
+  function kPeriod() {
+    const a = fmtDay(curDate()).replace(" (bugun)", ""), b = view.to ? fmtDay(view.to).replace(" (bugun)", "") : "";
+    return isRange() ? a + " — " + b : fmtDay(curDate());
+  }
+  function kBulkSet(c, list) {
+    const b = $("bulkDel"); kBulk = { c, ids: list.map(x => String(x.id)), label: kPeriod() };
+    b.hidden = !list.length;
+    b.innerHTML = "🗑 " + (isRange() ? "Shu kunlardagi" : "Shu kundagi") + " hammasini o'chirish <b>(" + list.length + " ta)</b>";
+  }
+  async function kDelMany(c, ids) {
+    const r = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "deleteMany", pin: adminPin, cat: c, ids }) });
+    const j = await r.json();
+    if (j.ok) return;
+    if (j.error !== "cat") throw new Error(j.error || "delete");
+    // Apps Script hali eski bo'lsa: bittalab o'chiramiz
+    for (const id of ids) await deleteEntry(adminPin, c, id);
+  }
+  $("bulkDel").addEventListener("click", async () => {
+    if (!kBulk || !kBulk.ids.length) return;
+    const { c, ids, label } = kBulk;
+    if (!confirm(ids.length + " ta murojaat o'chiriladi (" + CAT_NAMES[c] + ", " + label + ").\nUlarni qaytarib bo'lmaydi. Rostdan o'chirasizmi?")) return;
+    const kDel = window.kDelPend || (window.kDelPend = new Set()), set = new Set(ids), before = (adminData[c] || []).slice();
+    ids.forEach(id => kDel.add(c + ":" + id));
+    adminData[c] = before.filter(x => !set.has(String(x.id)));
+    render();
+    try { localStorage.setItem("kamolon_cache", JSON.stringify({ pin: adminPin, data: adminData })); } catch (_) {}
+    try {
+      if (API_URL) await kDelMany(c, ids);
+      else { for (const id of ids) await deleteEntry(adminPin, c, id); }
+      ids.forEach(id => kDel.delete(c + ":" + id));
+    } catch (err) {
+      ids.forEach(id => kDel.delete(c + ":" + id));
+      adminData[c] = before; render();
+      try { localStorage.setItem("kamolon_cache", JSON.stringify({ pin: adminPin, data: adminData })); } catch (_) {}
+      alert(String(err.message) === "pin" ? "PIN noto'g'ri" : "O'chirib bo'lmadi: " + err.message + ". Internetni tekshirib, qayta urinib ko'ring.");
+    }
+  });
   // Chek suratlari jadvaldan alohida, kerak bo'lganda yuklanadi
   const photoCache = {};
   async function getPhoto(cat, id) {
@@ -2874,5 +2916,6 @@ var ro=window.ResizeObserver?new ResizeObserver(function(es){es.forEach(function
 document.querySelectorAll(SEL).forEach(function(el){ro&&ro.observe(el);new MutationObserver(function(){fit(el)}).observe(el,{childList:true,characterData:true,subtree:true});});
 all();window.addEventListener("resize",all);document.fonts&&document.fonts.ready.then(all);})();</script>
 <style>.kbr a{display:inline-flex;align-items:center;gap:6px;padding:7px 14px 7px 10px;border-radius:999px;background:linear-gradient(#fff,#eaf1fb);box-shadow:0 3px 8px -3px rgba(0,0,0,.4);color:var(--kb);font:700 .95rem/1 var(--ktx);text-decoration:none;-webkit-tap-highlight-color:transparent}.kbr a:active{transform:scale(.96)}.kbr a .i{width:15px;height:15px;color:#E8A317;flex:none}</style>
+<style>.kbulk{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin:14px 0 0;padding:12px 14px;border:1.5px solid #f3b4b4;border-radius:14px;background:#fff5f5;color:#c02626;font:700 .95rem/1.2 var(--ktx,inherit);cursor:pointer}.kbulk:active{transform:scale(.98)}.kbulk b{font-weight:800}</style>
 </body>
 </html>
