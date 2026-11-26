@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0">
 <script>
   // Yangi versiya chiqqan bo'lsa, sahifani avtomatik yangilaydi
-  const APP_VERSION = "20261126103724";
+  const APP_VERSION = "20261126105244";
   window.kVer = fetch("version.json?t=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(j => {
@@ -2874,6 +2874,23 @@ html.ksp-on .kfall { visibility: hidden; }
     if (!e.target.closest(".emenu")) document.querySelectorAll(".emenu.open").forEach(x => x.classList.remove("open"));
   });
 
+  // Har 4 soniyada yengil tekshiruv: jadvalda o'zgarish bo'lsa, ro'yxat darhol yangilanadi
+  let kStamp = null, kPollBusy = false, kNoStamp = 0;
+  async function kPoll() {
+    const adminOpen = !$("s-admin").hidden || !$("s-alist").hidden;
+    if (!adminOpen || !adminPin || !API_URL || document.hidden || kPollBusy) return;
+    kPollBusy = true;
+    try {
+      const r = await fetch(API_URL + "?action=stamp&t=" + Date.now());
+      const j = await r.json();
+      if (j && j.s != null) {
+        if (kStamp !== null && j.s !== kStamp) { kStamp = j.s; await loadAdmin(); }
+        else kStamp = j.s;
+      } else if (++kNoStamp % 4 === 0) await loadAdmin(); // Apps Script eski bo'lsa: har ~16 soniyada
+    } catch (_) {} finally { kPollBusy = false; }
+  }
+  setInterval(kPoll, 4000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) { kStamp = null; kPoll(); const o = !$("s-admin").hidden || !$("s-alist").hidden; if (o && adminPin) loadAdmin(); } });
   // Har daqiqada jimgina yangilanadi; 00:00 da "bugun" o'z-o'zidan yangi kunga o'tadi
   let lastDay = today();
   setInterval(() => {

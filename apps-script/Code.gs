@@ -129,6 +129,9 @@ function sheetFor(cat) {
   return sh;
 }
 
+// Admin panel yangi ma'lumotni darhol bilishi uchun "o'zgarish belgisi"
+function bump() { try { PropertiesService.getScriptProperties().setProperty("stamp", String(Date.now())); } catch (e) {} }
+
 function out(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
@@ -158,6 +161,7 @@ function doPost(e) {
     });
     if (PropertiesService.getScriptProperties().getProperty("style") !== STYLE_VERSION) { try { jadvalniBezash(); } catch (er) {} }
     sh.appendRow(row);
+    bump();
     if (TG_TOKEN && TG_CHAT_ID && data.text) {
       try {
         UrlFetchApp.fetch("https://api.telegram.org/bot" + TG_TOKEN + "/sendMessage", {
@@ -198,6 +202,7 @@ function deleteMany(data) {
     n += i - j + 1;
     i = j - 1;
   }
+  if (n) bump();
   return out({ ok: true, deleted: n });
 }
 
@@ -207,13 +212,14 @@ function deleteRow(data) {
   const sh = sheetFor(data.cat);
   const ids = sh.getRange(1, 1, sh.getLastRow(), 1).getValues();
   for (let i = ids.length - 1; i >= 1; i--) {
-    if (String(ids[i][0]) === String(data.id)) { sh.deleteRow(i + 1); return out({ ok: true }); }
+    if (String(ids[i][0]) === String(data.id)) { sh.deleteRow(i + 1); bump(); return out({ ok: true }); }
   }
   return out({ ok: true, missing: true });
 }
 
 function doGet(e) {
   const p = e.parameter || {};
+  if (p.action === "stamp") return out({ ok: true, s: PropertiesService.getScriptProperties().getProperty("stamp") || "0" });
   if (p.action !== "list" && p.action !== "photo") return out({ ok: true });
   if (p.pin !== PIN) return out({ ok: false, error: "pin" });
   const ss = SpreadsheetApp.getActiveSpreadsheet();
